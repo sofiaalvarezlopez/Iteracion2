@@ -1,0 +1,42 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		
+		{ "menuTitle": "Check-in",
+		  "options":
+			[
+				{
+					"label": "Registrar llegada cliente",
+					"event": "registrarLlegada"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Check-out",
+		  "options":
+			[
+				{
+					"label": "Registrar salida cliente",
+					"event": "registrarSalida"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Acerca de ...",
+		  "options":
+			[
+				{
+					"label": "Acerca de ...",
+					"event": "acercaDe"
+				}
+			]
+		}		
+		
+	]
+}
+	
+	

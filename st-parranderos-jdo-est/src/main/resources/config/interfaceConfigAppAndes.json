@@ -1,0 +1,81 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Roles de usuario",
+		  "options":
+			[
+				{
+					"label": "Registrar rol de usuario",
+					"event": "registrarTipoUsuario"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Usuarios",
+		  "options":
+			[
+				{
+					"label": "Registrar un usuario",
+					"event": "registrarUsuario"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Tipos Habitacion",
+		  "options":
+			[
+				{
+					"label": "Registrar un tipo de habitacion",
+					"event": "registrarTipoHabitacion"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Habitaciones",
+		  "options":
+			[
+				{
+					"label": "Registrar una habitacion",
+					"event": "registrarHabitacion"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Servicios",
+		  "options":
+			[
+				{
+					"label": "Registrar servicios",
+					"event": "registrarServicios"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Planes de consumo",
+		  "options":
+			[
+				{
+					"label": "Registrar planes de consumo",
+					"event": "registrarConsumos"
+				}
+			]
+		},
+		
+		
+		{ "menuTitle": "Acerca de ...",
+		  "options":
+			[
+				{
+					"label": "Acerca de ...",
+					"event": "acercaDe"
+				}
+			]
+		}		
+		
+	]
+}
+	

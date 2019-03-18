@@ -1,0 +1,31 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		
+		{ "menuTitle": "Venta",
+		  "options":
+			[
+				{
+					"label": "Registrar una venta",
+					"event": "registrarConsumo"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Acerca de ...",
+		  "options":
+			[
+				{
+					"label": "Acerca de ...",
+					"event": "acercaDe"
+				}
+			]
+		}		
+		
+	]
+}
+	

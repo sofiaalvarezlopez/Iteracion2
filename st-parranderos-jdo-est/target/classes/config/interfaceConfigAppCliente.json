@@ -1,0 +1,34 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Servicios",
+		  "options":
+			[
+				{
+					"label": "Reservar Servicios",
+					"event": "reservarServicios"
+				},
+				{
+					"label": "Reservar Estadia",
+					"event": "reservarEstadia"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Acerca de ...",
+		  "options":
+			[
+				{
+					"label": "Acerca de ...",
+					"event": "acercaDe"
+				}
+			]
+		}		
+		
+	]
+}
+	

@@ -1,0 +1,26 @@
+{
+	"title": "Nombres de las tablas de HotelAndes",
+	"unidadPersistencia": "sistrans",
+	"tablas": [
+		"CADENAS_HOTELERAS",
+		"CARACTERISTICAS_ADICIONALES",
+		"DESCUENTOS",
+		"DOTACION_SALON",
+		"DOTACIONES",
+		"ESTADIAS",
+		"FACTURAS",
+		"HABITACIONES",
+		"HORARIOS",
+		"HOTELES",
+		"PLANES",
+		"PRODUCTOS",
+		"RESERVAS",
+		"SALONES",
+		"SERVICIOS",
+		"SERVICIOS_ADICIONALES",
+		"TIPO_USUARIO",
+		"TIPOS_HABITACION",
+		"USUARIOS",
+		"VENTA_PRODUCTOS"
+	]
+}
