@@ -88,7 +88,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 
 	/**
-	 * Ruta al archivo de configuración de la interfaz PARA LOS USUARIOS DE SUPERANDES
+	 * Ruta al archivo de configuración de la interfaz PARA LOS USUARIOS DE hotelandes
 	 */
 	private static final String CONFIG_INTERFAZ_ADMIN_DATOS = "./src/main/resources/config/interfaceConfigAppAndes.json"; 
 
@@ -135,7 +135,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	private long identificacionUsuario;
 
 	/**
-	 * Representa el tipo de persona que esta usando la app en su ejecucion {1 = cliente, 2 = empresa, 3 = UsuarioPersonal, 4 = SuperAndes}
+	 * Representa el tipo de persona que esta usando la app en su ejecucion {1 = cliente, 2 = empresa, 3 = UsuarioPersonal, 4 = hotelandes}
 	 */
 	private int estadoAplicacion;
 
@@ -279,7 +279,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		if ( guiConfig == null )
 		{
 			log.info ( "Se aplica configuración por defecto" );			
-			titulo = "Parranderos APP Default";
+			titulo = "Hotel Andes APP Default";
 			alto = 300;
 			ancho = 500;
 		}
@@ -345,7 +345,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	 *****************************************************************/
 
 	/**
-	 * Limpia todas las tuplas de todas las tablas de la base de datos de superandes
+	 * Limpia todas las tuplas de todas las tablas de la base de datos de hotelandes
 	 * Muestra en el panel de datos el número de tuplas eliminadas de cada tabla
 	 */
 	//	public void limpiarBD ()
@@ -353,7 +353,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	//		try 
 	//		{
 	//			// Ejecución de la demo y recolección de los resultados
-	//			//long eliminados [] = hotelAndes.limpiarSuperAndes();
+	//			//long eliminados [] = hotelAndes.limpiarhotelandes();
 	//
 	//			// Generación de la cadena de caracteres con la traza de la ejecución de la demo
 	//			String resultado = "\n\n************ Limpiando la base de datos ************ \n";
@@ -377,7 +377,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al tipo de usuario","HotelAndes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
-		String rta = "Se agrego el proveedor: \n";
+		String rta = "Se agrego el usuario: \n";
 		rta += tipoUsuario.toString();
 		panelDatos.actualizarInterfaz(rta);
 	}
@@ -393,10 +393,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		Usuario usuario = hotelAndes.adicionarUsuario(id, tipoId, nombre, correo, idTipo);
 		if(usuario == null)
 		{
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
-		String rta = "Se agrego el proveedor: \n";
+		String rta = "Se agrego el usuario: \n";
 		rta += usuario.toString();
 		panelDatos.actualizarInterfaz(rta);
 	}
@@ -414,10 +414,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 		TipoHabitacion tipo = hotelAndes.adicionarTipoHabitacion(id, descripcion, capacidad, precioPorPersonaPorNoche, idHotel);	
 		if(tipo == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
-		String rta = "Se agrego el proveedor: \n";
+		String rta = "Se agrego el usuario: \n";
 		rta += tipo.toString();
 		panelDatos.actualizarInterfaz(rta);
 	}
@@ -429,10 +429,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long idTipoHabitacion = Long.parseLong(idTipo);
 		Habitacion habitacion = hotelAndes.adicionarHabitacion(numHabitacion, idTipoHabitacion);
 		if(habitacion == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
-		String rta = "Se agrego el proveedor: \n";
+		String rta = "Se agrego el usuario: \n";
 		rta += habitacion.toString();
 		panelDatos.actualizarInterfaz(rta);
 	}
@@ -443,10 +443,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del servicio");
 		Servicio serv = hotelAndes.adicionarServicio(idServicio, nombre);
 		if(serv == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
-		String rta = "Se agrego el proveedor: \n";
+		String rta = "Se agrego el servicio: \n";
 		rta += serv.toString();
 		panelDatos.actualizarInterfaz(rta);
 
@@ -456,7 +456,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			int capacidad = Integer.parseInt(capa);
 			ServicioAdicional servicioAdicional = hotelAndes.adicionarServicioAdicional(idServicio, capacidad);
 			if(servicioAdicional == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 			String idCaracteristica = JOptionPane.showInputDialog(this, "Ingrese el id de la caracteristica adicional");
@@ -466,7 +466,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			double valor = Double.parseDouble(val);
 			CaracteristicaAdicional car = hotelAndes.adicionarCaracteristicaAdicional(idCaracteristicaAdicional, nombreCar, valor, idServicio);
 			if(car == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al servicio","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 			String resp = JOptionPane.showInputDialog(this, "Ingrese que dias esta abierto");
@@ -476,7 +476,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			long idHorario = Long.parseLong(idHor);
 			Horario hor = hotelAndes.adicionarHorario(idHorario, null, idServicio, null, resp, horaApertura, horaCierre);
 			if(hor == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 
@@ -491,7 +491,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			long idVentaP = Long.parseLong(idVP);
 			VentaProducto ventaP = hotelAndes.adicionarVentaProducto(idVentaP, capacidad, estilo, tipo, nombreVenta);
 			if(ventaP == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 
@@ -508,7 +508,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 			Producto p = hotelAndes.adicionarProducto(idProducto, prec, nombreProd, cant, dur, categoriaProducto, idVentaP); 
 			if(p == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 		}
@@ -520,7 +520,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 			Salon salon = hotelAndes.adicionarSalon(idServicio, capacidadSalon, precioSalon);
 			if(salon == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 
@@ -531,7 +531,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			double valor = Double.parseDouble(val);
 			DotacionSalon ds = hotelAndes.adicionarDotacionSalon(idDotacion, nombreDot, valor, idServicio);
 			if(ds == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 
@@ -551,7 +551,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String tipo = JOptionPane.showInputDialog("Ingrese el tipo del plan");
 		Plan plan = hotelAndes.adicionarPlan(idP, tipo, costoPlan, descuento, fechaVencimiento);
 		if(plan == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 
@@ -562,7 +562,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long descuentito = (long) descuento;
 		Descuento descu = hotelAndes.adicionarDescuento(idDescu, idP, 0, 0, descuentito, cantVeces);
 		if(descu == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 
@@ -587,7 +587,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		
 		Estadia estadia = hotelAndes.adicionarEstadia(idEstadia, fechaLlegada, fechaSalida, cantPersonas, idPlan, numHabitacion, 0, 0, tipoDoc, idEstadia);
 		if(estadia == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 	
@@ -608,7 +608,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		
 		Reserva res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0);
 		if(res == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 	}
@@ -618,7 +618,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long cedula = Long.parseLong(ced);
 		Estadia est = hotelAndes.darEstadiaPorID(cedula);
 		if(est == null){
-			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 		hotelAndes.checkInCliente(cedula);
@@ -642,7 +642,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long valor = Long.parseLong(precio);
 		Factura fac = hotelAndes.adicionarFactura(numFactura(), hoy, 0, valor, 0, idServ, "CC", idEstadia, numDocEmpleado, idConsumo);
 		if(fac == null){
-			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","SuperAndes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 	}
