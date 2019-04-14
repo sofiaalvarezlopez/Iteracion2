@@ -17,10 +17,10 @@ public class SQLVentaProducto {
 		this.pha = pha;
 	}
 	
-	public long adicionarVentaProducto(PersistenceManager pm, long idServicio, int capacidad, String estilo, String tipo, String nombre) 
+	public long adicionarVentaProducto(PersistenceManager pm, long idServicio, int capacidad, String estilo, String tipo) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO VENTA_PRODUCTOS"  + "(ID_SERVICIO, CAPACIDAD, ESTILO, TIPO, NOMBRE) VALUES (?, ?, ?, ?, ?)");
-		q.setParameters(idServicio, capacidad, estilo, tipo, nombre);
+		Query q = pm.newQuery(SQL, "INSERT INTO VENTA_PRODUCTOS"  + "(ID_SERVICIO, CAPACIDAD, ESTILO, TIPO) VALUES (?, ?, ?, ?)");
+		q.setParameters(idServicio, capacidad, estilo, tipo);
 		return (long) q.executeUnique();
 	}
 	

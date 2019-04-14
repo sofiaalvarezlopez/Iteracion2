@@ -1,5 +1,6 @@
 package uniandes.isis2304.hotelAndes.negocio;
 
+
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,33 +62,13 @@ public class HotelAndes {
 	 * 			Métodos para manejar los TIPOS DE USUARIO
 	 ********************************************************/
 	
-	public Usuario darCliente(long cedula){
+	public Usuario darUsuario(String cedula){
 		log.info ("Dando Cliente :  " + cedula);
-		Usuario clienEmp = pp.darCliente(cedula);
+		Usuario clienEmp = pp.darUsuario(cedula);
 		log.info ("Dando Cliente :  " + clienEmp);
 		return clienEmp;
 	}
 	
-	public Usuario darEmpleado(long cedula){
-		log.info ("Dando Cliente :  " + cedula);
-		Usuario clienEmp = pp.darEmpleado(cedula);
-		log.info ("Dando Cliente :  " + clienEmp);
-		return clienEmp;
-	}
-	
-	public Usuario darRecepcionista(long cedula){
-		log.info ("Dando Cliente :  " + cedula);
-		Usuario clienEmp = pp.darRecepcionista(cedula);
-		log.info ("Dando Cliente :  " + clienEmp);
-		return clienEmp;
-	}
-	
-	public Usuario darGerente(long cedula){
-		log.info ("Dando Cliente :  " + cedula);
-		Usuario clienEmp = pp.darGerente(cedula);
-		log.info ("Dando Cliente :  " + clienEmp);
-		return clienEmp;
-	}
 	public List <TipoUsuario> darTiposUsuarios(){
 		log.info("Consultando Tipos de Usuario");
 		List <TipoUsuario> tiposUsuarios = pp.darTiposUsuario();
@@ -280,11 +261,11 @@ public class HotelAndes {
 	/* ****************************************************************
 	 * 			Métodos para manejar VentaProducto
 	 ********************************************************/
-	public VentaProducto adicionarVentaProducto (long idServicio, int capacidad, String estilo, String tipo, String nombre)
+	public VentaProducto adicionarVentaProducto (long idServicio, int capacidad, String estilo, String tipo)
 	{
-		log.info ("Adicionando VentaProducto " + nombre);
-		VentaProducto d = pp.adicionarVentaProducto(idServicio, capacidad, estilo, tipo, nombre);
-        log.info ("Adicionando Dotacion: " + d);
+		log.info ("Adicionando VentaProducto de tipo" + tipo);
+		VentaProducto d = pp.adicionarVentaProducto(idServicio, capacidad, estilo, tipo);
+        log.info ("Adicionando VEnta Producto: " + d);
         return d;
 	}
 	public List<VentaProducto> darVentasProductos()
@@ -302,10 +283,10 @@ public class HotelAndes {
 	/* ****************************************************************
 	 * 			Métodos para manejar Salon
 	 ********************************************************/
-	public Salon adicionarSalon (long idServicio, int capacidad, double costoPorHora)
+	public Salon adicionarSalon (long idServicio, int capacidad, double costoPorHora, String tipo)
 	{
 		log.info ("Adicionando Salon ");
-		Salon s = pp.adicionarSalon( idServicio,  capacidad,  costoPorHora);
+		Salon s = pp.adicionarSalon( idServicio,  capacidad,  costoPorHora, tipo);
         log.info ("Adicionando Dotacion: " + s);
         return s;
 	}

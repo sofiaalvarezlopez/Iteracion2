@@ -1,67 +1,68 @@
 package uniandes.isis2304.hotelAndes.negocio;
 
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 public class Usuario implements VOUsuario
 {
-	private long numDocumento;	
-	private String tipoDocumento;
+	private long numero_documento;	
+	private String tipo_documento;
 	private String nombre;	
-	private String correoElectronico;
-	private long idTipoUsuario;
+	private String correo_electronico;
+	private long id_tipo_usuario;
 
 
 	public Usuario(){
-		numDocumento = 0;
-		tipoDocumento = "";
+		numero_documento = 0;
+		tipo_documento = "";
 		nombre = "";
-		correoElectronico = "";
-		setIdTipoUsuario(0);
+		correo_electronico = "";
+		setid_tipo_usuario(0);
 	}
-	public Usuario (long numDocumento, String tipoDocumento, String nombre, String correoElectronico, long  idTipoUsuario)
+	public Usuario (long numero_documento, String tipo_documento, String nombre, String correo_electronico, long  id_tipo_usuario)
 	{
-		this.numDocumento = numDocumento;
-		this.tipoDocumento = tipoDocumento;
+		this.numero_documento = numero_documento;
+		this.tipo_documento = tipo_documento;
 		this.nombre = nombre;
-		this.correoElectronico = correoElectronico;
-		this.idTipoUsuario = idTipoUsuario;
+		this.correo_electronico = correo_electronico;
+		this.id_tipo_usuario = id_tipo_usuario;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#getNumDocumento()
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#getnumero_documento()
 	 */
 	@Override
-	public long getNumDocumento() {
-		return numDocumento;
+	public long getNumeroDocumento() {
+		return numero_documento;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#setNumDocumento(long)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#setnumero_documento(long)
 	 */
 	@Override
-	public void setNumDocumento(long numDocumento) {
-		this.numDocumento = numDocumento;
+	public void setNumeroDocumento(long numeroDocumento) {
+		this.numero_documento = numeroDocumento;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#getTipoDocumento()
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#gettipo_documento()
 	 */
 	@Override
 	public String getTipoDocumento() {
-		return tipoDocumento;
+		return tipo_documento;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#setTipoDocumento(java.lang.String)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#settipo_documento(java.lang.String)
 	 */
 	@Override
-	public void setTipoDocumento(String tipoDocumento) {
-		this.tipoDocumento = tipoDocumento;
+	public void setTipoDocumento(String tipo_documento) {
+		this.tipo_documento = tipo_documento;
 	}
 
 
@@ -84,20 +85,20 @@ public class Usuario implements VOUsuario
 
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#getCorreoElectronico()
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#getcorreo_electronico()
 	 */
 	@Override
 	public String getCorreoElectronico() {
-		return correoElectronico;
+		return correo_electronico;
 	}
 
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#setCorreoElectronico(java.lang.String)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOUsuario#setcorreo_electronico(java.lang.String)
 	 */
 	@Override
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
+	public void setCorreoElectronico(String correo_electronico) {
+		this.correo_electronico = correo_electronico;
 	}
 	
 	/* (non-Javadoc)
@@ -106,18 +107,18 @@ public class Usuario implements VOUsuario
 	@Override
 	public String toString() 
 	{
-		return "Usuario [numero documento usuario=" + numDocumento + ", tipoDocumento =" + tipoDocumento + 
-				", nombre =" + nombre + ", correo electronico =" + correoElectronico + "]";
+		return "Usuario [numero documento usuario=" + numero_documento + ", tipo_documento =" + tipo_documento + 
+				", nombre =" + nombre + ", correo electronico =" + correo_electronico + "]";
 	}
 
 
-	public long getIdTipoUsuario() {
-		return idTipoUsuario;
+	public long getid_tipo_usuario() {
+		return id_tipo_usuario;
 	}
 
 
-	public void setIdTipoUsuario(long idTipoUsuario) {
-		this.idTipoUsuario = idTipoUsuario;
+	public void setid_tipo_usuario(long id_tipo_usuario) {
+		this.id_tipo_usuario = id_tipo_usuario;
 	}
 	
 

@@ -1,5 +1,6 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -45,39 +46,13 @@ public class SQLUsuario {
 		return (List<Usuario>) q.executeList();
 	}
 	
-	public Usuario darClientePorCedula(PersistenceManager pm, long cedula) 
+	public Usuario darUsuarioPorCedula(PersistenceManager pm, String cedula) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM USUARIOS" + " WHERE cedula = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM USUARIOS" + " WHERE NUMERO_DOCUMENTO = ?");
 		q.setResultClass(Usuario.class);
-		q.setParameters(cedula);
-		return (Usuario) q.executeUnique();        
+		q.setParameters(new BigDecimal(cedula));
+		Usuario u = (Usuario) q.executeUnique();
+		return u ;   
 	}
-	
-	public Usuario darEmpleadoPorCedula(PersistenceManager pm, long cedula) 
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM USUARIOS" + " WHERE cedula = ?");
-		q.setResultClass(Usuario.class);
-		q.setParameters(cedula);
-		return (Usuario) q.executeUnique();        
-	}
-	
-	public Usuario darRecepcionistaPorCedula(PersistenceManager pm, long cedula) 
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM USUARIOS" + " WHERE cedula = ?");
-		q.setResultClass(Usuario.class);
-		q.setParameters(cedula);
-		return (Usuario) q.executeUnique();        
-	}
-
-	public Usuario darGerentePorCedula(PersistenceManager pm, long cedula) 
-	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM USUARIOS" + " WHERE cedula = ?");
-		q.setResultClass(Usuario.class);
-		q.setParameters(cedula);
-		return (Usuario) q.executeUnique();        
-	}
-
-	
-	
 
 }

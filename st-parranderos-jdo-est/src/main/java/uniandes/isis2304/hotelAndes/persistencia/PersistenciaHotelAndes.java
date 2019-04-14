@@ -495,9 +495,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlTipoUsuario.adicionarTipoUsuario(pm, idTipoUsuario, nombreTipoUsuario);
+			log.trace ("Insercion de tipo usuario: " + nombreTipoUsuario + ": " + tuplasInsertadas + " tuplas insertadas");
+
 			tx.commit();
 
-			log.trace ("Insercion de tipo usuario: " + nombreTipoUsuario + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new TipoUsuario (idTipoUsuario, nombreTipoUsuario);
 		}
@@ -526,9 +527,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlCadenaHotelera.adicionarCadenaHotelera(pm, idCadena, nombreCadena);
+			log.trace ("Insercion de cadena hotelera: " + nombreCadena + ": " + tuplasInsertadas + " tuplas insertadas");
+
 			tx.commit();
 
-			log.trace ("Insercion de cadena hotelera: " + nombreCadena + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new CadenaHotelera(idCadena, nombreCadena);
 		}
@@ -556,9 +558,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlCaracteristicaAdicional.adicionarCaracteristicaAdicional(pm, idCaracteristicaAdicional, nombre, valor, idServicioAdicional);
+			log.trace ("Insercion de caracteristica adicional: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
 			tx.commit();
 
-			log.trace ("Insercion de caracteristica adicional: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new CaracteristicaAdicional(idCaracteristicaAdicional, nombre, valor, idServicioAdicional);
 		}
@@ -586,8 +589,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlDescuento.adicionarDescuento(pm, idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
-
 			log.trace ("Insercion de descuento: " + idDescuento + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Descuento(idDescuento, valor, limiteVeces, idPlan, idServicio, idProducto);
 		}
@@ -615,8 +620,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlDotacion.adicionarDotacion(pm, idDotacion, nombre, precio, idTipoHabitacion);
-
 			log.trace ("Insercion de dotacionl: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Dotacion(idDotacion, precio, nombre, idTipoHabitacion);
 		}
@@ -644,8 +651,9 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlDotacionSalon.adicionarDotacionSalon(pm, idDotacion, nombre, valor, idSalon);
-
 			log.trace ("Insercion de dotacion salon: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			tx.commit();
+
 
 			return new DotacionSalon(idDotacion, valor, nombre, idSalon);
 		}
@@ -673,8 +681,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlEstadia.adicionarEstadia(pm, idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, tipoDoc, numDoc);
-
 			log.trace ("Insercion de estadia: " + idEstadia + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Estadia(idEstadia, fechaLlegada, fechaSalida, numPersonas, checkIn, pago, tipoDoc, numDoc, idPlan, idHabitacion);
 		}
@@ -702,8 +712,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlFactura.adicionarFactura(pm, numFactura, fecha, pagada, precio, idDotacion, idServicio, tipoDocEmpleado, idEstadia, numDocEmpleado, idConsumo);
-
 			log.trace ("Insercion de factura: " + numFactura + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Factura(numFactura, fecha, pagada, precio, idConsumo, idDotacion, idServicio, idEstadia, tipoDocEmpleado, numDocEmpleado);
 		}
@@ -731,8 +743,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlHabitacion.adicionarHabitacion(pm, numHabitacion, idTipoHabitaciones);
-
 			log.trace ("Insercion de habitacion: " + numHabitacion + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Habitacion(numHabitacion, idTipoHabitaciones); 
 		}
@@ -760,8 +774,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlHorario.adicionarHorario(pm, idHorario, duracion, idServicio, fecha, dia, horaApertura, horaCierre);
-
 			log.trace ("Insercion de horario: " + idHorario + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Horario(idHorario, dia, horaApertura, horaCierre, duracion, fecha, idServicio);
 		}
@@ -789,8 +805,9 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlHotel.adicionarHotel(pm, idHotel, nombre, direccion, ciudad, estrellas, idCadenaHotelera);
-
 			log.trace ("Insercion de hotel: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			tx.commit();
+
 
 			return new Hotel(idHotel, nombre, direccion, ciudad, estrellas, idCadenaHotelera);
 		}
@@ -817,8 +834,9 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlPlan.adicionarPlan(pm, idPlan, tipo, costo, descuentoAlojamiento, fecha);
-
 			log.trace ("Insercion de plan: " + idPlan + ": " + tuplasInsertadas + " tuplas insertadas");
+			tx.commit();
+
 
 			return new Plan(idPlan, tipo, costo, descuentoAlojamiento, fecha);
 		}
@@ -846,8 +864,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, idProducto, precio, nombre, cantidad, duracion, categoria, idVentaProducto);
-
 			log.trace ("Insercion de producto: " + idProducto + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Producto(idProducto, nombre, precio, cantidad, duracion, categoria, idVentaProducto);
 		}
@@ -875,8 +895,9 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlReserva.adicionarReserva(pm, numReserva, idEstadia, idServicio, idHorario, idConsumo);
-
 			log.trace ("Insercion de plan: " + numReserva + ": " + tuplasInsertadas + " tuplas insertadas");
+			tx.commit();
+
 
 			return new Reserva(numReserva, idConsumo, idEstadia, idServicio, idHorario);
 		}
@@ -896,18 +917,20 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Salon adicionarSalon(long idServicio, int capacidad, double costoPorHora) 
+	public Salon adicionarSalon(long idServicio, int capacidad, double costoPorHora, String tipo) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlSalon.adicionarSalon(pm, idServicio, capacidad, costoPorHora);
-
+			long tuplasInsertadas = sqlSalon.adicionarSalon(pm, idServicio, capacidad, costoPorHora, tipo);
 			log.trace ("Insercion del salon: " + idServicio + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Salon(idServicio, capacidad, costoPorHora);
+			tx.commit();
+
+
+			return new Salon(idServicio, capacidad, costoPorHora, tipo);
 		}
 		catch (Exception e)
 		{
@@ -933,8 +956,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlServicio.adicionarServicio(pm, idServicio, nombreServicio);
-
 			log.trace ("Insercion del servicio: " + nombreServicio + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new Servicio(idServicio, nombreServicio);
 		}
@@ -962,8 +987,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlServicioAdicional.adicionarServicioAdicional(pm, idServicioAdicional, capacidad);
-
 			log.trace ("Insercion del servicio adicional: " + idServicioAdicional + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new ServicioAdicional(idServicioAdicional, capacidad);
 		}
@@ -991,8 +1018,10 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlTipoHabitacion.adicionarTipoHabitacion(pm, idTipoHabitacion, descripcion, capacidad, precioNoche, idHotel);
-
 			log.trace ("Insercion del tipo usuario: " + idTipoHabitacion + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			tx.commit();
+
 
 			return new TipoHabitacion(idTipoHabitacion, descripcion, capacidad, precioNoche, idHotel);
 		}
@@ -1020,6 +1049,7 @@ public class PersistenciaHotelAndes
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlUsuario.adicionarUsuario(pm, numeroDocumento, tipoDocumento, nombre, correoElectronico, idTipoUsuario);
+			tx.commit();
 
 			log.trace ("Insercion del servicio: " + numeroDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
 
@@ -1035,23 +1065,24 @@ public class PersistenciaHotelAndes
 		{
 			if (tx.isActive())
 			{
-				tx.rollback();
+				tx.rollback();;
 			}
 			pm.close();
 		}
 	}
-	public VentaProducto adicionarVentaProducto(long idServicio, int capacidad, String estilo, String tipo, String nombre) 
+	public VentaProducto adicionarVentaProducto(long idServicio, int capacidad, String estilo, String tipo) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlVentaProducto.adicionarVentaProducto(pm, idServicio, capacidad, estilo, tipo, nombre);
+			long tuplasInsertadas = sqlVentaProducto.adicionarVentaProducto(pm, idServicio, capacidad, estilo, tipo);
+			tx.commit();
 
 			log.trace ("Insercion de la venta producto: " + idServicio + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new VentaProducto(idServicio, estilo, capacidad, tipo, nombre);	
+			return new VentaProducto(idServicio, estilo, capacidad, tipo);	
 		}	
 		catch (Exception e)
 		{
@@ -1325,14 +1356,13 @@ public class PersistenciaHotelAndes
 	
 
 
-	public Usuario darCliente(long cedula){
+	public Usuario darUsuario(String cedula){
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			Usuario ce = sqlUsuario.darClientePorCedula(pm, cedula);
-			Usuario temp = darCliente(ce.getNumDocumento());
+			Usuario ce = sqlUsuario.darUsuarioPorCedula(pm, cedula);
 			tx.commit();
 			return ce;
 		}
@@ -1352,91 +1382,5 @@ public class PersistenciaHotelAndes
 			pm.close();
 		}
 	}
-
-	public Usuario darEmpleado(long cedula){
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			Usuario ce = sqlUsuario.darEmpleadoPorCedula(pm, cedula);
-			Usuario temp = darEmpleado(ce.getNumDocumento());
-			tx.commit();
-			return ce;
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	public Usuario darGerente(long cedula){
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			Usuario ce = sqlUsuario.darClientePorCedula(pm, cedula);
-			Usuario temp = darGerente(ce.getNumDocumento());
-			tx.commit();
-			return ce;
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	public Usuario darRecepcionista(long cedula){
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			Usuario ce = sqlUsuario.darClientePorCedula(pm, cedula);
-			Usuario temp = darRecepcionista(ce.getNumDocumento());
-			tx.commit();
-			return ce;
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-
-	}
-
 
 }

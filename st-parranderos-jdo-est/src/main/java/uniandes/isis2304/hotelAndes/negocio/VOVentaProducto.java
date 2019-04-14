@@ -14,10 +14,6 @@ public interface VOVentaProducto {
 
 	void setTipo(String tipo);
 
-	String getNombre();
-
-	void setNombre(String nombre);
-
 	String toString();
 
 }

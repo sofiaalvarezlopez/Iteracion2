@@ -1,10 +1,11 @@
 package uniandes.isis2304.hotelAndes.negocio;
 
+
 public interface VOUsuario {
 
-	long getNumDocumento();
+	long getNumeroDocumento();
 
-	void setNumDocumento(long numDocumento);
+	void setNumeroDocumento(long numDocumento);
 
 	String getTipoDocumento();
 

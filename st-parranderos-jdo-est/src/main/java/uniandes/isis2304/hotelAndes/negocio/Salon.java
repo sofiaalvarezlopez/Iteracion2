@@ -9,17 +9,35 @@ public class Salon extends Servicio implements VOSalon
 	
 	private double costoPorHora;
 	
+	private String tipo;
+	
 
 	public Salon(){
 		idServicio = 0;
 		this.capacidad = 0;
 		this.costoPorHora = 0;
+		this.setTipo("");
 	}
 	
-	public Salon(long idSalon, int capacidad, double costoPorHora){
+	/**
+	 * @return the tipo
+	 */
+	private String getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	private void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Salon(long idSalon, int capacidad, double costoPorHora, String tipo){
 		idServicio = idSalon;
 		this.capacidad = capacidad;
 		this.costoPorHora = costoPorHora;
+		this.setTipo(tipo);
 	}
 
 	/* (non-Javadoc)
@@ -64,7 +82,7 @@ public class Salon extends Servicio implements VOSalon
 	public String toString() 
 	{
 		return "Salon [idSalon=" + idServicio + ", capacidad =" + capacidad +
-				", costo por hora =" + costoPorHora + "]";
+				", costo por hora =" + costoPorHora + ", tipo =" + tipo + "]";
 	}
 	
 }

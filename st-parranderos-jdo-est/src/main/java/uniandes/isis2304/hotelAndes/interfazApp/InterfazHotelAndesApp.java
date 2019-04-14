@@ -135,7 +135,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	private long identificacionUsuario;
 
 	/**
-	 * Representa el tipo de persona que esta usando la app en su ejecucion {1 = cliente, 2 = empresa, 3 = UsuarioPersonal, 4 = hotelandes}
+	 * Representa el tipo de persona que esta usando la app en su ejecucion 6= Organizador de Eventos, 5 = cliente, 4 = empleado, 3 = recepccionista, 2 = gerente, 1 = Administrador de datos}
 	 */
 	private int estadoAplicacion;
 
@@ -151,58 +151,58 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
 		hotelAndes = new HotelAndes (tableConfig);
 
-		Object[] options = {"Cliente", "Empleado", "Recepcionista", "administradorDeDatos"};
+		Object[] options = {"Cliente", "Empleado", "Recepcionista", "Gerente", "administradorDeDatos", "Organizador Eventos"};
 		int n = JOptionPane.showOptionDialog(this,"¿Cómo desea ingresar?","HotelAndes",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[2]);
 		if(n == 0)
 		{
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
-			long cedula = Long.parseLong(ced);
+			String cedula = String.valueOf(Long.parseLong(ced));
+
 			if(ced.isEmpty())
 			{
 				JOptionPane.showMessageDialog(this, "Por favor digite una cedula valida", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 				System.exit(0);
 			}
-			if(hotelAndes.darCliente(cedula) == null)
+			if(hotelAndes.darUsuario(cedula) == null  || hotelAndes.darUsuario(cedula).getid_tipo_usuario() != 5)
 			{
 				JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 				System.exit(0);
 			}
 			else
 			{
-				estadoAplicacion = 1;
-				identificacionUsuario = cedula;
+				estadoAplicacion = 5;
+				identificacionUsuario = Long.parseLong(cedula);
 				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_CLIENTES);
 			}
 		}
-		if(n == 1)
+		else if(n == 1)
 		{
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
-			long cedula = Long.parseLong(ced);
-
+			String cedula = ced;
 			if(ced.isEmpty())
 			{
 				JOptionPane.showMessageDialog(this, "Por favor ingrese una cedula valido", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 				System.exit(0);
 			}
-			if(hotelAndes.darEmpleado(cedula) == null)
+			if(hotelAndes.darUsuario(cedula) == null|| hotelAndes.darUsuario(cedula).getid_tipo_usuario() != 4)
 			{
 				JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 				System.exit(0);
 			}
 			else
 			{
-				estadoAplicacion = 2;
-				identificacionUsuario = cedula;
+				estadoAplicacion = 4;
+				identificacionUsuario = Long.parseLong(cedula);
 				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_EMPLEADO);
 			}
 		}
-		if(n == 2)
+		else if(n == 2)
 		{
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
-			long cedula = Long.parseLong(ced);
+			String cedula = ced;
 
-			if(ced.isEmpty())
-				if(hotelAndes.darRecepcionista(cedula) == null)
+
+				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getid_tipo_usuario() != 3)
 				{
 					JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 					System.exit(0);
@@ -210,16 +210,69 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				else
 				{
 					estadoAplicacion = 3;
-					identificacionUsuario = cedula;
+					identificacionUsuario = Long.parseLong(cedula);
 					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
 				}
 		}
-		if(n == 3)
+		else if(n == 3)
 		{
-			JOptionPane.showMessageDialog(this, "Esta opcion es solo para acceso administrativo", "HotelAndes", JOptionPane.WARNING_MESSAGE);
-			estadoAplicacion = 4;
-			identificacionUsuario = 0;
+			
+			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+			String cedula = String.valueOf(Long.parseLong(ced));
+
+
+				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getid_tipo_usuario() != 2)
+				{
+					JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+					System.exit(0);
+				}
+				else
+				{
+					estadoAplicacion = 2;
+					identificacionUsuario = Long.parseLong(cedula);
+					//TODO cambiar a interfaz GERENTE
+					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
+				}
+		}
+		else if(n == 4)
+		{
+			
+			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+			String cedula = ced;
 			guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ADMIN_DATOS);
+			
+/*				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 1)
+				{
+					JOptionPane.showMessageDialog(this, "Esta opcion es solo para acceso administrativo", "HotelAndes", JOptionPane.WARNING_MESSAGE);
+					System.exit(0);
+				}
+				else
+				{
+					estadoAplicacion = 1;
+					identificacionUsuario = Long.parseLong(cedula);
+					//TODO cambiar a interfaz clientes
+					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
+				}*/
+		}
+		else if(n == 5)
+		{
+			
+			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+			String cedula = ced;
+
+
+				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getid_tipo_usuario() != 6)
+				{
+					JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+					System.exit(0);
+				}
+				else
+				{
+					estadoAplicacion = 6;
+					identificacionUsuario = Long.parseLong(cedula);
+					//TODO cambiar a interfaz Organizador Eventos
+					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
+				}
 		}
 
 		// Configura la apariencia del frame que contiene la interfaz gráfica
@@ -469,7 +522,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al servicio","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
-			String resp = JOptionPane.showInputDialog(this, "Ingrese que dias esta abierto");
+/*			String resp = JOptionPane.showInputDialog(this, "Ingrese que dias esta abierto");
 			String horaApertura = JOptionPane.showInputDialog(this, "Ingrese el horario de apertura");
 			String horaCierre = JOptionPane.showInputDialog(this, "Ingrese la hora de cierre");
 			String idHor = JOptionPane.showInputDialog(this, "Ingrese el id del horario");
@@ -478,32 +531,33 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			if(hor == null){
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
-			}
+			}*/
 
 		}
 		else if(rpta.equalsIgnoreCase("Venta Producto")){
+			String idVP = JOptionPane.showInputDialog(this, "Ingrese el id de venta del producto");
 			String cap= JOptionPane.showInputDialog(this, "Ingrese la capacidad");
 			int capacidad = Integer.parseInt(cap);
 			String estilo = JOptionPane.showInputDialog(this, "Ingrese el estilo");
-			String nombreVenta = JOptionPane.showInputDialog(this, "Ingresa el nombre del nuevo servicio");
-			String tipo = JOptionPane.showInputDialog(this, "Ingresa el tipo");
-			String idVP = JOptionPane.showInputDialog(this, "Ingrese el id de venta del producto");
+			String tipo = JOptionPane.showInputDialog(this, "Ingresa el tipo de servicio");
+			
 			long idVentaP = Long.parseLong(idVP);
-			VentaProducto ventaP = hotelAndes.adicionarVentaProducto(idVentaP, capacidad, estilo, tipo, nombreVenta);
+			VentaProducto ventaP = hotelAndes.adicionarVentaProducto(idVentaP, capacidad, estilo, tipo);
 			if(ventaP == null){
-				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, "No fue posible hacer el servicio","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
 
-			String cantidadProducto = JOptionPane.showInputDialog(this, "Ingrese la cantidad del producto");
-			int cant = Integer.parseInt(cantidadProducto);
-			String categoriaProducto = JOptionPane.showInputDialog(this, "Ingrese la categoria del producto");
-			String duracion = JOptionPane.showInputDialog(this, "Ingrese la duracion. No ingrese nada si no tiene duracion");
-			int dur = Integer.parseInt(duracion);
 			String idProd = JOptionPane.showInputDialog(this, "Ingrese el id del producto");
 			long idProducto = Long.parseLong(idProd);
 			String nombreProd = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto");
 			String precio = JOptionPane.showInputDialog(this, "Ingrese el precio");
+			String cantidadProducto = JOptionPane.showInputDialog(this, "Ingrese la cantidad del producto");
+			int cant = Integer.parseInt(cantidadProducto);
+			String categoriaProducto = JOptionPane.showInputDialog(this, "Ingrese la categoria del producto");
+			String duracion = JOptionPane.showInputDialog(this, "Ingrese la duracion. Ingrese cero si no tiene duración");
+			int dur = Integer.parseInt(duracion);
+
 			double prec = Double.parseDouble(precio);
 
 			Producto p = hotelAndes.adicionarProducto(idProducto, prec, nombreProd, cant, dur, categoriaProducto, idVentaP); 
@@ -517,8 +571,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			int capacidadSalon = Integer.parseInt(cSalon);
 			String precio = JOptionPane.showInputDialog(this, "Ingrese el costo por hora");
 			double precioSalon = Double.parseDouble(precio);
-
-			Salon salon = hotelAndes.adicionarSalon(idServicio, capacidadSalon, precioSalon);
+			String tipo = JOptionPane.showInputDialog(this, "Ingrese el tipo de salon (CONFERENCIA o REUNION");
+			Salon salon = hotelAndes.adicionarSalon(idServicio, capacidadSalon, precioSalon, tipo);
 			if(salon == null){
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -534,6 +588,11 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
+
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Tipo incorrecto","hotelandes", JOptionPane.WARNING_MESSAGE);
 
 		}
 	}
@@ -627,9 +686,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 	
 	public void registrarConsumo(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date today = new Date();
-		today.setHours(0);
-		Timestamp hoy = Timestamp.valueOf(today.toString());
+		Timestamp hoy = Timestamp.valueOf(sdf.format(today));
 		String s = JOptionPane.showInputDialog(this, "Ingrese el id del consumo realizado");
 		long idConsumo = Long.parseLong(s);
 		String d = JOptionPane.showInputDialog(this, "Ingrese el id del servicio realizado");
@@ -642,7 +701,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long valor = Long.parseLong(precio);
 		Factura fac = hotelAndes.adicionarFactura(numFactura(), hoy, 0, valor, 0, idServ, "CC", idEstadia, numDocEmpleado, idConsumo);
 		if(fac == null){
-			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","hotelandes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible registrar la facturae","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 	}

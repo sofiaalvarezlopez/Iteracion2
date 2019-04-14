@@ -17,10 +17,10 @@ public class SQLSalon {
 		this.pha = pha;
 	}
 	
-	public long adicionarSalon(PersistenceManager pm, long idServicio, int capacidad, double costoPorHora) 
+	public long adicionarSalon(PersistenceManager pm, long idServicio, int capacidad, double costoPorHora, String tipo) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO SALONES"  + "(ID_SERVICIO, CAPACIDAD, COSTO_POR_HORA) VALUES (?, ?, ?)");
-		q.setParameters(idServicio, capacidad, costoPorHora);
+		Query q = pm.newQuery(SQL, "INSERT INTO SALONES"  + "(ID_SERVICIO, CAPACIDAD, COSTO_POR_HORA, TIPO ) VALUES (?, ?, ?, ?)");
+		q.setParameters(idServicio, capacidad, costoPorHora, tipo);
 		return (long) q.executeUnique();
 	}
 	
