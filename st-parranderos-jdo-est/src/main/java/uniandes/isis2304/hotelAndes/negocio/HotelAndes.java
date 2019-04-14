@@ -62,9 +62,9 @@ public class HotelAndes {
 	 * 			Métodos para manejar los TIPOS DE USUARIO
 	 ********************************************************/
 	
-	public Usuario darUsuario(String cedula){
+	public Usuarios darUsuario(long cedula){
 		log.info ("Dando Cliente :  " + cedula);
-		Usuario clienEmp = pp.darUsuario(cedula);
+		Usuarios clienEmp = pp.darUsuario(cedula);
 		log.info ("Dando Cliente :  " + clienEmp);
 		return clienEmp;
 	}
@@ -103,24 +103,24 @@ public class HotelAndes {
 	/* ****************************************************************
 	 * 			Métodos para manejar los  USUARIOS
 	 ********************************************************/
-	public Usuario adicionarUsuario (long numeroDocumento, String tipoDocumento, String nombre, String correoElectronico, long idTipoUsuario)
+	public Usuarios adicionarUsuario (long numeroDocumento, String tipoDocumento, String nombre, String correoElectronico, long idTipoUsuario)
 	{
 		log.info ("Adicionando Usuario " + nombre);
-		Usuario usuario = pp.adicionarUsuario(numeroDocumento, tipoDocumento, nombre, correoElectronico, idTipoUsuario);
+		Usuarios usuario = pp.adicionarUsuario(numeroDocumento, tipoDocumento, nombre, correoElectronico, idTipoUsuario);
         log.info ("Adicionando bebida: " + usuario);
         return usuario;
 	}
-	public List<Usuario> darUsuarios()
+	public List<Usuarios> darUsuarios()
 	{
 		log.info("Conusltando Usuarios");
-		List <Usuario> usuarios = pp.darUsuarios();
+		List <Usuarios> usuarios = pp.darUsuarios();
 		log.info("Consultando Usuarios: " + usuarios.size() + " usuarios");
 		return usuarios;
 	}
-	public Usuario darUsuarioPorID(long idUsuario, String tipoDoc)
+	public Usuarios darUsuarioPorID(long idUsuario)
 	{
 		log.info("Buscando usuario por ID: "  + idUsuario);
-		return pp.darUsuarioPorid(idUsuario, tipoDoc);
+		return pp.darUsuario(idUsuario);
 
 	}
 	

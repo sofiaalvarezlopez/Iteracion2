@@ -34,7 +34,7 @@ import uniandes.isis2304.hotelAndes.negocio.Servicio;
 import uniandes.isis2304.hotelAndes.negocio.ServicioAdicional;
 import uniandes.isis2304.hotelAndes.negocio.TipoHabitacion;
 import uniandes.isis2304.hotelAndes.negocio.TipoUsuario;
-import uniandes.isis2304.hotelAndes.negocio.Usuario;
+import uniandes.isis2304.hotelAndes.negocio.Usuarios;
 import uniandes.isis2304.hotelAndes.negocio.VentaProducto;
 
 
@@ -96,7 +96,7 @@ public class PersistenciaHotelAndes
 	/**
 	 * Atributo para el acceso a la tabla USUARIOS de la base de datos
 	 */
-	private SQLUsuario sqlUsuario;
+	private SQLUsuarios sqlUsuario;
 
 	/**
 	 * Atributo para el acceso a la tabla CADENA_HOTELERA de la base de datos
@@ -287,7 +287,7 @@ public class PersistenciaHotelAndes
 	private void crearClasesSQL ()
 	{
 		sqlTipoUsuario = new SQLTipoUsuario(this);
-		sqlUsuario = new SQLUsuario(this);
+		sqlUsuario = new SQLUsuarios(this);
 		sqlCadenaHotelera = new SQLCadenaHotelera(this);
 		sqlHotel = new SQLHotel(this);
 		sqlTipoHabitacion = new SQLTipoHabitacion(this);
@@ -1041,7 +1041,7 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Usuario adicionarUsuario(long numeroDocumento, String tipoDocumento, String nombre, String correoElectronico, long idTipoUsuario) 
+	public Usuarios adicionarUsuario(long numeroDocumento, String tipoDocumento, String nombre, String correoElectronico, long idTipoUsuario) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -1053,7 +1053,7 @@ public class PersistenciaHotelAndes
 
 			log.trace ("Insercion del servicio: " + numeroDocumento + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Usuario(numeroDocumento, tipoDocumento, nombre, correoElectronico, idTipoUsuario);
+			return new Usuarios(numeroDocumento, tipoDocumento, nombre, correoElectronico, idTipoUsuario);
 		}
 		catch (Exception e)
 		{
@@ -1336,13 +1336,10 @@ public class PersistenciaHotelAndes
 		return sqlTipoHabitacion.darTipoHabitacionPorId(pmf.getPersistenceManager(), idTipoHabitacion);
 	}
 	
-	public List<Usuario> darUsuarios(){
+	public List<Usuarios> darUsuarios(){
 		return sqlUsuario.darUsuarios(pmf.getPersistenceManager());
 	}
 	
-	public Usuario darUsuarioPorid(long idUsuario, String tipoDoc){
-		return sqlUsuario.darUsuarioPorId(pmf.getPersistenceManager(), idUsuario, tipoDoc);
-	}
 	
 	public List<VentaProducto> darVentasProducto(){
 		return sqlVentaProducto.darVentasProducto(pmf.getPersistenceManager());
@@ -1352,11 +1349,7 @@ public class PersistenciaHotelAndes
 		return sqlVentaProducto.darVentaProductoPorId(pmf.getPersistenceManager(), idVentaProducto);
 	}
 
-	
-	
-
-
-	public Usuario darUsuario(String cedula){
+	public Usuarios darUsuario(long cedula){
 		return sqlUsuario.darUsuarioPorCedula(pmf.getPersistenceManager(), cedula);
 	}
 }
