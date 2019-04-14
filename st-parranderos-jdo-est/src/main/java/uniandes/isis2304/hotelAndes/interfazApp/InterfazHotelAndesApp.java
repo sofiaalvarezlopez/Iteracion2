@@ -239,9 +239,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 			String cedula = ced;
-			guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ADMIN_DATOS);
+
 			
-/*				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 1)
+				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getid_tipo_usuario() != 1)
 				{
 					JOptionPane.showMessageDialog(this, "Esta opcion es solo para acceso administrativo", "HotelAndes", JOptionPane.WARNING_MESSAGE);
 					System.exit(0);
@@ -250,9 +250,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				{
 					estadoAplicacion = 1;
 					identificacionUsuario = Long.parseLong(cedula);
-					//TODO cambiar a interfaz clientes
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
-				}*/
+					//TODO cambiar a interfaz A
+					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ADMIN_DATOS);
+				}
 		}
 		else if(n == 5)
 		{
