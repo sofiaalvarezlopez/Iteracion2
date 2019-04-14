@@ -252,7 +252,6 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				{
 					estadoAplicacion = 1;
 					identificacionUsuario = cedula;
-					//TODO cambiar a interfaz A
 					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ADMIN_DATOS);
 				}
 		}
@@ -524,6 +523,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al servicio","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
 			}
+			//TODO PONER OPCIÖN DE AGREGAR HORARIO
 /*			String resp = JOptionPane.showInputDialog(this, "Ingrese que dias esta abierto");
 			String horaApertura = JOptionPane.showInputDialog(this, "Ingrese el horario de apertura");
 			String horaCierre = JOptionPane.showInputDialog(this, "Ingrese la hora de cierre");
@@ -599,13 +599,12 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 	}
 
-	public void registrarConsumos(){
+	public void registrarPlan(){
 		String costo = JOptionPane.showInputDialog(this, "Ingrese el costo del plan");
 		double costoPlan = Double.parseDouble(costo);
-		String desc = JOptionPane.showInputDialog(this, "Ingrese el descuento del plan");
+		String desc = JOptionPane.showInputDialog(this, "Ingrese el descuento en el alojamiento del plan");
 		double descuento = Double.parseDouble(desc);
 		
-		// TODO ASÏ SE CONVIERTE DE STRING A TIMESTAMP!! HACERLO EN HORARIO Y EN TODO LO QUE REQUIERA FECHA.
 		String fecha = JOptionPane.showInputDialog("Ingrese la fecha de vencimiento del plan, si tiene. " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
 		Timestamp fechaVencimiento;
@@ -639,10 +638,32 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 		String idDescuento = JOptionPane.showInputDialog(this, "Ingrese el id del descuento");
 		long idDescu = Long.parseLong(idDescuento);
-		String numVeces = JOptionPane.showInputDialog(this, "Ingrese el numero de veces que se puede aplicar. No ingrese nada si no hay.");
+		String idServ = JOptionPane.showInputDialog(this, "Ingrese el id del servicio al que pertenece el desuento");
+		Long idServicio;
+		if(idServ.equals(""))
+		{
+			idServicio = null;
+		}
+		else
+		{
+			idServicio = Long.valueOf(idServ);
+		}
+		String idProd = JOptionPane.showInputDialog(this, "Ingrese el id del producto. No ingrese nada si no hay");
+		Long idProducto;
+		if(idProd.equals(""))
+		{
+			idProducto = null;
+		}
+		else
+		{
+			idProducto = Long.valueOf(idProd);
+		}
+
+		String numVeces = JOptionPane.showInputDialog(this, "Ingrese el numero de veces que se puede aplicar. Ingrese -1 si no hay.");
 		int cantVeces = Integer.parseInt(numVeces);
-		long descuentito = (long) descuento;
-		Descuento descu = hotelAndes.adicionarDescuento(idDescu, idP, 0, 0, descuentito, cantVeces);
+		String valorDesc = JOptionPane.showInputDialog(this, "Ingrese el porcentaje de descuento (Numero entre 1 y 100)");
+		Long descuentito = Long.valueOf( valorDesc);
+		Descuento descu = hotelAndes.adicionarDescuento(idDescu, idP, idServicio, idProducto, descuentito, cantVeces);
 		if(descu == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -707,7 +728,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		
 		Estadia estadia = hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, tipoDoc, idEstadia);
 		if(estadia == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No fue posible agregar la estadía","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 	
@@ -717,16 +738,52 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String ced = JOptionPane.showInputDialog(this, "Ingrese su cedula");
 		String x = JOptionPane.showInputDialog(this, "Diga el id del servicio que desea reservar");
 		long id = Long.parseLong(x);
-		
-		
 		long idEstadia = Long.parseLong(ced);
-		String fechaInicio = JOptionPane.showInputDialog(this, "Ingrese la fecha inicial de reserva en formato yyyy-mm-dd ");
-		Timestamp fechaini = Timestamp.valueOf(fechaInicio);
-		String fechaFin = JOptionPane.showInputDialog(this, "Ingrese la fecha final de reserva en formato yyyy-mm-dd ");
-		Timestamp fechafin = Timestamp.valueOf(fechaFin);
+		String fechaIni = JOptionPane.showInputDialog("Ingrese la fecha  inicial de la reserva. " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaInicio;
+		if(fechaIni == null || fechaIni == "")
+		{
+			fechaInicio = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaIni)).getTime());
+				fechaInicio = ts;
+			}
+			catch (Exception e)
+			{
+				fechaInicio = null;
+			}
+			
+		}
+		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final de la reserva " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaFin;
+		if(fechaFini == null || fechaFini == "")
+		{
+			fechaFin = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaFini)).getTime());
+				fechaFin = ts;
+			}
+			catch (Exception e)
+			{
+				fechaFin = null;
+			}
+			
+		}
 		String duracion = JOptionPane.showInputDialog(this, "Ingrese la duracion de su servicio");
 	
-		Horario hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechaini, null, null, null, fechafin);
+		Horario hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechaInicio, null, null, null, fechaFin);
 		
 		Reserva res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0);
 		if(res == null){

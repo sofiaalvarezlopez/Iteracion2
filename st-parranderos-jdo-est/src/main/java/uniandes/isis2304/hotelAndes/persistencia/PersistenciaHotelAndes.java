@@ -957,10 +957,6 @@ public class PersistenciaHotelAndes
 			tx.begin();
 			long tuplasInsertadas = sqlServicio.adicionarServicio(pm, idServicio, nombreServicio);
 			log.trace ("Insercion del servicio: " + nombreServicio + ": " + tuplasInsertadas + " tuplas insertadas");
-
-			tx.commit();
-
-
 			return new Servicio(idServicio, nombreServicio);
 		}
 		catch (Exception e)

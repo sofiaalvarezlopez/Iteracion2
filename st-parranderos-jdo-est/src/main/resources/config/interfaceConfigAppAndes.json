@@ -60,7 +60,7 @@
 			[
 				{
 					"label": "Registrar planes de consumo",
-					"event": "registrarConsumos"
+					"event": "registrarPlan"
 				}
 			]
 		},

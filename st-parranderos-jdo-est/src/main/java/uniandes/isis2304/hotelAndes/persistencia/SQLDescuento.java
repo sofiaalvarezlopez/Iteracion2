@@ -17,7 +17,7 @@ public class SQLDescuento {
 
 	public long adicionarDescuento(PersistenceManager pm, long idDescuento, long idPlan, long idServicio, long idProducto, long valor, int limiteVeces) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO DESCUENTOS"  + "(ID_DESCUENTO, ID_PLAN, ID_SERVICIO, ID_PRODUCTO, VALOR, LIMITE_VECES) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO DESCUENTOS"  + "(ID_DESCUENTO, ID_PLAN, ID_SERVICIO, ID_PRODUCTO, VALOR, LIMITE_VECES) VALUES (?, ?, ?, ?, ?, ?)");
 		q.setParameters(idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
 		return (long) q.executeUnique();
 	}
