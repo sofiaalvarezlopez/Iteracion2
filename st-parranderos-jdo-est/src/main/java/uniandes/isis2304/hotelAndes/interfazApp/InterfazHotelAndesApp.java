@@ -14,7 +14,9 @@ import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -88,7 +90,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 
 	/**
-	 * Ruta al archivo de configuración de la interfaz PARA LOS USUARIOS DE hotelandes
+	 * Ruta al archivo de configuración de la interfaz PARA EL ADMINISTRADOR DE DATOS
 	 */
 	private static final String CONFIG_INTERFAZ_ADMIN_DATOS = "./src/main/resources/config/interfaceConfigAppAndes.json"; 
 
@@ -602,9 +604,30 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		double costoPlan = Double.parseDouble(costo);
 		String desc = JOptionPane.showInputDialog(this, "Ingrese el descuento del plan");
 		double descuento = Double.parseDouble(desc);
+		
+		// TODO ASÏ SE CONVIERTE DE STRING A TIMESTAMP!! HACERLO EN HORARIO Y EN TODO LO QUE REQUIERA FECHA.
 		String fecha = JOptionPane.showInputDialog("Ingrese la fecha de vencimiento del plan, si tiene. " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
-		Timestamp fechaVencimiento = Timestamp.valueOf(fecha);
+		Timestamp fechaVencimiento;
+		if(fecha == null || fecha == "")
+		{
+			fechaVencimiento = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fecha)).getTime());
+				fechaVencimiento = ts;
+			}
+			catch (Exception e)
+			{
+				fechaVencimiento = null;
+			}
+			
+		}
+
 		String idPlan = JOptionPane.showInputDialog(this, "Ingrese el id del plan");
 		long idP = Long.parseLong(idPlan);
 		String tipo = JOptionPane.showInputDialog("Ingrese el tipo del plan");
@@ -629,10 +652,48 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	
 	public void reservarEstadia()
 	{
-		String fecha1 = JOptionPane.showInputDialog(this, "Ingrese la fecha de llegada en formato yyyy-mm-dd");
-		Timestamp fechaLlegada = Timestamp.valueOf(fecha1);
-		String fecha2 = JOptionPane.showInputDialog(this, "Ingrese la fecha de salida en formato yyyy-mm-dd");
-		Timestamp fechaSalida = Timestamp.valueOf(fecha2);
+		String fechaLlegada = JOptionPane.showInputDialog("Ingrese la fecha de llegada" + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaL;
+		if(fechaLlegada == null || fechaLlegada == "")
+		{
+			fechaL = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaLlegada)).getTime());
+				fechaL = ts;
+			}
+			catch (Exception e)
+			{
+				fechaL = null;
+			}
+			
+		}
+		String fechaSalida = JOptionPane.showInputDialog("Ingrese la fecha de salida. " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaS;
+		if(fechaSalida == null || fechaSalida == "")
+		{
+			fechaS = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaSalida)).getTime());
+				fechaS = ts;
+			}
+			catch (Exception e)
+			{
+				fechaS = null;
+			}
+			
+		}
 		String idEst = JOptionPane.showInputDialog(this, "Ingrese su cedula");
 		long idEstadia = Long.parseLong(idEst);
 		String numH = JOptionPane.showInputDialog(this, "Ingrese el numero de habitacion que desea");
@@ -644,7 +705,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		
 		String tipoDoc = JOptionPane.showInputDialog(this, "Ingrese el tipo de su documento");
 		
-		Estadia estadia = hotelAndes.adicionarEstadia(idEstadia, fechaLlegada, fechaSalida, cantPersonas, idPlan, numHabitacion, 0, 0, tipoDoc, idEstadia);
+		Estadia estadia = hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, tipoDoc, idEstadia);
 		if(estadia == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
