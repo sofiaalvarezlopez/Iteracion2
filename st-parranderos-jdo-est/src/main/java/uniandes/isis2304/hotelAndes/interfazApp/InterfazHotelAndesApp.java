@@ -659,11 +659,13 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		
 		
 		long idEstadia = Long.parseLong(ced);
-		String fecha = JOptionPane.showInputDialog(this, "Ingrese la fecha de reserva en formato yyyy-mm-dd ");
-		Timestamp fechares = Timestamp.valueOf(fecha);
+		String fechaInicio = JOptionPane.showInputDialog(this, "Ingrese la fecha inicial de reserva en formato yyyy-mm-dd ");
+		Timestamp fechaini = Timestamp.valueOf(fechaInicio);
+		String fechaFin = JOptionPane.showInputDialog(this, "Ingrese la fecha final de reserva en formato yyyy-mm-dd ");
+		Timestamp fechafin = Timestamp.valueOf(fechaFin);
 		String duracion = JOptionPane.showInputDialog(this, "Ingrese la duracion de su servicio");
 	
-		Horario hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechares, null, null, null);
+		Horario hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechaini, null, null, null, fechafin);
 		
 		Reserva res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0);
 		if(res == null){

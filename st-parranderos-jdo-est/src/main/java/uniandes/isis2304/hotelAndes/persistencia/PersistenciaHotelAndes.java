@@ -766,20 +766,20 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Horario adicionarHorario( long idHorario, String duracion, long idServicio, Timestamp fecha, String dia, String horaApertura, String horaCierre)
+	public Horario adicionarHorario( long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlHorario.adicionarHorario(pm, idHorario, duracion, idServicio, fecha, dia, horaApertura, horaCierre);
+			long tuplasInsertadas = sqlHorario.adicionarHorario(pm, idHorario, duracion, idServicio, fechaInicio, dia, horaInicio, horaFin, fechaFin);
 			log.trace ("Insercion de horario: " + idHorario + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			tx.commit();
 
 
-			return new Horario(idHorario, dia, horaApertura, horaCierre, duracion, fecha, idServicio);
+			return new Horario(idHorario, dia, horaInicio, horaFin, duracion, fechaInicio, idServicio, fechaFin);
 		}
 		catch (Exception e)
 		{

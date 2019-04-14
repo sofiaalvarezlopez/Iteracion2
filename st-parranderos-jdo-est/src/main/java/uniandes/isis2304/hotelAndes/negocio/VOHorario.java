@@ -12,21 +12,25 @@ public interface VOHorario {
 
 	void setDia(String dia);
 
-	String getHoraApertura();
+	String getHoraInicio();
 
-	void setHoraApertura(String horaApertura);
+	void setHoraInicio(String horaInicio);
 
-	String getHoraCierre();
+	String getHoraFin();
 
-	void setHoraCierre(String horaCierre);
+	void setHoraFin(String horaFin);
 
 	String getDuracion();
 
 	void setDuracion(String duracion);
 
-	Timestamp getFecha();
+	Timestamp getFechaInicio();
 
-	void setFecha(Timestamp fecha);
+	void setFechaInicio(Timestamp fechaInicio);
+	
+	Timestamp getFechaFin();
+
+	void setFechaFin(Timestamp fechaFin);
 
 	String toString();
 

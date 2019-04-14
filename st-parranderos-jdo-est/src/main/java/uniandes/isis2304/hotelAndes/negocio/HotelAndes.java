@@ -391,10 +391,10 @@ public class HotelAndes {
 	/* ****************************************************************
 	 * 			Métodos para manejar Horario
 	 ********************************************************/
-	public Horario adicionarHorario(long idHorario,String duracion, long idServicio, Timestamp fecha, String dia, String  horaApertura,String horaCierre)
+	public Horario adicionarHorario(long idHorario,String duracion, long idServicio, Timestamp fechaInicio, String dia, String  horaInicio,String horaFin, Timestamp fechaFin)
 	{
 		log.info ("Adicionando Horario " );
-		Horario h = pp.adicionarHorario(idHorario, duracion, idServicio, fecha, dia, horaApertura, horaCierre);
+		Horario h = pp.adicionarHorario(idHorario, duracion, idServicio, fechaInicio, dia, horaInicio, horaFin, fechaFin);
         log.info ("Adicionando Horario: " + h);
         return h;
 	}

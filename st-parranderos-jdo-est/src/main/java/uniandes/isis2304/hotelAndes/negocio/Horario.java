@@ -6,31 +6,37 @@ import java.sql.Timestamp;
 public class Horario implements VOHorario
 {
 	private long idHorario;
-	private String dia;
-	private String horaApertura;
-	private String horaCierre;
 	private String duracion;
-	private Timestamp fecha;
 	private long idServicio;
+	private Timestamp fechaInicio;
+	private String dia;
+	private String horaInicio;
+	private String horaFin;
+	private Timestamp fechaFin;
+	
+
+
 	
 	public Horario(){
 		idHorario = 0;
 		dia = "";
-		horaApertura = "";
-		horaCierre = "";
+		horaInicio = "";
+		horaFin = "";
 		duracion = "";
-		fecha = new Timestamp (0); 
+		fechaInicio = new Timestamp (0); 
+		fechaFin = new Timestamp(0);
 		setIdServicio(0);
 	}
 	
-	public Horario(long idHorario, String dia, String horaApertura, String horaCierre, String duracion, Timestamp fecha, long idServicio){
+	public Horario(long idHorario, String dia, String horaInicio, String horaFin, String duracion, Timestamp fechaInicio, long idServicio, Timestamp fechaFin){
 		this.idHorario = idHorario;
 		this.dia = dia;
-		this.horaApertura = horaApertura;
-		this.horaCierre = horaCierre;
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
 		this.duracion = duracion;
-		this.fecha = fecha;
+		this.fechaInicio = fechaInicio;
 		this.setIdServicio(0);
+		this.fechaFin = fechaFin;
 		
 	}
 
@@ -67,35 +73,35 @@ public class Horario implements VOHorario
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#getHoraApertura()
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#getHoraInicio()
 	 */
 	@Override
-	public String getHoraApertura() {
-		return horaApertura;
+	public String getHoraInicio() {
+		return horaInicio;
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#setHoraApertura(java.lang.String)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#setHoraInicio(java.lang.String)
 	 */
 	@Override
-	public void setHoraApertura(String horaApertura) {
-		this.horaApertura = horaApertura;
+	public void setHoraInicio(String horaInicio) {
+		this.horaInicio = horaInicio;
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#getHoraCierre()
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#getHoraFin()
 	 */
 	@Override
-	public String getHoraCierre() {
-		return horaCierre;
+	public String getHoraFin() {
+		return horaFin;
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#setHoraCierre(java.lang.String)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#setHoraFin(java.lang.String)
 	 */
 	@Override
-	public void setHoraCierre(String horaCierre) {
-		this.horaCierre = horaCierre;
+	public void setHoraFin(String horaFin) {
+		this.horaFin = horaFin;
 	}
 
 	/* (non-Javadoc)
@@ -118,16 +124,33 @@ public class Horario implements VOHorario
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#getFecha()
 	 */
 	@Override
-	public Timestamp getFecha() {
-		return fecha;
+	public Timestamp getFechaInicio() {
+		return fechaInicio;
 	}
 
 	/* (non-Javadoc)
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#setFecha(java.sql.Timestamp)
 	 */
 	@Override
-	public void setFecha(Timestamp fecha) {
-		this.fecha = fecha;
+	public void setFechaInicio(Timestamp fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#getFecha()
+	 */
+	@Override
+	public Timestamp getFechaFin() {
+		return fechaFin;
+	}
+
+	/* (non-Javadoc)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHorario#setFecha(java.sql.Timestamp)
+	 */
+	@Override
+	public void setFechaFin(Timestamp fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 	
 	/* (non-Javadoc)
@@ -136,7 +159,7 @@ public class Horario implements VOHorario
 	@Override
 	public String toString() 
 	{
-		return "Horario [id=" + idHorario + ", dia=" + dia + ", hora apertura =" + horaApertura + ", hora cierre =" + horaCierre + ", duracion =" + duracion + ", fecha = " + fecha.toString() + "]";
+		return "Horario [id=" + idHorario + ", dia=" + dia + ", hora Inicio =" + horaInicio + ", hora Fin =" + horaFin + ", duracion =" + duracion + ", fechaInicio = " + fechaInicio.toString() + ", fechaFin = " + fechaFin.toString() +"]";
 	}
 
 	/**

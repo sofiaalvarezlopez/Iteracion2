@@ -16,10 +16,10 @@ public class SQLHorario {
 		this.pha = pha;
 	}
 	
-	public long adicionarHorario(PersistenceManager pm, long idHorario, String duracion, long idServicio, Timestamp fecha, String dia, String horaApertura, String horaCierre) 
+	public long adicionarHorario(PersistenceManager pm, long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaINICIO, String horaFIN, Timestamp fechaFin) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO HORARIOS"  + "(ID_HORARIO, DURACION, ID_SERVICIO, FECHA, DIA, HORA_APERTURA, HORA_CIERRE) VALUES (?, ?, ?, ?, ?, ?, ?)");
-		q.setParameters(idHorario, duracion, idServicio, fecha, dia, horaApertura, horaCierre);
+		Query q = pm.newQuery(SQL, "INSERT INTO HORARIOS"  + "(ID_HORARIO, DURACION, ID_SERVICIO, FECHA_INICIO, DIA, HORA_INICIO, HORA_FIN, FECHA_FIN) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+		q.setParameters(idHorario, duracion, idServicio, fechaInicio, dia, horaINICIO, horaFIN, fechaFin);
 		return (long) q.executeUnique();
 	}
 	
