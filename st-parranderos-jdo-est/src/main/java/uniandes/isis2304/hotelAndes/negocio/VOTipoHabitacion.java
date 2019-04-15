@@ -14,9 +14,9 @@ public interface VOTipoHabitacion {
 
 	void setCapacidad(int capacidad);
 
-	int getPrecioPorPersonaPorNoche();
+	int getPrecioPorNoche();
 
-	void setPrecioPorPersonaPorNoche(int precioPorPersonaPorNoche);
+	void setPrecioPorNoche(int precioPorNoche);
 
 	String toString();
 

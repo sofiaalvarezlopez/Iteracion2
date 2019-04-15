@@ -10,9 +10,9 @@ public interface VODescuento {
 
 	void setValor(double valor);
 
-	int getNumVeces();
+	int getLimiteVeces();
 
-	void setNumVeces(int numVeces);
+	void setLimiteVeces(int limiteVeces);
 
 	String toString();
 

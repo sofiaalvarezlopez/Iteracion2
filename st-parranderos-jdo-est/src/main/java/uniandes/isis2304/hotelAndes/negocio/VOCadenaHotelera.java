@@ -17,9 +17,6 @@ public interface VOCadenaHotelera {
 
 	void setNombreCadena(String nombreCadena);
 
-	List<Object[]> getHoteles();
-
-	void setHoteles(List<Object[]> hoteles);
 
 	/**
 	 * @return Una cadena de caracteres con la información básica del bebedor

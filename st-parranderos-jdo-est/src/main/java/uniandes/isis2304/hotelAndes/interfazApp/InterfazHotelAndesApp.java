@@ -41,24 +41,25 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-import uniandes.isis2304.hotelAndes.negocio.CaracteristicaAdicional;
-import uniandes.isis2304.hotelAndes.negocio.Descuento;
+import uniandes.isis2304.hotelAndes.negocio.CaracteristicasAdicionales;
+import uniandes.isis2304.hotelAndes.negocio.Descuentos;
 import uniandes.isis2304.hotelAndes.negocio.DotacionSalon;
-import uniandes.isis2304.hotelAndes.negocio.Estadia;
-import uniandes.isis2304.hotelAndes.negocio.Factura;
-import uniandes.isis2304.hotelAndes.negocio.Habitacion;
-import uniandes.isis2304.hotelAndes.negocio.Horario;
+import uniandes.isis2304.hotelAndes.negocio.Estadias;
+import uniandes.isis2304.hotelAndes.negocio.Facturas;
+import uniandes.isis2304.hotelAndes.negocio.Habitaciones;
+import uniandes.isis2304.hotelAndes.negocio.Horarios;
 import uniandes.isis2304.hotelAndes.negocio.HotelAndes;
-import uniandes.isis2304.hotelAndes.negocio.Plan;
-import uniandes.isis2304.hotelAndes.negocio.Producto;
-import uniandes.isis2304.hotelAndes.negocio.Reserva;
-import uniandes.isis2304.hotelAndes.negocio.Salon;
-import uniandes.isis2304.hotelAndes.negocio.Servicio;
-import uniandes.isis2304.hotelAndes.negocio.ServicioAdicional;
-import uniandes.isis2304.hotelAndes.negocio.TipoHabitacion;
+import uniandes.isis2304.hotelAndes.negocio.Planes;
+import uniandes.isis2304.hotelAndes.negocio.Productos;
+import uniandes.isis2304.hotelAndes.negocio.Reservas;
+import uniandes.isis2304.hotelAndes.negocio.Salones;
+import uniandes.isis2304.hotelAndes.negocio.Servicios;
+import uniandes.isis2304.hotelAndes.negocio.ServiciosAdicionales;
+import uniandes.isis2304.hotelAndes.negocio.TiposHabitacion;
 import uniandes.isis2304.hotelAndes.negocio.TipoUsuario;
 import uniandes.isis2304.hotelAndes.negocio.Usuarios;
-import uniandes.isis2304.hotelAndes.negocio.VentaProducto;
+import uniandes.isis2304.hotelAndes.negocio.VOFacturas;
+import uniandes.isis2304.hotelAndes.negocio.VentaProductos;
 
 
 /**
@@ -466,7 +467,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String idH = JOptionPane.showInputDialog(this, "Ingrese el id del hotel");
 		long idHotel = Long.parseLong(idH);
 
-		TipoHabitacion tipo = hotelAndes.adicionarTipoHabitacion(id, descripcion, capacidad, precioPorPersonaPorNoche, idHotel);	
+		TiposHabitacion tipo = hotelAndes.adicionarTipoHabitacion(id, descripcion, capacidad, precioPorPersonaPorNoche, idHotel);	
 		if(tipo == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -481,7 +482,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long numHabitacion = Long.parseLong(id);
 		String idTipo = JOptionPane.showInputDialog(this, "Ingrese el id del tipo de habitacion");
 		long idTipoHabitacion = Long.parseLong(idTipo);
-		Habitacion habitacion = hotelAndes.adicionarHabitacion(numHabitacion, idTipoHabitacion);
+		Habitaciones habitacion = hotelAndes.adicionarHabitacion(numHabitacion, idTipoHabitacion);
 		if(habitacion == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -495,7 +496,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String id = JOptionPane.showInputDialog(this, "Ingrese el id del servicio");
 		long idServicio = Long.parseLong(id);
 		String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del servicio");
-		Servicio serv = hotelAndes.adicionarServicio(idServicio, nombre);
+		Servicios serv = hotelAndes.adicionarServicio(idServicio, nombre);
 		if(serv == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -508,7 +509,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		if(rpta.equalsIgnoreCase("Servicio Adicional")){
 			String capa = JOptionPane.showInputDialog(this, "Ingresa la capacidad del servicio");
 			int capacidad = Integer.parseInt(capa);
-			ServicioAdicional servicioAdicional = hotelAndes.adicionarServicioAdicional(idServicio, capacidad);
+			ServiciosAdicionales servicioAdicional = hotelAndes.adicionarServicioAdicional(idServicio, capacidad);
 			if(servicioAdicional == null){
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -518,7 +519,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			String nombreCar = JOptionPane.showInputDialog(this, "Ingrese el nombre de la carcteristica adicional");
 			String val = JOptionPane.showInputDialog(this, "Ingrese el valor de la caracteristica");
 			double valor = Double.parseDouble(val);
-			CaracteristicaAdicional car = hotelAndes.adicionarCaracteristicaAdicional(idCaracteristicaAdicional, nombreCar, valor, idServicio);
+			CaracteristicasAdicionales car = hotelAndes.adicionarCaracteristicaAdicional(idCaracteristicaAdicional, nombreCar, valor, idServicio);
 			if(car == null){
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al servicio","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -544,7 +545,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			String tipo = JOptionPane.showInputDialog(this, "Ingresa el tipo de servicio");
 			
 			long idVentaP = Long.parseLong(idVP);
-			VentaProducto ventaP = hotelAndes.adicionarVentaProducto(idVentaP, capacidad, estilo, tipo);
+			VentaProductos ventaP = hotelAndes.adicionarVentaProducto(idVentaP, capacidad, estilo, tipo);
 			if(ventaP == null){
 				JOptionPane.showMessageDialog(this, "No fue posible hacer el servicio","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -562,7 +563,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 			double prec = Double.parseDouble(precio);
 
-			Producto p = hotelAndes.adicionarProducto(idProducto, prec, nombreProd, cant, dur, categoriaProducto, idVentaP); 
+			Productos p = hotelAndes.adicionarProducto(idProducto, prec, nombreProd, cant, dur, categoriaProducto, idVentaP); 
 			if(p == null){
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -574,7 +575,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			String precio = JOptionPane.showInputDialog(this, "Ingrese el costo por hora");
 			double precioSalon = Double.parseDouble(precio);
 			String tipo = JOptionPane.showInputDialog(this, "Ingrese el tipo de salon (CONFERENCIA o REUNION");
-			Salon salon = hotelAndes.adicionarSalon(idServicio, capacidadSalon, precioSalon, tipo);
+			Salones salon = hotelAndes.adicionarSalon(idServicio, capacidadSalon, precioSalon, tipo);
 			if(salon == null){
 				JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 				return;
@@ -630,7 +631,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String idPlan = JOptionPane.showInputDialog(this, "Ingrese el id del plan");
 		long idP = Long.parseLong(idPlan);
 		String tipo = JOptionPane.showInputDialog("Ingrese el tipo del plan");
-		Plan plan = hotelAndes.adicionarPlan(idP, tipo, costoPlan, descuento, fechaVencimiento);
+		Planes plan = hotelAndes.adicionarPlan(idP, tipo, costoPlan, descuento, fechaVencimiento);
 		if(plan == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -663,7 +664,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		int cantVeces = Integer.parseInt(numVeces);
 		String valorDesc = JOptionPane.showInputDialog(this, "Ingrese el porcentaje de descuento (Numero entre 1 y 100)");
 		Long descuentito = Long.valueOf( valorDesc);
-		Descuento descu = hotelAndes.adicionarDescuento(idDescu, idP, idServicio, idProducto, descuentito, cantVeces);
+		Descuentos descu = hotelAndes.adicionarDescuento(idDescu, idP, idServicio, idProducto, descuentito, cantVeces);
 		if(descu == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -724,9 +725,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String idPla = JOptionPane.showInputDialog(this, "Ingrese el id de su plan");
 		long idPlan = Long.parseLong(idPla);
 		
-		String tipoDoc = JOptionPane.showInputDialog(this, "Ingrese el tipo de su documento");
+		String idConvencion = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
+		long idConv = Long.parseLong(idConvencion);
 		
-		Estadia estadia = hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, tipoDoc, idEstadia);
+		Estadias estadia = hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, idEstadia, idConv);
 		if(estadia == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar la estadía","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -783,9 +785,12 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 		String duracion = JOptionPane.showInputDialog(this, "Ingrese la duracion de su servicio");
 	
-		Horario hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechaInicio, null, null, null, fechaFin);
+		Horarios hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechaInicio, null, null, null, fechaFin);
 		
-		Reserva res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0);
+		String conv = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
+		long idConvencion = Long.parseLong(conv);
+		
+		Reservas res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0, idConvencion);
 		if(res == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -795,7 +800,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	public void registrarLlegada(){
 		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
 		long cedula = Long.parseLong(ced);
-		Estadia est = hotelAndes.darEstadiaPorID(cedula);
+		Estadias est = hotelAndes.darEstadiaPorID(cedula);
 		if(est == null){
 			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -819,7 +824,13 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long numDocEmpleado = Long.parseLong(ceduEmp);
 		String precio = JOptionPane.showInputDialog(this, "Ingrese el valor del consumo");
 		long valor = Long.parseLong(precio);
-		Factura fac = hotelAndes.adicionarFactura(numFactura(), hoy, 0, valor, 0, idServ, "CC", idEstadia, numDocEmpleado, idConsumo);
+		String conv = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
+		long idConvencion = Long.parseLong(conv);
+		String idDotacionSalon = JOptionPane.showInputDialog(this, "Ingrese el id de la dotacion del salon a facturar");
+		long idDotacionS = Long.parseLong(idDotacionSalon);
+		String idDotacion = JOptionPane.showInputDialog(this, "Ingrese el id de la dotacion a facturar");
+		long idDot = Long.parseLong(idDotacion);
+		VOFacturas fac = hotelAndes.adicionarFactura(numFactura(), hoy, 0, valor, idDot, idServ, idEstadia, numDocEmpleado, idConsumo, idConvencion, idDotacionS);
 		if(fac == null){
 			JOptionPane.showMessageDialog(this, "No fue posible registrar la facturae","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -829,7 +840,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	public void registrarSalida(){
 		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
 		long cedula = Long.parseLong(ced);
-		List<Factura> facturas = hotelAndes.darFacturas();
+		List<Facturas> facturas = hotelAndes.darFacturas();
 		String a;
 		for (int i = 0; i < facturas.size(); i++) {
 			if(i == 0){
@@ -843,7 +854,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(this, a+= facturas.get(i).getNumFactura());
 		}
 		String resp = JOptionPane.showInputDialog(this, "¿Desea pagar las facturas?");
-		Estadia est = hotelAndes.darEstadiaPorID(cedula);
+		Estadias est = hotelAndes.darEstadiaPorID(cedula);
 		if(resp.equalsIgnoreCase("si"))
 		{
 			hotelAndes.cambiarEstadiaAPagada(est.getIdEstadia());

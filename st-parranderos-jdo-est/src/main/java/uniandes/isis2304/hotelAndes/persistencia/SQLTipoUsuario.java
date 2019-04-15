@@ -19,20 +19,20 @@ public class SQLTipoUsuario {
 	
 	public long adicionarTipoUsuario(PersistenceManager pm, long idTipoUsuario, String nombreTipoUsuario) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO TIPO_USUARIO"  + "(ID_TIPO_USUARIO, NOMBRE_TIPO_USUARIO) VALUES (?, ?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO TIPOUSUARIO"  + "(IDTIPOUSUARIO, NOMBRETIPOUSUARIO) VALUES (?, ?)");
 		q.setParameters(idTipoUsuario, nombreTipoUsuario);
 		return (long) q.executeUnique();
 	}
 	
 	public long eliminarTipoUsuario(PersistenceManager pm, long idTipoUsuario){
-		Query q = pm.newQuery(SQL, "DELETE FROM TIPO_USUARIO" + " WHERE ID_TIPO_USUARIO = ?");
+		Query q = pm.newQuery(SQL, "DELETE FROM TIPOUSUARIO" + " WHERE IDTIPOUSUARIO = ?");
 		q.setParameters(idTipoUsuario);
 		return (long) q.executeUnique();
 	}
 	
 	public TipoUsuario darTipoUsuarioPorId (PersistenceManager pm, long idTipoUsuario) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM TIPO_USUARIO" + " WHERE ID_TIPO_USUARIO = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM TIPOUSUARIO" + " WHERE IDTIPOUSUARIO = ?");
 		q.setResultClass(TipoUsuario.class);
 		q.setParameters(idTipoUsuario);
 		return (TipoUsuario) q.executeUnique();
@@ -40,7 +40,7 @@ public class SQLTipoUsuario {
 
 	public List<TipoUsuario> darTiposUsuario (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM TIPO_USUARIO");
+		Query q = pm.newQuery(SQL, "SELECT * FROM TIPOUSUARIO");
 		q.setResultClass(TipoUsuario.class);
 		return (List<TipoUsuario>) q.executeList();
 	}

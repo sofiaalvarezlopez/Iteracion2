@@ -9,16 +9,16 @@ public class TipoUsuario implements VOTipoUsuario
 	
 	private long idTipoUsuario;
 
-	private String tipoUsuario;
+	private String nombreTipoUsuario;
 
 	public TipoUsuario(){
 		idTipoUsuario = 0;
-		tipoUsuario = "";
+		nombreTipoUsuario = "";
 	}
 	
 	public TipoUsuario(long idTipoUsuario, String tipoUsuario){
 		this.idTipoUsuario = idTipoUsuario;
-		this.tipoUsuario = tipoUsuario;
+		this.nombreTipoUsuario = tipoUsuario;
 	}
 
 	public long getIdTipoUsuario() {
@@ -29,17 +29,17 @@ public class TipoUsuario implements VOTipoUsuario
 		this.idTipoUsuario = idTipoUsuario;
 	}
 
-	public String getTipoUsuario() {
-		return tipoUsuario;
+	public String getNombreTipoUsuario() {
+		return nombreTipoUsuario;
 	}
 
-	public void setTipoUsuario(String tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public void setNombreTipoUsuario(String tipoUsuario) {
+		this.nombreTipoUsuario = tipoUsuario;
 	}
 	
 	public String toString() 
 	{
-		return "Tipo Usuario [idTipoUsuario=" + idTipoUsuario + ", tipoUsuario =" + tipoUsuario + "]";
+		return "Tipo Usuario [idTipoUsuario=" + idTipoUsuario + ", tipoUsuario =" + nombreTipoUsuario + "]";
 	}
 
 }

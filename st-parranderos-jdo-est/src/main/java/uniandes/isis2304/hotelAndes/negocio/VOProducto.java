@@ -2,9 +2,9 @@ package uniandes.isis2304.hotelAndes.negocio;
 
 public interface VOProducto {
 
-	long getIdProducto();
+	long getIdProductos();
 
-	void setIdProducto(long idProducto);
+	void setIdProductos(long idProducto);
 
 	String getNombre();
 

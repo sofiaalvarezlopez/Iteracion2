@@ -6,9 +6,9 @@ public interface VOHotel {
 
 	void setIdHotel(long idHotel);
 
-	String getNombre();
+	String getNombreHotel();
 
-	void setNombre(String nombre);
+	void setNombreHotel(String nombreHotel);
 
 	String getDireccion();
 

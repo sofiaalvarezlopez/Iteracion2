@@ -18,20 +18,20 @@ public class SQLDotacionSalon {
 	
 	public long adicionarDotacionSalon(PersistenceManager pm, long idDotacion, String nombre, double valor, long idSalon) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO DOTACION_SALON"  + "(ID_DOTACION, NOMBRE, VALOR, ID_SALON) VALUES (?, ?, ?, ?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO DOTACIONSALON"  + "(IDDOTACION, NOMBRE, VALOR, IDSALON) VALUES (?, ?, ?, ?)");
 		q.setParameters(idDotacion, nombre, valor, idSalon);
 		return (long) q.executeUnique();
 	}
 	
 	public long eliminarDotacionSalon(PersistenceManager pm, long idDotacion){
-		Query q = pm.newQuery(SQL, "DELETE FROM DOTACION_SALON" + " WHERE ID_DOTACION = ?");
+		Query q = pm.newQuery(SQL, "DELETE FROM DOTACIONSALON" + " WHERE IDDOTACION = ?");
 		q.setParameters(idDotacion);
 		return (long) q.executeUnique();
 	}
 	
 	public DotacionSalon darDotacionSalonPorId (PersistenceManager pm, long idDotacion) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM DOTACION_SALON" + " WHERE ID_DOTACION = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM DOTACIONSALON" + " WHERE IDDOTACION = ?");
 		q.setResultClass(DotacionSalon.class);
 		q.setParameters(idDotacion);
 		return (DotacionSalon) q.executeUnique();
@@ -39,7 +39,7 @@ public class SQLDotacionSalon {
 
 	public List<DotacionSalon> darDotacionSalones (PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM DOTACION_SALON");
+		Query q = pm.newQuery(SQL, "SELECT * FROM DOTACIONSALON");
 		q.setResultClass(DotacionSalon.class);
 		return (List<DotacionSalon>) q.executeList();
 	}

@@ -18,14 +18,14 @@ public class SQLUsuarios {
 	
 	public long adicionarUsuario(PersistenceManager pm, long numeroDocumento, String tipoDocumento, String nombre, String correoElectronico, long idTipoUsuario) 
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO USUARIOS"  + "(NUMERO_DOCUMENTO, TIPO_DOCUMENTO, NOMBRE, CORREO_ELECTRONICO, ID_TIPO_USUARIO) VALUES (?, ?, ?, ?, ?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO USUARIOS"  + "(NUMERODOCUMENTO, TIPODOCUMENTO, NOMBRE, CORREOELECTRONICO, IDTIPOUSUARIO) VALUES (?, ?, ?, ?, ?)");
 		q.setParameters(numeroDocumento, tipoDocumento, nombre, correoElectronico, idTipoUsuario);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarUsuario(PersistenceManager pm, long idUsuario, String tipoDoc){
-		Query q = pm.newQuery(SQL, "DELETE FROM USUARIOS" + " WHERE NUMERO_DOCUMENTO = ? AND TIPO_DOCUMENTO = ?");
-		q.setParameters(idUsuario, tipoDoc);
+	public long eliminarUsuario(PersistenceManager pm, long idUsuario){
+		Query q = pm.newQuery(SQL, "DELETE FROM USUARIOS" + " WHERE NUMERODOCUMENTO = ?");
+		q.setParameters(idUsuario);
 		return (long) q.executeUnique();
 	}
 
