@@ -87,7 +87,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	 */
 	private static final String CONFIG_INTERFAZ_EMPLEADO = "./src/main/resources/config/interfaceConfigAppEmpleado.json"; 
 
-	private static final String CONFIG_INTERFAZ_RECEPCIONISTA = "./src/main/resources/config/interfaceConfigRecepcionista.json"; 
+	private static final String CONFIG_INTERFAZ_RECEPCIONISTA = "./src/main/resources/config/interfaceConfigRecepcionista.json";
+	
+	private static final String CONFIG_INTERFAZ_GERENTE = "./src/main/resources/config/interfaceConfigAppGerente.json"; 
+
 
 
 	/**
@@ -95,6 +98,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	 */
 	private static final String CONFIG_INTERFAZ_ADMIN_DATOS = "./src/main/resources/config/interfaceConfigAppAndes.json"; 
 
+	private static final String CONFIG_INTERFAZ_ORGANIZADOR_EVENTOS = "./src/main/resources/config/interfaceConfigAppOrganizadorEventos.json"; 
+
+	
 	/**
 	 * Ruta al archivo de configuración de los nombres de tablas de la base de datos
 	 */
@@ -154,7 +160,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
 		hotelAndes = new HotelAndes (tableConfig);
 
-		Object[] options = {"Cliente", "Empleado", "Recepcionista", "Gerente", "administradorDeDatos", "Organizador Eventos"};
+		Object[] options = {"Cliente", "Empleado", "Recepcionista", "Gerente", "Administrador De Datos", "Organizador Eventos"};
 		int n = JOptionPane.showOptionDialog(this,"¿Cómo desea ingresar?","HotelAndes",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[2]);
 		if(n == 0)
 		{
@@ -234,7 +240,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 					estadoAplicacion = 2;
 					identificacionUsuario = cedula;
 					//TODO cambiar a interfaz GERENTE
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
+					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_GERENTE);
 				}
 		}
 		else if(n == 4)
@@ -273,7 +279,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 					estadoAplicacion = 6;
 					identificacionUsuario = cedula;
 					//TODO cambiar a interfaz Organizador Eventos
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
+					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ORGANIZADOR_EVENTOS);
 				}
 		}
 
@@ -886,12 +892,61 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	 */
 	public void acercaDe ()
 	{
-		String resultado = "Proyecto #1 Sistemas Transaccionales \n"
-				+ "Daniel Serrano - 201731047"
+		String resultado = "Proyecto #2 Sistemas Transaccionales \n"
+				+ "Daniel Serrano - 201731047 \n"
 				+ "Sofia Alvarez - 201729031";
 
 		panelDatos.actualizarInterfaz(resultado);		
 	}
+	
+	public void dineroServiciosPorHabitacion(){
+		
+	}
+	
+	public void topPopulares(){
+		
+	}
+	
+	public void indiceOcupacion(){
+		
+	}
+	
+	public void serviciosCaracteristica(){
+		
+	}
+	
+	public void consumoPorUsuarioPorFecha(){
+		
+	}
+	
+	public void operacionHotelAndes(){
+		
+	}
+	
+	public void verBuenosClientes(){
+		
+	}
+	
+	public void serviciosPocaDemanda(){
+		
+	}
+	
+	public void crearPlanConvencion(){
+		
+	}
+	
+	public void crearConvencion(){
+		
+	}
+	
+	public void cancelarConvencion(){
+		
+	}
+	
+	public void finalizarConvencion(){
+		
+	}
+	
 	/**
 	 * Abre el archivo dado como parámetro con la aplicación por defecto del sistema
 	 * @param nombreArchivo - El nombre del archivo que se quiere mostrar
