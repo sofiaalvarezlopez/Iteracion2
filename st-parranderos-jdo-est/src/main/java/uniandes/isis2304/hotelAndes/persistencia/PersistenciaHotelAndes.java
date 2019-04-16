@@ -1218,7 +1218,7 @@ public class PersistenciaHotelAndes
 		return sqlFactura.darFacturas(pmf.getPersistenceManager());
 	}
 
-	public VOFacturas darFacturaPorId(long numFactura){
+	public Facturas darFacturaPorId(long numFactura){
 		return sqlFactura.darFacturaPorId(pmf.getPersistenceManager(), numFactura);
 	}
 
@@ -1512,6 +1512,247 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
+	
+	public List masNumeroDeVecesServicioSemana(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM( SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ?) B GROUP BY IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES)Z";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
 
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List mayorGananciaServicioSemana(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT * FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B GROUP BY IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW')  ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
 
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List menorGananciaServicioSemana(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B group by IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES"; 
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List masNumeroDeVecesHabitacionSemana(long idTipoHabitacion){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM( SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM (  SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B GROUP BY TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES )Z";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idTipoHabitacion);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List mayorGananciaHabitacionSemana(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B GROUP BY TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List menorGananciaHabitacionSemana(long idTipoHabitacion){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = " SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B GROUP BY TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idTipoHabitacion);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List masNumeroDeVecesServicioMes(long id){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM( SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT * FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B GROUP BY IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES )Z ";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(id);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List mayorGananciaServicioMes(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *   FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B group by IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM')  ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List menorGananciaServicioMes(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION  FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A  LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B  group by IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES";     
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List mayorGananciaHabitacionMes(long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B group by TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List masNumeroDeVecesHabitacionMes(long idTipoHabitacion){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM(  SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM (  SELECT *  FROM (FACTURAS  LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B group by TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM')  ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES  )Z ";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idTipoHabitacion);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+	
+	public List menorGananciaHabitacionMes(long idTipoHabitacion){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "  SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION  WHERE TIPOHABITACION = ? ) B group by TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES" ;
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idTipoHabitacion);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+	
+	
 }

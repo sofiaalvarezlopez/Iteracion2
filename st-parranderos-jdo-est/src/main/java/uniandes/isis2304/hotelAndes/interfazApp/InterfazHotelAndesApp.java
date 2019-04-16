@@ -90,7 +90,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	private static final String CONFIG_INTERFAZ_EMPLEADO = "./src/main/resources/config/interfaceConfigAppEmpleado.json"; 
 
 	private static final String CONFIG_INTERFAZ_RECEPCIONISTA = "./src/main/resources/config/interfaceConfigRecepcionista.json";
-	
+
 	private static final String CONFIG_INTERFAZ_GERENTE = "./src/main/resources/config/interfaceConfigAppGerente.json"; 
 
 
@@ -102,7 +102,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 	private static final String CONFIG_INTERFAZ_ORGANIZADOR_EVENTOS = "./src/main/resources/config/interfaceConfigAppOrganizadorEventos.json"; 
 
-	
+
 	/**
 	 * Ruta al archivo de configuración de los nombres de tablas de la base de datos
 	 */
@@ -213,76 +213,76 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			long cedula = Long.parseLong(ced);
 
 
-				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 3)
-				{
-					JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
-					System.exit(0);
-				}
-				else
-				{
-					estadoAplicacion = 3;
-					identificacionUsuario = cedula;
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
-				}
+			if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 3)
+			{
+				JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+				System.exit(0);
+			}
+			else
+			{
+				estadoAplicacion = 3;
+				identificacionUsuario = cedula;
+				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_RECEPCIONISTA);
+			}
 		}
 		else if(n == 3)
 		{
-			
+
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 			long cedula = Long.parseLong(ced);
 
 
-				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 2)
-				{
-					JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
-					System.exit(0);
-				}
-				else
-				{
-					estadoAplicacion = 2;
-					identificacionUsuario = cedula;
-					//TODO cambiar a interfaz GERENTE
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_GERENTE);
-				}
+			if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 2)
+			{
+				JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+				System.exit(0);
+			}
+			else
+			{
+				estadoAplicacion = 2;
+				identificacionUsuario = cedula;
+				//TODO cambiar a interfaz GERENTE
+				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_GERENTE);
+			}
 		}
 		else if(n == 4)
 		{
-			
+
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 			Long cedula = Long.parseLong(ced);
 
-			
-				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 1)
-				{
-					JOptionPane.showMessageDialog(this, "Esta opcion es solo para acceso administrativo", "HotelAndes", JOptionPane.WARNING_MESSAGE);
-					System.exit(0);
-				}
-				else
-				{
-					estadoAplicacion = 1;
-					identificacionUsuario = cedula;
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ADMIN_DATOS);
-				}
+
+			if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 1)
+			{
+				JOptionPane.showMessageDialog(this, "Esta opcion es solo para acceso administrativo", "HotelAndes", JOptionPane.WARNING_MESSAGE);
+				System.exit(0);
+			}
+			else
+			{
+				estadoAplicacion = 1;
+				identificacionUsuario = cedula;
+				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ADMIN_DATOS);
+			}
 		}
 		else if(n == 5)
 		{
-			
+
 			String ced = JOptionPane.showInputDialog(this, "Digite su cedula", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
 			long cedula = Long.parseLong(ced);
 
 
-				if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 6)
-				{
-					JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
-					System.exit(0);
-				}
-				else
-				{
-					estadoAplicacion = 6;
-					identificacionUsuario = cedula;
-					//TODO cambiar a interfaz Organizador Eventos
-					guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ORGANIZADOR_EVENTOS);
-				}
+			if(hotelAndes.darUsuario(cedula) == null || hotelAndes.darUsuario(cedula).getIdTipoUsuario() != 6)
+			{
+				JOptionPane.showMessageDialog(this, "Lo sentimos, su cedula no se encuentra en nuestros registros", "HotelAndes", JOptionPane.PLAIN_MESSAGE);
+				System.exit(0);
+			}
+			else
+			{
+				estadoAplicacion = 6;
+				identificacionUsuario = cedula;
+				//TODO cambiar a interfaz Organizador Eventos
+				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ORGANIZADOR_EVENTOS);
+			}
 		}
 
 		// Configura la apariencia del frame que contiene la interfaz gráfica
@@ -533,7 +533,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				return;
 			}
 			//TODO PONER OPCIÖN DE AGREGAR HORARIO
-/*			String resp = JOptionPane.showInputDialog(this, "Ingrese que dias esta abierto");
+			/*			String resp = JOptionPane.showInputDialog(this, "Ingrese que dias esta abierto");
 			String horaApertura = JOptionPane.showInputDialog(this, "Ingrese el horario de apertura");
 			String horaCierre = JOptionPane.showInputDialog(this, "Ingrese la hora de cierre");
 			String idHor = JOptionPane.showInputDialog(this, "Ingrese el id del horario");
@@ -551,7 +551,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			int capacidad = Integer.parseInt(cap);
 			String estilo = JOptionPane.showInputDialog(this, "Ingrese el estilo");
 			String tipo = JOptionPane.showInputDialog(this, "Ingresa el tipo de servicio");
-			
+
 			long idVentaP = Long.parseLong(idVP);
 			VentaProductos ventaP = hotelAndes.adicionarVentaProducto(idVentaP, capacidad, estilo, tipo);
 			if(ventaP == null){
@@ -613,7 +613,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		double costoPlan = Double.parseDouble(costo);
 		String desc = JOptionPane.showInputDialog(this, "Ingrese el descuento en el alojamiento del plan");
 		double descuento = Double.parseDouble(desc);
-		
+
 		String fecha = JOptionPane.showInputDialog("Ingrese la fecha de vencimiento del plan, si tiene. " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
 		Timestamp fechaVencimiento;
@@ -633,7 +633,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			{
 				fechaVencimiento = null;
 			}
-			
+
 		}
 
 		String idPlan = JOptionPane.showInputDialog(this, "Ingrese el id del plan");
@@ -679,7 +679,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 
 	}
-	
+
 	public void reservarEstadia()
 	{
 		String fechaLlegada = JOptionPane.showInputDialog("Ingrese la fecha de llegada" + "\n"
@@ -701,7 +701,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			{
 				fechaL = null;
 			}
-			
+
 		}
 		String fechaSalida = JOptionPane.showInputDialog("Ingrese la fecha de salida. " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
@@ -722,7 +722,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			{
 				fechaS = null;
 			}
-			
+
 		}
 		String idEst = JOptionPane.showInputDialog(this, "Ingrese su cedula");
 		long idEstadia = Long.parseLong(idEst);
@@ -732,18 +732,18 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		int cantPersonas = Integer.parseInt(numPersonas);
 		String idPla = JOptionPane.showInputDialog(this, "Ingrese el id de su plan");
 		long idPlan = Long.parseLong(idPla);
-		
+
 		String idConvencion = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
 		long idConv = Long.parseLong(idConvencion);
-		
+
 		Estadias estadia = hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, idEstadia, idConv);
 		if(estadia == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar la estadía","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
-	
+
 	}
-	
+
 	public void reservarServicios() {
 		String ced = JOptionPane.showInputDialog(this, "Ingrese el id de su estadia");
 		String x = JOptionPane.showInputDialog(this, "Diga el id del servicio que desea reservar");
@@ -768,7 +768,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			{
 				fechaInicio = null;
 			}
-			
+
 		}
 		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final de la reserva " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
@@ -789,24 +789,24 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			{
 				fechaFin = null;
 			}
-			
+
 		}
 		String duracion = JOptionPane.showInputDialog(this, "Ingrese la duracion de su servicio");
-	
+
 		Horarios hor = hotelAndes.adicionarHorario(idEstadia, duracion, id, fechaInicio, null, null, null, fechaFin);
-		
+
 		String conv = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
 		long idConvencion = Long.parseLong(conv);
 		String cap = JOptionPane.showInputDialog(this, "¿Para cuantas personas es la reserva?");
 		long capacidad = Long.parseLong(cap);
-		
+
 		Reservas res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0, idConvencion, capacidad);
 		if(res == null){
 			JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
 	}
-	
+
 	public void registrarLlegada(){
 		String num = JOptionPane.showInputDialog(this, "Ingrese el numero de reserva de la estadia");
 		long numReserva = Long.parseLong(num);
@@ -817,9 +817,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 		hotelAndes.checkInCliente(numReserva);
 		JOptionPane.showMessageDialog(this, "¡Check in realizado exitosamente!");
-		
+
 	}
-	
+
 	public void registrarConsumo(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date today = new Date();
@@ -846,38 +846,33 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			return;
 		}
 	}
-	
+
 	public void registrarSalida(){
 //		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
 //		long cedula = Long.parseLong(ced);
-//		List<Facturas> facturas = hotelAndes.darFacturas();
-//		String a;
+//		List<Facturas> facturas = hotelAndes.darFacturaPorID(cedula);
+//		String a = "Las facturas del cliente son: \n";
 //		for (int i = 0; i < facturas.size(); i++) {
-//			if(i == 0){
-//				
-//			a = "Las facturas del cliente son: ";
-//			}
-//			else
-//			{
-//				a = "";
-//			}
-//			JOptionPane.showMessageDialog(this, a+= facturas.get(i).getNumFactura());
+//			a += facturas.get(i).getNumFactura() + "\n";
 //		}
+//		JOptionPane.showMessageDialog(this, a);
 //		String resp = JOptionPane.showInputDialog(this, "¿Desea pagar las facturas?");
-//		Estadias est = hotelAndes.darEstadiaPorID(cedula);
+//		Estadias est = hotelAndes.darEstadiaPorId(cedula);
 //		if(resp.equalsIgnoreCase("si"))
 //		{
 //			hotelAndes.cambiarEstadiaAPagada(est.getIdEstadia());
+//			JOptionPane.showMessageDialog(this, "Check-out realizado exitosamente");
 //		}
-//	
-//		JOptionPane.showInputDialog(this, "Check-out realizado exitosamente");
+//		else{
+//			JOptionPane.showMessageDialog(this, "Lo sentimos, no se pudo realizar check-out");
+//		}
 
-	
+
 	}
-	
-	
+
+
 	public long numFactura(){
-		
+
 		return (long) Math.random();
 	}
 
@@ -902,57 +897,57 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 		panelDatos.actualizarInterfaz(resultado);		
 	}
-	
+
 	public String dineroServiciosPorHabitacion(){
 		String resp = "Las habitaciones y el total de dinero recolectado son:\n";
-    	int i = 1;
-        for ( long [] tupla : hotelAndes.dineroServiciosPorHabitacion())
-        {
+		int i = 1;
+		for ( long [] tupla : hotelAndes.dineroServiciosPorHabitacion())
+		{
 			long [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
+			String resp1 = i++ + ". " + "[";
 			resp1 += "idHab: " + datos [0] + ", ";
 			resp1 += "total: " + datos [1];
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
 		panelDatos.actualizarInterfaz(resp);
-        return resp;
+		return resp;
 	}
-	
+
 	public String topPopulares(){
 		String resp = "Los 20 servicios más populares son:\n";
-    	int i = 1;
-        for ( Object [] tupla : hotelAndes.topPopulares())
-        {
+		int i = 1;
+		for ( Object [] tupla : hotelAndes.topPopulares())
+		{
 			Object [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
+			String resp1 = i++ + ". " + "[";
 			resp1 += "Servicio: " + datos [0] + ", ";
 			resp1 += "Total recolectado: " + datos [1];
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
 		panelDatos.actualizarInterfaz(resp);
-        return resp;
-		
+		return resp;
+
 	}
-	
+
 	public String indiceOcupacion() {
 		String resp = "Indice ocupacion:\n";
-    	int i = 1;
-        for ( long [] tupla : hotelAndes.indiceOcupacion())
-        {
+		int i = 1;
+		for ( long [] tupla : hotelAndes.indiceOcupacion())
+		{
 			long [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
+			String resp1 = i++ + ". " + "[";
 			resp1 += "Id habitacion: " + datos [0] + ", ";
 			resp1 += "Porcentaje de ocupacion: " + datos [1];
-	        resp1 += "%]";
-	        resp += resp1 + "\n";
-        }
+			resp1 += "%]";
+			resp += resp1 + "\n";
+		}
 		panelDatos.actualizarInterfaz(resp);
-        return resp;
-		
+		return resp;
+
 	}
-	
+
 	public void serviciosCaracteristica(){
 		String solicitud = JOptionPane.showInputDialog(this, "Digite el numero de la opcion a consultar: \n"
 				+ "1. Mostrar servicios con precio en rango. \n"
@@ -964,131 +959,325 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			String up = JOptionPane.showInputDialog(this, "Ingrese el limite superior del rango");
 			long arriba = Long.parseLong(up);
 			String resp = "Servicios con precio en rango " + abajo + "-" + arriba + "\n";
-	    	int i = 1;
-	        for ( Object [] tupla : hotelAndes.serviciosPrecioEnRango(abajo, arriba))
-	        {
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.serviciosPrecioEnRango(abajo, arriba))
+			{
 				Object [] datos = tupla;
-		        String resp1 = i++ + ". " + "[";
+				String resp1 = i++ + ". " + "[";
 				resp1 += "Id servicio: " + datos [0] + ", ";
 				resp1 += "Nombre servicio: " + datos [1] + ", ";
 				resp1 += "Precio: " + datos[2];
-		        resp1 += "]";
-		        resp += resp1 + "\n";
-	        }
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
 			panelDatos.actualizarInterfaz(resp);
 		}
 		else if(solicitud.equals("2")){
 			String inicio = JOptionPane.showInputDialog(this, "Ingrese la fecha de inicio en formato yyyy-mm-dd");
 			String fin = JOptionPane.showInputDialog(this, "Ingrese la fecha de fin en formato yyyy-mm-dd");
 			String resp = "Servicios con fecha en rango " + inicio + "-" + fin + "\n";
-	    	int i = 1;
-	        for ( Object [] tupla : hotelAndes.serviciosFechaEnRango(inicio, fin))
-	        {
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.serviciosFechaEnRango(inicio, fin))
+			{
 				Object [] datos = tupla;
-		        String resp1 = i++ + ". " + "[";
+				String resp1 = i++ + ". " + "[";
 				resp1 += "Id servicio: " + datos [0] + ", ";
 				resp1 += "Nombre servicio: " + datos [1];
-		        resp1 += "]";
-		        resp += resp1 + "\n";
-	        }
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
 			panelDatos.actualizarInterfaz(resp);
 		}
 		else if(solicitud.equals("3")){
 			String idEmp = JOptionPane.showInputDialog(this, "Ingrese el documento del empleado");
 			long cedulaEmpleado = Long.parseLong(idEmp);
 			String resp = "Servicios registrados por el empleado " + cedulaEmpleado + "\n";
-	    	int i = 1;
-	        for ( Object [] tupla : hotelAndes.serviciosPorEmpleado(cedulaEmpleado))
-	        {
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.serviciosPorEmpleado(cedulaEmpleado))
+			{
 				Object [] datos = tupla;
-		        String resp1 = i++ + ". " + "[";
+				String resp1 = i++ + ". " + "[";
 				resp1 += "Id servicio: " + datos [0] + ", ";
 				resp1 += "Nombre servicio: " + datos [1];
-		        resp1 += "]";
-		        resp += resp1 + "\n";
-	        }
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
 			panelDatos.actualizarInterfaz(resp);
 		}	
 	}
-	
+
 	public String consumoPorUsuarioPorFecha() {
 		String id = JOptionPane.showInputDialog(this, "Ingrese el id del cliente");
 		long idCliente = Long.parseLong(id);
 		String fechaInicio = JOptionPane.showInputDialog(this, "Ingrese la fecha de inicio en formato yyyy-mm-dd");
 		String fechaFin = JOptionPane.showInputDialog(this, "Ingrese la fecha de fin en formato yyyy-mm-dd");
 		String resp = "Consumo del usuario " + idCliente + " entre " + fechaInicio + " y " + fechaFin + "\n";
-    	int i = 1;
-        for ( long [] tupla : hotelAndes.consumoPorUsuarioPorFecha(idCliente, fechaInicio, fechaFin))
-        {
+		int i = 1;
+		for ( long [] tupla : hotelAndes.consumoPorUsuarioPorFecha(idCliente, fechaInicio, fechaFin))
+		{
 			long [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
+			String resp1 = i++ + ". " + "[";
 			resp1 += "Id cliente: " + datos [0] + ", ";
 			resp1 += "Consumo cliente: " + datos [1];
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
 		panelDatos.actualizarInterfaz(resp);
-        return resp;
-		
+		return resp;
+
 	}
-	
-	
+
+
 	public void operacionHotelAndes(){
+		String unidad = JOptionPane.showInputDialog("Digite el numero de la unidad de tiempo para analizar la operacion de HotelAndes: \n"
+				+ "1. Semana \n" +
+				"2. Mes");
+		if(unidad.equals("1")){
+			String opcion = JOptionPane.showInputDialog("Digite 1 para consultar analisis de operacion de servicio, 2 para consultar habitacion de HotelAndes: \n"
+					+ "1. Servicio \n" +
+					"2. Habitacion");
+			if(opcion.equalsIgnoreCase("1")){
+				String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+				long idServicio = Long.parseLong(id);
+				String resp = "Semana de mayor numero de veces de consumo para el servicio " + idServicio + "\n";
+				int i = 1;
+				for ( Object [] tupla : hotelAndes.masNumeroDeVecesServicioSemana(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id servicio: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Semana: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Semana de mayor consumo para el servicio " + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.mayorGananciaServicioSemana(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id servicio: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Semana: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Semana de menor consumo para el servicio " + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.menorGananciaServicioSemana(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id servicio: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Semana: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				panelDatos.actualizarInterfaz(resp);
+			}
+			else if(opcion.equalsIgnoreCase("2")){
+				String id = JOptionPane.showInputDialog("Digite el id del tipo de habitacion a analizar");
+				long idServicio = Long.parseLong(id);
+				String resp = "Semana de mayor consumo para el tipo de habitacion " + idServicio + "\n";
+				int i = 1;
+				for ( Object [] tupla : hotelAndes.masNumeroDeVecesHabitacionSemana(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id tipo habitacion: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Semana: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Semana de mayor consumo para el tipo de habitacion " + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.mayorGananciaHabitacionSemana(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id tipo habitacion: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Semana: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Semana de menor consumo para el tipo de habitacion" + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.menorGananciaHabitacionSemana(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id tipo habitacion: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Semana: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				panelDatos.actualizarInterfaz(resp);				
+			}
+			
+		}
+		else if(unidad.equals("2")){
+			String opcion = JOptionPane.showInputDialog("Digite 1 para consultar analisis de operacion de servicio, 2 para consultar habitacion de HotelAndes: \n"
+					+ "1. Servicio \n" +
+					"2. Habitacion");
+			if(opcion.equalsIgnoreCase("1")){
+				String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+				long idServicio = Long.parseLong(id);
+				String resp = "Mes de mayor numero de veces de consumo para el servicio " + idServicio + "\n";
+				int i = 1;
+				for ( Object [] tupla : hotelAndes.masNumeroDeVecesServicioMes(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id servicio: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Mes: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Mes de mayor consumo para el servicio " + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.mayorGananciaServicioMes(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id servicio: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Mes: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Mes de menor consumo para el servicio " + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.menorGananciaServicioMes(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id servicio: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Mes: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				panelDatos.actualizarInterfaz(resp);
+			}
+			else if(opcion.equalsIgnoreCase("2")){
+				String id = JOptionPane.showInputDialog("Digite el id del tipo de habitacion a analizar");
+				long idServicio = Long.parseLong(id);
+				String resp = "Mes de mayor consumo para el tipo de habitacion " + idServicio + "\n";
+				int i = 1;
+				for ( Object [] tupla : hotelAndes.masNumeroDeVecesHabitacionMes(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id tipo habitacion: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Mes: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Mes de mayor consumo para el tipo de habitacion " + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.mayorGananciaHabitacionMes(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id tipo habitacion: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Mes: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				resp += "Mes de menor consumo para el tipo de habitacion" + idServicio + "\n";
+				for ( Object [] tupla : hotelAndes.menorGananciaHabitacionMes(idServicio))
+				{
+					Object [] datos = tupla;
+					String resp1 = i++ + ". " + "[";
+					resp1 += "Id tipo habitacion: " + datos [0] + ", ";
+					resp1 += "Anio: " + datos [1] + ", ";
+					resp1 += "Mes: " + datos [2] + ", ";
+					resp1 += "Veces consumido: " + datos [3] + ", ";
+					resp1 += "Dinero recaudado: " + datos [4];
+					resp1 += "]";
+					resp += resp1 + "\n";
+				}
+				panelDatos.actualizarInterfaz(resp);				
+			}	
+		}
 		
 	}
-	
+
 	public String verBuenosClientes(){
 		String resp = "Los buenos clientes son:\n";
-    	int i = 1;
-        for ( Object [] tupla : hotelAndes.verBuenosClientes())
-        {
+		int i = 1;
+		for ( Object [] tupla : hotelAndes.verBuenosClientes())
+		{
 			Object [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
+			String resp1 = i++ + ". " + "[";
 			resp1 += "Id cliente: " + datos [0] + ", ";
 			resp1 += "Nombre cliente: " + datos [1] + ", ";
 			resp1 += "Total consumido: " + datos [2] + ", ";
 			resp1 += "Total dias en HotelAndes: " + datos [3];
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
 		panelDatos.actualizarInterfaz(resp);
-        return resp;		
+		return resp;		
 	}
-	
+
 	public String serviciosPocaDemanda(){
 		String resp = "Los buenos clientes son:\n";
-    	int i = 1;
-        for ( Object [] tupla : hotelAndes.verServiciosPocaDemanda())
-        {
+		int i = 1;
+		for ( Object [] tupla : hotelAndes.verServiciosPocaDemanda())
+		{
 			Object [] datos = tupla;
-	        String resp1 = i++ + ". " + "[";
+			String resp1 = i++ + ". " + "[";
 			resp1 += "Id servicio: " + datos [0] + ", ";
 			resp1 += "Nombre servicio: " + datos [1] + ", ";
 			resp1 += "Total facturas por semana: " + datos [2];
-	        resp1 += "]";
-	        resp += resp1 + "\n";
-        }
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
 		panelDatos.actualizarInterfaz(resp);
-        return resp;	
-		
+		return resp;	
+
 	}
-	
+
 	public void crearPlanConvencion(){
-		
+
 	}
-	
+
 	public void crearConvencion(){
-		
+
 	}
-	
+
 	public void cancelarConvencion(){
-		
+
 	}
-	
+
 	public void finalizarConvencion(){
-		
+
 	}
-	
+
 	/**
 	 * Abre el archivo dado como parámetro con la aplicación por defecto del sistema
 	 * @param nombreArchivo - El nombre del archivo que se quiere mostrar

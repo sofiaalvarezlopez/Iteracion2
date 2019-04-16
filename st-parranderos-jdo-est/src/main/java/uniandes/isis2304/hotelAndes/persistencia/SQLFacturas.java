@@ -31,13 +31,15 @@ public class SQLFacturas {
 		return (long) q.executeUnique();
 	}
 	
-	public VOFacturas darFacturaPorId (PersistenceManager pm, long idFactura) 
+	public Facturas darFacturaPorId (PersistenceManager pm, long idFactura) 
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM FACTURAS" + " WHERE NUMFACTURA = ?");
 		q.setResultClass(Facturas.class);
 		q.setParameters(idFactura);
-		return (VOFacturas) q.executeUnique();
+		return (Facturas) q.executeUnique();
 	}
+	
+	//public Facturas darFacturaPorIdCliente
 
 	public List<Facturas> darFacturas(PersistenceManager pm)
 	{

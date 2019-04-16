@@ -526,7 +526,7 @@ public class HotelAndes {
 		log.info("Consultando  Facturas" + f.size() + " Facturas");
 		return f;
 	}
-	public VOFacturas darFacturaPorID(long id)
+	public Facturas darFacturaPorID(long id)
 	{
 		log.info("Buscando Factura por ID: "  + id);
 		return pp.darFacturaPorId(id);
@@ -602,11 +602,92 @@ public class HotelAndes {
 
 	}
 	
+	public List<Object []> mayorGananciaServicioSemana(long id){
+		log.info("Mostrando servicio con mayor ganancia semanal");
+		List tuplas = pp.mayorGananciaServicioSemana(id);
+		log.info("Mostrado servicio con mayor ganancia semanal");
+		return tuplas;
+	}
+	
+	public List<Object []> masNumeroDeVecesServicioSemana(long id){
+		log.info("Mostrando servicios mas numero de veces por semana");
+		List tuplas = pp.masNumeroDeVecesServicioSemana(id);
+		log.info("Mostrado servicios mas numero de veces por semana");
+		return tuplas;
+	}
+	
+	public List<Object []> menorGananciaServicioSemana(long id){
+		log.info("Mostrando servicios con menor ganancia semanal");
+		List tuplas = pp.menorGananciaServicioSemana(id);
+		log.info("Mostrado servicios con menor ganancia semanal");
+		return tuplas;
+	}
+	
+	public List<Object []> mayorGananciaHabitacionSemana(long id){
+		log.info("Mostrando servicio con mayor ganancia semanal");
+		List tuplas = pp.mayorGananciaHabitacionSemana(id);
+		log.info("Mostrado servicio con mayor ganancia semanal");
+		return tuplas;
+	}
+	
+	public List<Object []> masNumeroDeVecesHabitacionSemana(long id){
+		log.info("Mostrando servicios mas numero de veces por semana");
+		List tuplas = pp.masNumeroDeVecesHabitacionSemana(id);
+		log.info("Mostrado servicios mas numero de veces por semana");
+		return tuplas;
+	}
+	
+	public List<Object []> menorGananciaHabitacionSemana(long id){
+		log.info("Mostrando servicios con menor ganancia semanal");
+		List tuplas = pp.menorGananciaHabitacionSemana(id);
+		log.info("Mostrado servicios con menor ganancia semanal");
+		return tuplas;
+	}
+	
+	public List<Object []> mayorGananciaServicioMes(long id){
+		log.info("Mostrando servicio con mayor ganancia mensual");
+		List tuplas = pp.mayorGananciaServicioMes(id);
+		log.info("Mostrado servicio con mayor ganancia mensual");
+		return tuplas;
+	}
+	
+	public List<Object []> masNumeroDeVecesServicioMes(long id){
+		log.info("Mostrando servicios mas numero de veces por mes");
+		List tuplas = pp.masNumeroDeVecesServicioMes(id);
+		log.info("Mostrado servicios mas numero de veces por mes");
+		return tuplas;
+	}
+	
+	public List<Object []> menorGananciaServicioMes(long id){
+		log.info("Mostrando servicios con menor ganancia mes");
+		List tuplas = pp.menorGananciaServicioMes(id);
+		log.info("Mostrado servicios con menor ganancia mes");
+		return tuplas;
+	}
+	
+	public List<Object []> mayorGananciaHabitacionMes(long id){
+		log.info("Mostrando servicio con mayor ganancia mensual");
+		List tuplas = pp.mayorGananciaHabitacionMes(id);
+		log.info("Mostrado servicio con mayor ganancia mensual");
+		return tuplas;
+	}
+	
+	public List<Object []> masNumeroDeVecesHabitacionMes(long id){
+		log.info("Mostrando servicios mas numero de veces por mes");
+		List tuplas = pp.masNumeroDeVecesHabitacionMes(id);
+		log.info("Mostrado servicios mas numero de veces por semana");
+		return tuplas;
+	}
+	
+	public List<Object []> menorGananciaHabitacionMes(long id){
+		log.info("Mostrando servicios con menor ganancia semanal");
+		List tuplas = pp.menorGananciaHabitacionMes(id);
+		log.info("Mostrado servicios con menor ganancia semanal");
+		return tuplas;
+	}
 	
 	
 	
-	
-
 	
 
 }
