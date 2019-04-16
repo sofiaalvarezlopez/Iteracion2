@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.JDODataStoreException;
@@ -848,28 +850,65 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public void registrarSalida(){
-//		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
-//		long cedula = Long.parseLong(ced);
-//		List<Facturas> facturas = hotelAndes.darFacturaPorID(cedula);
-//		String a = "Las facturas del cliente son: \n";
-//		for (int i = 0; i < facturas.size(); i++) {
-//			a += facturas.get(i).getNumFactura() + "\n";
-//		}
-//		JOptionPane.showMessageDialog(this, a);
-//		String resp = JOptionPane.showInputDialog(this, "¿Desea pagar las facturas?");
-//		Estadias est = hotelAndes.darEstadiaPorId(cedula);
-//		if(resp.equalsIgnoreCase("si"))
-//		{
-//			hotelAndes.cambiarEstadiaAPagada(est.getIdEstadia());
-//			JOptionPane.showMessageDialog(this, "Check-out realizado exitosamente");
-//		}
-//		else{
-//			JOptionPane.showMessageDialog(this, "Lo sentimos, no se pudo realizar check-out");
-//		}
+		String ced = JOptionPane.showInputDialog(this, "Ingrese el id de la estadia");
+		long id = Long.parseLong(ced);
+		List<Object []> facturas = hotelAndes.darFacturasPorIdEstadia(id);
+		String a = "Las facturas del cliente son: \n";			
+		a += listarFacturas(facturas);	
+		JOptionPane.showMessageDialog(this, a);
+		String resp = JOptionPane.showInputDialog(this, "¿Desea pagar las facturas?");
+		Estadias est = hotelAndes.darEstadiaPorId(id);
+		if(resp.equalsIgnoreCase("si"))
+		{
+			List<Long> lista = pagarFactura(facturas); 
+			for(Long l: lista)
+			{
+				hotelAndes.cambiarFacturaAPagada(l);
+			}
+			hotelAndes.cambiarEstadiaAPagada(est.getIdEstadia());
+			JOptionPane.showMessageDialog(this, "Check-out realizado exitosamente");
+		}
+		else{
+			JOptionPane.showMessageDialog(this, "Lo sentimos, no se pudo realizar check-out");
+		}
 
 
 	}
+	
+	private String listarFacturas(List<Object []> list){
+		String resp = "";
+		int i = 1;
+		for ( Object [] tupla : list)
+		{
+			Object [] datos = tupla;
+			String resp1 = i++ + ". " + "[";
+			resp1 += "Num factura: " + datos [0] + ", ";
+			resp1 += "Fecha: " + datos [1];
+			resp1 += "Pagada: " + datos [2] + ", ";
+			resp1 += "Precio: " + datos [3] + ", ";
+			resp1 += "Id dotacion: " + datos [4] + ", ";
+			resp1 += "Id servicio: " + datos [5] + ", ";
+			resp1 += "Id estadia: " + datos [6] + ", ";
+			resp1 += "Num doc empleado: " + datos [7] + ", ";
+			resp1 += "Id producto: " + datos [8] + ", ";
+			resp1 += "Id convencion: " + datos [9] + ", ";
+			resp1 += "Id dotacion salon: " + datos [10] + ", ";
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
+		panelDatos.actualizarInterfaz(resp);
+		return resp;
+	}
 
+	private List<Long> pagarFactura(List<Object []> list){
+		LinkedList<Long> numFactura = new LinkedList<>();
+		for ( Object [] tupla : list)
+		{
+			Object [] datos = tupla;
+			numFactura.add(((Long) datos[0]).longValue ());
+		}
+		return numFactura;
+	}
 
 	public long numFactura(){
 

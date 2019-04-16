@@ -9,8 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
 
-import uniandes.isis2304.hotelAndes.persistencia.*;;
-
+import uniandes.isis2304.hotelAndes.persistencia.*;
 
 
 public class HotelAndes {
@@ -536,6 +535,7 @@ public class HotelAndes {
 		return pp.cambiarFacturasAPagada(idFactura);
 	}
 	
+	
 	public List<long []> dineroServiciosPorHabitacion ()
 	{
 
@@ -684,6 +684,14 @@ public class HotelAndes {
 		List tuplas = pp.menorGananciaHabitacionMes(id);
 		log.info("Mostrado servicios con menor ganancia semanal");
 		return tuplas;
+	}
+	
+	public List<Object []> darFacturasPorIdEstadia(long id){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.darFacturaPorIdEstadia(id);
+        log.info ("Generando las facturas de la estadia" + id + " existentes");
+        return tuplas;
+		
 	}
 	
 	

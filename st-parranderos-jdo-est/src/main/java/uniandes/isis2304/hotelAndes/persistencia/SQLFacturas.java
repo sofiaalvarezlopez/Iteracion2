@@ -55,4 +55,11 @@ public class SQLFacturas {
 	     return (long) q.executeUnique();            
 	}
 	
+	public List<Facturas> darFacturaPorIdEstadia(PersistenceManager pm, long idEstadia){
+		Query q = pm.newQuery(SQL, "SELECT * FROM FACTURAS WHERE IDESTADIA = ?");
+		q.setResultClass(Facturas.class);
+		q.setParameters(idEstadia);
+		return (List<Facturas>) q.executeList();
+	}
+	
 }

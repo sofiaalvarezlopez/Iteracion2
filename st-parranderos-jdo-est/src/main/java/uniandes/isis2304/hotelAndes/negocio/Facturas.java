@@ -10,11 +10,11 @@ public class Facturas implements VOFacturas
 	private Timestamp fecha;
 	private int fuePagada;
 	private double precio;
-	private long idProducto;
 	private long idDotacion;
 	private long idServicio;
 	private long idEstadia;
 	private long numDocEmpleado;
+	private long idProducto;
 	private long idConvencion;
 	private long idDotacionSalon;
 	
@@ -23,11 +23,11 @@ public class Facturas implements VOFacturas
 		fecha = new Timestamp (0);
 		fuePagada = 0;
 		precio = 0;
-		idProducto = 0;
 		idDotacion = 0;
 		idServicio = 0;
 		idEstadia = 0;
 		numDocEmpleado = 0;
+		idProducto = 0;
 		setIdConvencion(0);
 		idDotacion = 0;
 	}
@@ -50,11 +50,11 @@ public class Facturas implements VOFacturas
 		this.fecha = fecha;
 		this.fuePagada = pagado;
 		this.precio = valor;
-		this.idProducto = idConsumo;
 		this.idDotacion = idDotacion;
 		this.idServicio = idServicio;
 		this.idEstadia = idEstadia;
 		this.numDocEmpleado = numDocEmpleado;
+		this.idProducto = idConsumo;
 		this.setIdConvencion(idConvencion);
 		this.setIdDotacionSalon(idDotacionSalon);
 	}
@@ -241,23 +241,16 @@ public class Facturas implements VOFacturas
 	/* (non-Javadoc)
 	 * @see uniandes.isis2304.hotelAndes.negocio.VOFacturas#toString()
 	 */
-	@Override
-	public String toString() 
-	{
-		String a =  "Dotacion [numero factura=" + numFactura + ", fecha =" + fecha.toString() + ", valor =" + precio + 
-				", id consumo =" + idProducto; 
-				if(fuePagada == 0){
-					a += "No ha sido pagado";
-				}
-				else{
-					a += "La factura ha sido pagada";
-				}
-				a += "]";
-				
-				return a; 
-	}
+
 	public long getIdDotacionSalon() {
 		return idDotacionSalon;
+	}
+	@Override
+	public String toString() {
+		return "Facturas [numFactura=" + numFactura + ", fecha=" + fecha + ", fuePagada=" + fuePagada + ", precio="
+				+ precio + ", idDotacion=" + idDotacion + ", idServicio=" + idServicio + ", idEstadia=" + idEstadia
+				+ ", numDocEmpleado=" + numDocEmpleado + ", idProducto=" + idProducto + ", idConvencion=" + idConvencion
+				+ ", idDotacionSalon=" + idDotacionSalon + "]";
 	}
 	public void setIdDotacionSalon(long idDotacionSalon) {
 		this.idDotacionSalon = idDotacionSalon;

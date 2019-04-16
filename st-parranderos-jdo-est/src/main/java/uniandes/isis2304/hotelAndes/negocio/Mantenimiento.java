@@ -7,6 +7,7 @@ public class Mantenimiento implements VOMantenimiento {
 	private long idHorario;
 	private long idServicio;
 	private long numHabitacion;
+	private int finalizado;
 	
 	public Mantenimiento(){
 		idMantenimiento = 0;
@@ -14,14 +15,16 @@ public class Mantenimiento implements VOMantenimiento {
 		idHorario = 0;
 		idServicio = 0;
 		numHabitacion = 0;
+		setFinalizado(0);
 	}
 	
-	public Mantenimiento(long idMantenimiento, String causa, long idHorario, long idServicio, long numHabitacion) {
+	public Mantenimiento(long idMantenimiento, String causa, long idHorario, long idServicio, long numHabitacion, int finalizado) {
 		this.idMantenimiento = idMantenimiento;
 		this.causa = causa;
 		this.idHorario = idHorario;
 		this.idServicio = idServicio;
 		this.numHabitacion = numHabitacion;
+		this.setFinalizado(finalizado);
 	}
 
 	/* (non-Javadoc)
@@ -95,6 +98,14 @@ public class Mantenimiento implements VOMantenimiento {
 		this.numHabitacion = numHabitacion;
 	}
 	
+	public int getFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(int finalizado) {
+		this.finalizado = finalizado;
+	}
+
 	/* (non-Javadoc)
 	 * @see uniandes.isis2304.hotelAndes.negocio.VOMantenimiento#toString()
 	 */

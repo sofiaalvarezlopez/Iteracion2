@@ -1,6 +1,7 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -1152,7 +1153,7 @@ public class PersistenciaHotelAndes
 	public List<Estadias> darEstadias(){
 		return sqlEstadia.darEstadias(pmf.getPersistenceManager());
 	}
-	
+
 	public Estadias darEstadiaPorId(long id){
 		return sqlEstadia.buscarEstadiaPorId(pmf.getPersistenceManager(), id);
 	}
@@ -1221,6 +1222,7 @@ public class PersistenciaHotelAndes
 	public Facturas darFacturaPorId(long numFactura){
 		return sqlFactura.darFacturaPorId(pmf.getPersistenceManager(), numFactura);
 	}
+
 
 	public long cambiarFacturasAPagada (long idFactura)
 	{
@@ -1495,9 +1497,9 @@ public class PersistenciaHotelAndes
 	public List serviciosPocaDemanda(){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, NOMBRESERVICIO, MAX (TOTFACTURAS) AS TOTALFACTURASSEMANA FROM( SELECT SERVICIOS.IDSERVICIO, SERVICIOS.NOMBRESERVICIO , to_char(FECHA - 7/24,'IYYY') AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA , COUNT(NUMFACTURA) AS TOTFACTURAS FROM FACTURAS FULL OUTER JOIN SERVICIOS ON SERVICIOS.IDSERVICIO = FACTURAS.IDSERVICIO " +
-		" GROUP BY SERVICIOS.IDSERVICIO, SERVICIOS.NOMBRESERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') " +
-		" HAVING  (to_char(FECHA - 7/24,'IYYY') IS NULL OR to_char(FECHA - 7/24,'IYYY') = 2019) ) "	+
-		" GROUP BY IDSERVICIO, NOMBRESERVICIO HAVING MAX (TOTFACTURAS) < 3 ";
+				" GROUP BY SERVICIOS.IDSERVICIO, SERVICIOS.NOMBRESERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') " +
+				" HAVING  (to_char(FECHA - 7/24,'IYYY') IS NULL OR to_char(FECHA - 7/24,'IYYY') = 2019) ) "	+
+				" GROUP BY IDSERVICIO, NOMBRESERVICIO HAVING MAX (TOTFACTURAS) < 3 ";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 		List<Object[]> tuplas = q.executeList();
@@ -1512,7 +1514,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List masNumeroDeVecesServicioSemana(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT * FROM( SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ?) B GROUP BY IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES)Z";
@@ -1532,7 +1534,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List mayorGananciaServicioSemana(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT * FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B GROUP BY IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW')  ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
@@ -1552,7 +1554,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List menorGananciaServicioSemana(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B group by IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES"; 
@@ -1572,7 +1574,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;
 	}
-	
+
 	public List masNumeroDeVecesHabitacionSemana(long idTipoHabitacion){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT * FROM( SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM (  SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B GROUP BY TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES )Z";
@@ -1592,7 +1594,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List mayorGananciaHabitacionSemana(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B GROUP BY TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
@@ -1612,7 +1614,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List menorGananciaHabitacionSemana(long idTipoHabitacion){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = " SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B GROUP BY TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES";
@@ -1632,7 +1634,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List masNumeroDeVecesServicioMes(long id){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT * FROM( SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT * FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B GROUP BY IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES )Z ";
@@ -1652,7 +1654,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;
 	}
-	
+
 	public List mayorGananciaServicioMes(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *   FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B group by IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM')  ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
@@ -1672,7 +1674,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List menorGananciaServicioMes(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION  FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A  LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE IDSERVICIO = ? ) B  group by IDSERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES";     
@@ -1692,7 +1694,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;
 	}
-	
+
 	public List mayorGananciaHabitacionMes(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES,SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B group by TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY DINERO DESC FETCH FIRST 1 ROWS WITH TIES";
@@ -1712,7 +1714,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List masNumeroDeVecesHabitacionMes(long idTipoHabitacion){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT * FROM(  SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES ,COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM (  SELECT *  FROM (FACTURAS  LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION WHERE TIPOHABITACION = ? ) B group by TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM')  ORDER BY VECES DESC FETCH FIRST 1 ROWS WITH TIES  )Z ";
@@ -1732,7 +1734,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List menorGananciaHabitacionMes(long idTipoHabitacion){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "  SELECT TIPOHABITACION, to_char(FECHA - 7/24,'IYYY')AS ANIO, to_char(FECHA,'YYYY-MM') AS MES , COUNT(IDSERVICIO)AS VECES, SUM(PRECIO)AS DINERO FROM ( SELECT FECHA, PRECIO, IDSERVICIO, TIPOHABITACION FROM ( SELECT *  FROM (FACTURAS LEFT OUTER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA) )A LEFT OUTER JOIN HABITACIONES ON A.IDHABITACION = HABITACIONES.NUMEROHABITACION  WHERE TIPOHABITACION = ? ) B group by TIPOHABITACION, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA,'YYYY-MM') ORDER BY DINERO  FETCH FIRST 1 ROWS WITH TIES" ;
@@ -1753,6 +1755,54 @@ public class PersistenciaHotelAndes
 		return resp;	
 	}
 
-	
-	
+	public List darFacturaPorIdEstadia(long idEstadia){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM FACTURAS WHERE IDESTADIA = ?";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		//q.setResultClass(Facturas.class);
+		q.setParameters(idEstadia);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [11];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = new Date(((Timestamp) tupla [1]).getYear(), ((Timestamp) tupla [1]).getMonth(), ((Timestamp) tupla [1]).getDate());
+			datosResp [2] = ((String) tupla [2]).toString();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			if(tupla [4] == null){
+
+				datosResp [4] = null;
+			}
+			else{
+				datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			}
+			datosResp [5] = ((BigDecimal) tupla [5]).longValue ();
+			datosResp [6] = ((BigDecimal) tupla [6]).longValue ();
+			datosResp [7] = ((BigDecimal) tupla [7]).longValue ();
+			datosResp [8] = ((BigDecimal) tupla [8]).longValue ();
+			if(tupla [9] == null){
+
+				datosResp [9] = null;
+			}
+			else{
+				datosResp [9] = ((BigDecimal) tupla [9]).longValue ();
+			}
+			if(tupla [10] == null){
+
+				datosResp [10] = null;
+			}
+			else{
+				datosResp [10] = ((BigDecimal) tupla [10]).longValue ();
+			
+			}
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+
+
+
+
 }
