@@ -9,10 +9,6 @@
 		  "options":
 			[
 				{
-					"label": "Crear plan para una convencion",
-					"event": "crearPlanConvencion"
-				},
-				{
 					"label": "Registrar una convención",
 					"event": "crearConvencion"
 				}

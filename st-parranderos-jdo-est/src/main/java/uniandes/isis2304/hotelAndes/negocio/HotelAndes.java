@@ -1,9 +1,13 @@
 package uniandes.isis2304.hotelAndes.negocio;
 
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Transaction;
 
 import org.apache.log4j.Logger;
 
@@ -419,6 +423,14 @@ public class HotelAndes {
         log.info ("Adicionando Plan: " + p);
         return p;
 	}
+	
+	public Planes adicionarPlanConvencion(long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha)
+	{
+		log.info ("Adicionando Plan " + tipo);
+		Planes p = pp.adicionarPlanConvencion(idPlan, tipo, costo, descuentoAlojamiento, fecha);
+        log.info ("Adicionando Plan: " + p);
+        return p;
+	}
 	public List<Planes> darPlanes()
 	{
 		log.info("Consultando Plan");
@@ -441,6 +453,14 @@ public class HotelAndes {
         log.info ("Adicionando Descuento: " + d);
         return d;
 	}
+	
+	public Descuentos adicionarDescuentoConvencion(long idDescuento,long idPlan,long idServicio,long idProducto, long valor, int limiteVeces)
+	{
+		log.info ("Adicionando Descuento ");
+		Descuentos d = pp.adicionarDescuentoConvencion(idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
+        log.info ("Adicionando Descuento: " + d);
+        return d;
+	}
 	public List<Descuentos> darDescuentos()
 	{
 		log.info("Consultando Descuentos");
@@ -460,6 +480,14 @@ public class HotelAndes {
 	{
 		log.info ("Adicionando Estadia ");
 		Estadias e = pp.adicionarEstadia(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
+        log.info ("Adicionando Estadia: " + e);
+        return e;
+	}
+	
+	public Estadias adicionarEstadiaConvencion(long idEstadia, Timestamp fechaLlegada,Timestamp  fechaSalida,int numPersonas,long  idPlan, long idHabitacion, int checkIn, int pago, Long numDoc, long idConvencion)
+	{
+		log.info ("Adicionando Estadia ");
+		Estadias e = pp.adicionarEstadiaConvencion(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
         log.info ("Adicionando Estadia: " + e);
         return e;
 	}
@@ -496,6 +524,10 @@ public class HotelAndes {
         log.info ("Adicionando Reserva: " + r);
         return r;
 	}
+	
+
+	
+	
 	public List<Reservas> darReservas()
 	{
 		log.info("Consultando Reservas");
@@ -534,6 +566,12 @@ public class HotelAndes {
 	{
 		return pp.cambiarFacturasAPagada(idFactura);
 	}
+	
+	public Convenciones adicionarConvencion(long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, long idPlan, int pago){
+		Convenciones c = pp.adicionarConvencion(idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, idPlan, pago);
+		return c;
+	}
+	
 	
 	
 	public List<long []> dineroServiciosPorHabitacion ()
@@ -692,6 +730,30 @@ public class HotelAndes {
         log.info ("Generando las facturas de la estadia" + id + " existentes");
         return tuplas;
 		
+	}
+	
+	public List<Object []> darHabitacionesLibresPorTipo(Timestamp fechaInicio, Timestamp fechaFin, long idTipo){
+        List tuplas = pp.darHabitacionesLibresPorTipo(fechaInicio, fechaFin, idTipo);
+        return tuplas;
+		
+	}
+	
+	public BigDecimal selectMax(){
+		return pp.selectMax();
+	}
+	
+	public void rollback(){
+		pp.rollback();
+	}
+	
+	public void commit(){
+		pp.commit();
+	}
+	
+	public void rf12(long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha, long idDescuento, long idServicio, Long idProducto, long valor, int limiteVeces, 
+			long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, String [] rpta) throws Exception
+	{
+		pp.rf12(idPlan, tipo, costo, descuentoAlojamiento, fecha, idDescuento, idServicio, idProducto, valor, limiteVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta);
 	}
 	
 	

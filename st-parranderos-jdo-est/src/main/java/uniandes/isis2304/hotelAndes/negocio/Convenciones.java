@@ -3,7 +3,7 @@ package uniandes.isis2304.hotelAndes.negocio;
 import java.sql.Timestamp;
 
 public class Convenciones {
-	
+
 	private long idConvencion;
 	private String nombre;
 	private int capacidad;
@@ -12,9 +12,32 @@ public class Convenciones {
 	private long idOrganizador;
 	private long idPlan;
 	private int pago;
-	
-	
-	
+
+	public Convenciones(){
+		idConvencion = 0;
+		nombre = "";
+		capacidad = 0;
+		fechaInicio = new Timestamp(0);
+		fechaFin = new Timestamp(0);
+		idOrganizador = 0;
+		idPlan = 0;
+		pago = 0;
+
+	}
+
+
+	public Convenciones(long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin,
+			long idOrganizador, long idPlan, int pago) {
+		super();
+		this.idConvencion = idConvencion;
+		this.nombre = nombre;
+		this.capacidad = capacidad;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.idOrganizador = idOrganizador;
+		this.idPlan = idPlan;
+		this.pago = pago;
+	}
 	public long getIdConvencion() {
 		return idConvencion;
 	}
@@ -63,6 +86,6 @@ public class Convenciones {
 	public void setPago(int pago) {
 		this.pago = pago;
 	}
-	
+
 
 }

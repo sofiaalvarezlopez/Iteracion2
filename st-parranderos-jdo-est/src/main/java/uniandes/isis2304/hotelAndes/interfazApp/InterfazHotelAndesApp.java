@@ -46,6 +46,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.hotelAndes.negocio.CaracteristicasAdicionales;
+import uniandes.isis2304.hotelAndes.negocio.Convenciones;
 import uniandes.isis2304.hotelAndes.negocio.Descuentos;
 import uniandes.isis2304.hotelAndes.negocio.DotacionSalon;
 import uniandes.isis2304.hotelAndes.negocio.Estadias;
@@ -1306,7 +1307,101 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public void crearConvencion(){
+		String id = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
+		long idConvencion = Long.parseLong(id);
+		String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre de la convencion");
+		String cap = JOptionPane.showInputDialog(this, "Ingrese la capacidad de la convencion");
+		int capacidad = Integer.parseInt(cap);
+		String fechaIni = JOptionPane.showInputDialog("Ingrese la fecha  inicial de la reserva. " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaInicio;
+		if(fechaIni == null || fechaIni == "")
+		{
+			fechaInicio = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaIni)).getTime());
+				fechaInicio = ts;
+			}
+			catch (Exception e)
+			{
+				fechaInicio = null;
+			}
 
+		}
+		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final de la reserva " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaFin;
+		if(fechaFini == null || fechaFini == "")
+		{
+			fechaFin = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaFini)).getTime());
+				fechaFin = ts;
+			}
+			catch (Exception e)
+			{
+				fechaFin = null;
+			}
+
+		}
+		String idOrg = JOptionPane.showInputDialog(this, "Ingrese su id");
+		long idOrganizador = Long.parseLong(idOrg);
+		String costo = JOptionPane.showInputDialog(this, "Ingrese el costo del plan");
+		double costoPlan = Double.parseDouble(costo);
+		String desc = JOptionPane.showInputDialog(this, "Ingrese el descuento en el alojamiento del plan");
+		double descuento = Double.parseDouble(desc);
+
+		String idPlan = JOptionPane.showInputDialog(this, "Ingrese el id del plan");
+		long idP = Long.parseLong(idPlan);
+		String tipo = JOptionPane.showInputDialog("Ingrese el tipo del plan");
+
+		String idDescuento = JOptionPane.showInputDialog(this, "Ingrese el id del descuento");
+		long idDescu = Long.parseLong(idDescuento);
+		String idServ = JOptionPane.showInputDialog(this, "Ingrese el id del servicio al que pertenece el desuento. No ingrese nada si no hay");
+		Long idServicio;
+		if(idServ.equals(""))
+		{
+			idServicio = null;
+		}
+		else
+		{
+			idServicio = Long.valueOf(idServ);
+		}
+		String idProd = JOptionPane.showInputDialog(this, "Ingrese el id del producto. No ingrese nada si no hay");
+		Long idProducto;
+		if(idProd.equals(""))
+		{
+			idProducto = null;
+		}
+		else
+		{
+			idProducto = Long.valueOf(idProd);
+		}
+
+		String numVeces = JOptionPane.showInputDialog(this, "Ingrese el numero de veces que se puede aplicar. Ingrese -1 si no hay.");
+		int cantVeces = Integer.parseInt(numVeces);
+		String valorDesc = JOptionPane.showInputDialog(this, "Ingrese el porcentaje de descuento (Numero entre 1 y 100)");
+		long descuentito = Long.valueOf( valorDesc);
+		
+		String cant = JOptionPane.showInputDialog(this, "¿Cuantas habitaciones desea reservar? \n Separe los tipos y las cantidades con comas \n Ej: 1,2,2,3 Busca 2 habitaciones tipo 1 y 3 tipo 2 ");
+		String[] rpta = cant.split(",");
+		try{
+			hotelAndes.rf12(idP, tipo, costoPlan, descuento, fechaFin, idDescu, idServicio, idProducto, descuentito, cantVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta);
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+		JOptionPane.showMessageDialog(this, "La convencion se pudo registrar exitosamente");
 	}
 
 	public void cancelarConvencion(){

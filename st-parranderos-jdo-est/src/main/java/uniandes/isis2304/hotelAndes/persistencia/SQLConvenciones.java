@@ -17,14 +17,14 @@ public class SQLConvenciones {
 		this.pha = pha;
 	}
 	
-	public long adicionarCaracteristicaAdicional(PersistenceManager pm, long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, long idPlan, int pago) 
+	public long adicionarConvencion(PersistenceManager pm, long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, long idPlan, int pago) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO CONVENCIONES"  + "(IDCONVENCION, NOMBRE, CAPACIDAD, FECHAINICIO, FECHAFIN, IDORGANIZADOR, IDPLAN, PAGO) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, idPlan, pago);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarCaracteristicaAdicional(PersistenceManager pm, long idConvencion){
+	public long eliminarConvencion(PersistenceManager pm, long idConvencion){
 		Query q = pm.newQuery(SQL, "DELETE FROM CONVENCIONES" + " WHERE IDCONVENCION = ?");
 		q.setParameters(idConvencion);
 		return (long) q.executeUnique();

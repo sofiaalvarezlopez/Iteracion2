@@ -7,14 +7,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.*;
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import sun.invoke.util.ValueConversions;
 import uniandes.isis2304.hotelAndes.negocio.CadenasHoteleras;
 import uniandes.isis2304.hotelAndes.negocio.CaracteristicasAdicionales;
+import uniandes.isis2304.hotelAndes.negocio.Convenciones;
 import uniandes.isis2304.hotelAndes.negocio.Descuentos;
 import uniandes.isis2304.hotelAndes.negocio.Dotaciones;
 import uniandes.isis2304.hotelAndes.negocio.DotacionSalon;
@@ -174,6 +177,10 @@ public class PersistenciaHotelAndes
 	 */
 	private SQLFacturas sqlFactura;
 
+	private SQLConvenciones sqlConvencion;
+
+	private SQLMantenimiento sqlMantenimiento;
+
 
 	/* **********************
 	 * 			MÃ©todos del MANEJADOR DE PERSISTENCIA
@@ -304,6 +311,8 @@ public class PersistenciaHotelAndes
 		sqlEstadia = new SQLEstadias(this);
 		sqlReserva = new SQLReservas(this);
 		sqlFactura = new SQLFacturas(this);
+		sqlMantenimiento = new SQLMantenimiento(this);
+		sqlConvencion = new SQLConvenciones(this);
 		//		sqlUtil = new SQLUtil(this);
 	}
 
@@ -610,6 +619,25 @@ public class PersistenciaHotelAndes
 		}
 	}
 
+	public Descuentos adicionarDescuentoConvencion( long idDescuento, long idPlan, long idServicio, long idProducto, long valor, int limiteVeces)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			long tuplasInsertadas = sqlDescuento.adicionarDescuento(pm, idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
+			log.trace ("Insercion de descuento: " + idDescuento + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Descuentos(idDescuento, valor, limiteVeces, idPlan, idServicio, idProducto);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+
+	}
+
 	public Dotaciones adicionarDotacion( long idDotacion, String nombre, double precio, long idTipoHabitacion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -699,6 +727,25 @@ public class PersistenciaHotelAndes
 				tx.rollback();
 			}
 			pm.close();
+		}
+	}
+
+	public Estadias adicionarEstadiaConvencion( long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, Long numDoc, long idConvencion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			long tuplasInsertadas = sqlEstadia.adicionarEstadia(pm, idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
+			log.trace ("Insercion de estadia: " + idEstadia + ": " + tuplasInsertadas + " tuplas insertadas");
+
+
+			return new Estadias(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
 		}
 	}
 
@@ -853,6 +900,26 @@ public class PersistenciaHotelAndes
 			pm.close();
 		}
 	}
+
+	public Planes adicionarPlanConvencion( long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+
+			long tuplasInsertadas = sqlPlan.adicionarPlan(pm, idPlan, tipo, costo, descuentoAlojamiento, fecha);
+			log.trace ("Insercion de plan: " + idPlan + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Planes(idPlan, tipo, costo, descuentoAlojamiento, fecha);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+	}
+
 
 	public Productos adicionarProducto( long idProducto, double precio, String nombre, int cantidad, int duracion, String categoria, long idVentaProducto) 
 	{
@@ -1091,6 +1158,23 @@ public class PersistenciaHotelAndes
 				tx.rollback();
 			}
 			pm.close();
+		}
+	}
+
+	public Convenciones adicionarConvencion(long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, long idPlan, int pago) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			long tuplasInsertadas = sqlConvencion.adicionarConvencion(pm, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, idPlan, pago);
+			log.trace ("Insercion de la convencion: " + idConvencion + ": " + tuplasInsertadas + " tuplas insertadas");
+			return new Convenciones(idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, idPlan, pago);
+		}	
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
 		}
 	}
 
@@ -1794,14 +1878,100 @@ public class PersistenciaHotelAndes
 			}
 			else{
 				datosResp [10] = ((BigDecimal) tupla [10]).longValue ();
-			
+
 			}
 			resp.add (datosResp);
 		}
 		return resp;	
 	}
 
+	public List darHabitacionesLibresPorTipo(Timestamp fechaInicio, Timestamp fechaFin, long idTipo){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM HABITACIONES WHERE NUMEROHABITACION NOT IN ( SELECT IDHABITACION FROM ESTADIAS  WHERE ((FECHALLEGADA < ? AND FECHASALIDA > ?) OR (FECHALLEGADA BETWEEN  ? AND ?) OR(FECHASALIDA BETWEEN ? AND ?))  )  AND TIPOHABITACION = ? ";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(fechaInicio, fechaFin, fechaInicio, fechaFin, fechaInicio, fechaFin, idTipo);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [2];
 
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+	public BigDecimal selectMax(){
+
+		return sqlEstadia.selectMax(pmf.getPersistenceManager());
+	}
+
+	public void rf12(long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha, long idDescuento, long idServicio, Long idProducto, long valor, int limiteVeces, 
+			long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, String[] rpta ) throws Exception
+	{
+		Transaction tx=pmf.getPersistenceManager().currentTransaction();
+		tx.begin();
+		try{
+			adicionarPlanConvencion(idPlan, tipo, costo, descuentoAlojamiento, fecha);
+			adicionarDescuentoConvencion(idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
+			adicionarConvencion(idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, idPlan, 0);
+			for (int i = 0; i < rpta.length; i+=2) {
+				String tipoHabitacion = rpta[i];
+				long tipoHab = Long.parseLong(tipoHabitacion);
+				String cantidadHabitaciones = rpta[i+1];
+				int cantHab = Integer.parseInt(cantidadHabitaciones);
+				List<Object []> listica = darHabitacionesLibresPorTipo(fechaInicio, fechaFin, tipoHab);
+				if(cantHab <= listica.size())
+				{
+					int j = 0;
+					for ( Object [] tupla : listica)
+					{
+						j++;
+						long maximo = selectMax().longValue() + 1;
+						long idHab =  ((Long) tupla [0]).longValue ();
+						adicionarEstadiaConvencion(maximo, fechaInicio, fechaFin, 1, idPlan, idHab, 0, 0, null, idConvencion);
+						maximo++;
+						if(j == cantHab){
+							break;
+						}
+					}
+				}
+				else {
+					rollback();
+					throw new Exception("No fue posible agregar la convencion: No hay habitaciones suficientes");	
+				}
+
+			}
+			tx.commit();
+		}
+		catch(Exception e){
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();;
+			}
+			pmf.getPersistenceManager().close();
+		}
+
+	}
+
+	public void rollback(){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		if(tx.isActive()){
+			tx.rollback();	}
+	}
+
+	public void commit(){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		if(tx.isActive()){
+			tx.commit();}
+	}
 
 
 

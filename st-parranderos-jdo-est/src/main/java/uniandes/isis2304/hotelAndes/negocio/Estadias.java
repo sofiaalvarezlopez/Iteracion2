@@ -18,7 +18,7 @@ public class Estadias implements VOEstadia
 	private long idHabitacion;
 	private int checkin; 
 	private int pagado;
-	private long idCliente;
+	private Long idCliente;
 	private long idConvencion;
 	
 	
@@ -35,7 +35,7 @@ public class Estadias implements VOEstadia
 		setIdConvencion(0);
 	}
 	
-	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, long idPlan, long idHabitacion, int checkin, int pagado, long idCliente, long idConvencion){
+	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, long idPlan, long idHabitacion, int checkin, int pagado, Long idCliente, long idConvencion){
 		this.idEstadia = idEstadia;
 		this.fechaLlegada = fechaLlegada;
 		this.fechaSalida = fechaSalida;

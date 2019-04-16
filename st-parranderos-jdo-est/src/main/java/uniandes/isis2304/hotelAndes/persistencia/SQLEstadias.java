@@ -1,5 +1,6 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,20 +18,20 @@ public class SQLEstadias {
 		this.pha = pha;
 	}
 	
-	public long adicionarEstadia(PersistenceManager pm, long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, long numDoc, long idConvencion) 
+	public long adicionarEstadia(PersistenceManager pm, long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, Long numDoc, long idConvencion) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO ESTADIAS"  + "(IDESTADIA, FECHALLEGADA, FECHASALIDA, NUMEROPERSONAS, IDPLAN, IDHABITACION, CHECKIN, PAGADO, IDCLIENTE, IDCONVENCION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarEstadia(PersistenceManager pm, long idServicio){
+	public long eliminarEstadia(PersistenceManager pm, Long idServicio){
 		Query q = pm.newQuery(SQL, "DELETE FROM ESTADIAS" + " WHERE IDESTADIA = ?");
 		q.setParameters(idServicio);
 		return (long) q.executeUnique();
 	}
 	
-	public Estadias buscarEstadiaPorId(PersistenceManager pm, long id){
+	public Estadias buscarEstadiaPorId(PersistenceManager pm, Long id){
 		Query q = pm.newQuery(SQL, "SELECT * FROM ESTADIAS" + " WHERE IDESTADIA = ?");
 		q.setResultClass(Estadias.class);
 		q.setParameters(id);
@@ -45,17 +46,22 @@ public class SQLEstadias {
 		return (List<Estadias>) q.executeList();
 	}
 	
-	public long cambiarAPagada (PersistenceManager pm, long idEstadia) 
+	public long cambiarAPagada (PersistenceManager pm, Long idEstadia) 
 	{
 		 Query q = pm.newQuery(SQL, "UPDATE ESTADIAS" + " SET PAGADO = 1 WHERE IDESTADIA = ?");
 	     q.setParameters(idEstadia);
 	     return (long) q.executeUnique();            
 	}
 	
-	public long checkInCliente(PersistenceManager pm, long idEstadia){
+	public long checkInCliente(PersistenceManager pm, Long idEstadia){
 		 Query q = pm.newQuery(SQL, "UPDATE ESTADIAS" + " SET CHECKIN = 1 WHERE IDESTADIA = ?");
 	     q.setParameters(idEstadia);
 	     return (long) q.executeUnique();       
+	}
+	
+	public BigDecimal selectMax(PersistenceManager pm){
+		Query q = pm.newQuery(SQL, "SELECT MAX(IDESTADIA) FROM ESTADIAS");
+		return (BigDecimal) q.executeUnique();
 	}
 	
 
