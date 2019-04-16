@@ -159,7 +159,7 @@ public class Horarios implements VOHorario
 	@Override
 	public String toString() 
 	{
-		return "Horario [id=" + idHorario + ", dia=" + dia + ", hora Inicio =" + horaInicio + ", hora Fin =" + horaFin + ", duracion =" + duracion + ", fechaInicio = " + fechaInicio.toString() + ", fechaFin = " + fechaFin.toString() +"]";
+		return "Horario [id=" + idHorario +"]";
 	}
 
 	/**

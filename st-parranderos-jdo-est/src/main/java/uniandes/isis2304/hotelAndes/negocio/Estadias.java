@@ -14,11 +14,11 @@ public class Estadias implements VOEstadia
 	private Timestamp fechaLlegada;
 	private Timestamp fechaSalida;
 	private int numeroPersonas;
+	private long idPlan;
+	private long idHabitacion;
 	private int checkin; 
 	private int pagado;
 	private long idCliente;
-	private long idPlan;
-	private long idHabitacion;
 	private long idConvencion;
 	
 	
@@ -35,7 +35,7 @@ public class Estadias implements VOEstadia
 		setIdConvencion(0);
 	}
 	
-	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, int checkin, int pagado, long idCliente, long idPlan, long idHabitacion, long idConvencion){
+	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, long idPlan, long idHabitacion, int checkin, int pagado, long idCliente, long idConvencion){
 		this.idEstadia = idEstadia;
 		this.fechaLlegada = fechaLlegada;
 		this.fechaSalida = fechaSalida;
@@ -111,6 +111,22 @@ public class Estadias implements VOEstadia
 	public void setNumeroPersonas(int numeroPersonas) {
 		this.numeroPersonas = numeroPersonas;
 	}
+	
+	public long getIdPlan() {
+		return idPlan;
+	}
+
+	public void setIdPlan(long idPlan) {
+		this.idPlan = idPlan;
+	}
+	
+	public long getIdHabitacion() {
+		return idHabitacion;
+	}
+
+	public void setIdHabitacion(long idHabitacion) {
+		this.idHabitacion = idHabitacion;
+	}
 
 	/* (non-Javadoc)
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOEstadia#getCheckin()
@@ -144,6 +160,24 @@ public class Estadias implements VOEstadia
 		this.pagado = pagado;
 	}
 	
+	public long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(long idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	
+
+	public long getIdConvencion() {
+		return idConvencion;
+	}
+
+	public void setIdConvencion(long idConvencion) {
+		this.idConvencion = idConvencion;
+	}
+	
 	/* (non-Javadoc)
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOEstadia#toString()
 	 */
@@ -171,37 +205,6 @@ public class Estadias implements VOEstadia
 	}
 
 
-	public long getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(long idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	public long getIdPlan() {
-		return idPlan;
-	}
-
-	public void setIdPlan(long idPlan) {
-		this.idPlan = idPlan;
-	}
-
-	public long getIdHabitacion() {
-		return idHabitacion;
-	}
-
-	public void setIdHabitacion(long idHabitacion) {
-		this.idHabitacion = idHabitacion;
-	}
-
-	public long getIdConvencion() {
-		return idConvencion;
-	}
-
-	public void setIdConvencion(long idConvencion) {
-		this.idConvencion = idConvencion;
-	}
 	
 
 }

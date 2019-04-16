@@ -471,11 +471,12 @@ public class HotelAndes {
 		log.info("Consultando  Estadias" + e.size() + " Estadias");
 		return e;
 	}
-	public Estadias darEstadiaPorID(long id)
-	{
-		log.info("Buscando Estadia por ID: "  + id);
-		return pp.darEstadiaPorId(id);
+	
+	public Estadias darEstadiaPorId(long id){
+		Estadias e = pp.darEstadiaPorId(id);
+		return e;
 	}
+	
 	public long cambiarEstadiaAPagada(long idEstadia)
 	{
 		return pp.cambiarEstadiaAPagada(idEstadia);
@@ -483,7 +484,7 @@ public class HotelAndes {
 	
 	public long checkInCliente(long idEstadia)
 	{
-		return checkInCliente(idEstadia);
+		return pp.checkInCliente(idEstadia);
 	}
 	// UPDATE
 	/* ****************************************************************

@@ -744,8 +744,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	
 	}
 	
-	public void reservarServicio() {
-		String ced = JOptionPane.showInputDialog(this, "Ingrese su cedula");
+	public void reservarServicios() {
+		String ced = JOptionPane.showInputDialog(this, "Ingrese el id de su estadia");
 		String x = JOptionPane.showInputDialog(this, "Diga el id del servicio que desea reservar");
 		long id = Long.parseLong(x);
 		long idEstadia = Long.parseLong(ced);
@@ -797,7 +797,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		
 		String conv = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
 		long idConvencion = Long.parseLong(conv);
-		String cap = JOptionPane.showInputDialog(this, "¿Para cuantas personas es la reserva=");
+		String cap = JOptionPane.showInputDialog(this, "¿Para cuantas personas es la reserva?");
 		long capacidad = Long.parseLong(cap);
 		
 		Reservas res = hotelAndes.adicionarReserva(idEstadia, idEstadia, id, hor.getIdHorario(), 0, idConvencion, capacidad);
@@ -810,7 +810,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	public void registrarLlegada(){
 		String num = JOptionPane.showInputDialog(this, "Ingrese el numero de reserva de la estadia");
 		long numReserva = Long.parseLong(num);
-		Estadias est = hotelAndes.darEstadiaPorID(numReserva);
+		Estadias est = hotelAndes.darEstadiaPorId(numReserva);
 		if(est == null){
 			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
@@ -848,29 +848,29 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 	
 	public void registrarSalida(){
-		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
-		long cedula = Long.parseLong(ced);
-		List<Facturas> facturas = hotelAndes.darFacturas();
-		String a;
-		for (int i = 0; i < facturas.size(); i++) {
-			if(i == 0){
-				
-			a = "Las facturas del cliente son: ";
-			}
-			else
-			{
-				a = "";
-			}
-			JOptionPane.showMessageDialog(this, a+= facturas.get(i).getNumFactura());
-		}
-		String resp = JOptionPane.showInputDialog(this, "¿Desea pagar las facturas?");
-		Estadias est = hotelAndes.darEstadiaPorID(cedula);
-		if(resp.equalsIgnoreCase("si"))
-		{
-			hotelAndes.cambiarEstadiaAPagada(est.getIdEstadia());
-		}
-	
-		JOptionPane.showInputDialog(this, "Check-out realizado exitosamente");
+//		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
+//		long cedula = Long.parseLong(ced);
+//		List<Facturas> facturas = hotelAndes.darFacturas();
+//		String a;
+//		for (int i = 0; i < facturas.size(); i++) {
+//			if(i == 0){
+//				
+//			a = "Las facturas del cliente son: ";
+//			}
+//			else
+//			{
+//				a = "";
+//			}
+//			JOptionPane.showMessageDialog(this, a+= facturas.get(i).getNumFactura());
+//		}
+//		String resp = JOptionPane.showInputDialog(this, "¿Desea pagar las facturas?");
+//		Estadias est = hotelAndes.darEstadiaPorID(cedula);
+//		if(resp.equalsIgnoreCase("si"))
+//		{
+//			hotelAndes.cambiarEstadiaAPagada(est.getIdEstadia());
+//		}
+//	
+//		JOptionPane.showInputDialog(this, "Check-out realizado exitosamente");
 
 	
 	}

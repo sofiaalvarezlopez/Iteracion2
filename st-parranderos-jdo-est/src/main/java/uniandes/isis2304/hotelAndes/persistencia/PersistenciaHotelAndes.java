@@ -683,7 +683,7 @@ public class PersistenciaHotelAndes
 			tx.commit();
 
 
-			return new Estadias(idEstadia, fechaLlegada, fechaSalida, numPersonas, checkIn, pago, numDoc, idPlan, idHabitacion, idConvencion);
+			return new Estadias(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
 		}
 		catch (Exception e)
 		{
@@ -1152,9 +1152,9 @@ public class PersistenciaHotelAndes
 	public List<Estadias> darEstadias(){
 		return sqlEstadia.darEstadias(pmf.getPersistenceManager());
 	}
-
-	public Estadias darEstadiaPorId(long idEstadia){
-		return sqlEstadia.darEstadiaPorId(pmf.getPersistenceManager(), idEstadia);
+	
+	public Estadias darEstadiaPorId(long id){
+		return sqlEstadia.buscarEstadiaPorId(pmf.getPersistenceManager(), id);
 	}
 
 	public long cambiarEstadiaAPagada (long idEstadia)
