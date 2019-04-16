@@ -1,15 +1,11 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.jdo.JDODataStoreException;
-import javax.jdo.JDOHelper;
 import javax.jdo.*;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Transaction;
 
 import org.apache.log4j.Logger;
 import com.google.gson.JsonArray;
@@ -192,20 +188,20 @@ public class PersistenciaHotelAndes
 
 		// Define los nombres por defecto de las tablas de la base de datos
 		tablas = new LinkedList<String> ();
-		tablas.add ("TIPO_USUARIO");
+		tablas.add ("TIPOUSUARIO");
 		tablas.add ("USUARIOS");
-		tablas.add ("CADENAS_HOTELERAS");
+		tablas.add ("CADENASHOTELERAS");
 		tablas.add ("HOTELES");
-		tablas.add ("TIPOS_HABITACION");
+		tablas.add ("TIPOSHABITACION");
 		tablas.add ("HABITACIONES");
 		tablas.add ("DOTACIONES");
 		tablas.add ("SERVICIOS");
-		tablas.add ("VENTA_PRODUCTOS");
+		tablas.add ("VENTAPRODUCTOS");
 		tablas.add ("SALONES");
-		tablas.add ("SERVICIOS_ADICIONALES");
+		tablas.add ("SERVICIOSADICIONALES");
 		tablas.add ("PRODUCTOS");
-		tablas.add ("DOTACION_SALON");
-		tablas.add ("CARACTERISTICAS_ADICIONALES");
+		tablas.add ("DOTACIONSALON");
+		tablas.add ("CARACTERISTICASADICIONALES");
 		tablas.add ("HORARIOS");
 		tablas.add ("PLANES");
 		tablas.add ("DESCUENTOS");
@@ -225,7 +221,7 @@ public class PersistenciaHotelAndes
 
 		String unidadPersistencia = tableConfig.get ("unidadPersistencia").getAsString ();
 		log.trace ("Accediendo unidad de persistencia: " + unidadPersistencia);
-		
+
 		pmf = JDOHelper.getPersistenceManagerFactory (unidadPersistencia);
 	}
 
@@ -888,19 +884,19 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Reservas adicionarReserva(long numReserva, long idEstadia, long idServicio, long idHorario, long idConsumo, long idConvencion) 
+	public Reservas adicionarReserva(long numReserva, long idEstadia, long idServicio, long idHorario, long idConsumo, long idConvencion, long capacidad) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlReserva.adicionarReserva(pm, numReserva, idEstadia, idServicio, idHorario, idConsumo, idConvencion);
+			long tuplasInsertadas = sqlReserva.adicionarReserva(pm, numReserva, idEstadia, idServicio, idHorario, idConsumo, idConvencion, capacidad);
 			log.trace ("Insercion de plan: " + numReserva + ": " + tuplasInsertadas + " tuplas insertadas");
 			tx.commit();
 
 
-			return new Reservas(numReserva, idConsumo, idEstadia, idServicio, idHorario, idConvencion);
+			return new Reservas(numReserva, idConsumo, idEstadia, idServicio, idHorario, idConvencion, capacidad);
 		}
 		catch (Exception e)
 		{
@@ -1192,40 +1188,40 @@ public class PersistenciaHotelAndes
 	public long checkInCliente (long idEstadia)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx=pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            long resp = sqlEstadia.checkInCliente(pm, idEstadia);
-            tx.commit();
-            return resp;
-        }
-        catch (Exception e)
-        {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-            return -1;
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long resp = sqlEstadia.checkInCliente(pm, idEstadia);
+			tx.commit();
+			return resp;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
-	
+
 	public List<Facturas> darFacturas()
 	{
 		return sqlFactura.darFacturas(pmf.getPersistenceManager());
 	}
-	
+
 	public VOFacturas darFacturaPorId(long numFactura){
 		return sqlFactura.darFacturaPorId(pmf.getPersistenceManager(), numFactura);
 	}
-	
+
 	public long cambiarFacturasAPagada (long idFactura)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1252,96 +1248,96 @@ public class PersistenciaHotelAndes
 			pm.close();
 		}
 	}
-	
+
 	public List<Habitaciones> darHabitaciones(){
 		return sqlHabitacion.darHabitaciones(pmf.getPersistenceManager());
 	}
-	
+
 	public Habitaciones darHabitacionPorId(long numHabitacion){
 		return sqlHabitacion.darHabitacionPorNumeroHabitacion(pmf.getPersistenceManager(), numHabitacion);
 	}
-	
+
 	public List<Horarios> darHorarios(){
 		return sqlHorario.darHorarios(pmf.getPersistenceManager());
 	}
-	
+
 	public Horarios darHorarioPorId(long idHorario){
 		return sqlHorario.darHorarioPorId(pmf.getPersistenceManager(), idHorario);
 	}
-	
+
 	public List<Hoteles> darHoteles(){
 		return sqlHotel.darHoteles(pmf.getPersistenceManager());
 	}
-	
+
 	public Hoteles darHotelPorId(long idHotel){
 		return sqlHotel.darHotelPorId(pmf.getPersistenceManager(), idHotel);
 	}
-	
+
 	public List<Planes> darPlanes(){
 		return sqlPlan.darPlanes(pmf.getPersistenceManager());
 	}
-	
+
 	public Planes darPlan(long idPlan){
 		return sqlPlan.darPlanesPorId(pmf.getPersistenceManager(), idPlan);
 	}
-	
+
 	public List<Productos> darProductos(){
 		return sqlProducto.darProductos(pmf.getPersistenceManager());
 	}
-	
+
 	public Productos darProductoPorId(long idProducto){
 		return sqlProducto.darProductoPorId(pmf.getPersistenceManager(), idProducto);
 	}
-	
+
 	public List<Reservas> darReservas(){
 		return sqlReserva.darReservas(pmf.getPersistenceManager());
 	}
-	
+
 	public Reservas darReservaPorId(long idReserva){
 		return sqlReserva.darReservaPorId(pmf.getPersistenceManager(), idReserva);
 	}
-	
+
 	public List<Salones> darSalones(){
 		return sqlSalon.darSalones(pmf.getPersistenceManager());
 	}
-	
+
 	public Salones darSalonPorId(long idSalon){
 		return sqlSalon.darSalonPorId(pmf.getPersistenceManager(), idSalon);
 	}
-	
+
 	public List<Servicios> darServicios(){
 		return sqlServicio.darServicios(pmf.getPersistenceManager());
 	}
-	
+
 	public Servicios darServicio(long idServicio){
 		return sqlServicio.darServicioPorId(pmf.getPersistenceManager(), idServicio);
 	}
-	
+
 	public List<ServiciosAdicionales> darServiciosAdicionales(){
 		return sqlServicioAdicional.darServiciosAdicionales(pmf.getPersistenceManager());
 	}
-	
+
 	public ServiciosAdicionales darServicioAdicionalPorId(long idServicioAdicional){
 		return sqlServicioAdicional.darServicioAdicionalPorId(pmf.getPersistenceManager(), idServicioAdicional);
 	}
-	
+
 	public List<TiposHabitacion> darTiposHabitacion(){
 		return sqlTipoHabitacion.darTiposHabitacion(pmf.getPersistenceManager());
 	}
-	
+
 	public TiposHabitacion darTipoHabitacionPorId(long idTipoHabitacion){
 		return sqlTipoHabitacion.darTipoHabitacionPorId(pmf.getPersistenceManager(), idTipoHabitacion);
 	}
-	
+
 	public List<Usuarios> darUsuarios(){
 		return sqlUsuario.darUsuarios(pmf.getPersistenceManager());
 	}
-	
-	
+
+
 	public List<VentaProductos> darVentasProducto(){
 		return sqlVentaProducto.darVentasProducto(pmf.getPersistenceManager());
 	}
-	
+
 	public VentaProductos darVentaProductoPorId(long idVentaProducto){
 		return sqlVentaProducto.darVentaProductoPorId(pmf.getPersistenceManager(), idVentaProducto);
 	}
@@ -1349,4 +1345,173 @@ public class PersistenciaHotelAndes
 	public Usuarios darUsuario(long cedula){
 		return sqlUsuario.darUsuarioPorCedula(pmf.getPersistenceManager(), cedula);
 	}
+
+	public List dineroServiciosPorHabitacion(){
+		List<long []> resp = new LinkedList<long []> ();
+		String sql = "SELECT IDHABITACION, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM(SELECT IDHABITACION, PRECIO FROM((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE('2019-01-01', 'YYYY-MM-DD'))A INNER JOIN ESTADIAS ON A.IDESTADIA = ESTADIAS.IDESTADIA))GROUP BY IDHABITACION";
+		//System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			long [] datosResp = new long [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+
+	public List topPopulares(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NOMBRESERVICIO, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM ((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE('2019-01-01', 'YYYY-MM-DD') AND FECHA < TO_DATE('2019-12-31', 'YYYY-MM-DD'))A INNER JOIN SERVICIOS ON A.IDSERVICIO = SERVICIOS.IDSERVICIO) GROUP BY A.IDSERVICIO, NOMBRESERVICIO ORDER BY SUM(PRECIO) DESC FETCH FIRST 20 ROWS ONLY";
+		//System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [2];
+
+			datosResp [0] = ((String) tupla [0]).toString();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+
+	}
+
+	public List indiceOcupacion(){
+		List<long []> resp = new LinkedList<long []> ();
+		String sql = "SELECT IDHABITACION, (NUMEROPERSONAS / CAPACIDAD * 100) AS PORCENTAJEOCUPACION FROM (ESTADIAS A INNER JOIN HABITACIONES B ON A.IDHABITACION = B.NUMEROHABITACION) INNER JOIN TIPOSHABITACION D ON TIPOHABITACION = D.IDTIPOHABITACION";
+		//System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object []> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			long [] datosResp = new long [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+
+	}
+
+	public List consumoPorUsuarioPorFecha(long idCliente, String fechaI, String fechaF){
+		List<long []> resp = new LinkedList<>();
+		String sql = "SELECT E.IDCLIENTE, SUM(F.PRECIO) AS CONSUMO_PERSONA FROM FACTURAS F INNER JOIN ESTADIAS E ON F.IDESTADIA = E.IDESTADIA WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE(?, 'YYYY-MM-DD') AND FECHA < TO_DATE(?, 'YYYY-MM-DD') AND E.IDCLIENTE = ? GROUP BY (E.IDCLIENTE)";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(fechaI, fechaF, idCliente);
+		List<Object []> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			long [] datosResp = new long [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+	public List serviciosPrecioEnRango(long abajo, long arriba){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT DISTINCT B.IDSERVICIO, B.NOMBRESERVICIO, PRECIO FROM FACTURAS A INNER JOIN SERVICIOS B ON A.IDSERVICIO = B.IDSERVICIO WHERE PRECIO BETWEEN ? AND ?";
+		//System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(abajo, arriba);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+
+	public List serviciosFechaEnRango(String inicio, String fin){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT DISTINCT B.IDSERVICIO, B.NOMBRESERVICIO FROM FACTURAS A INNER JOIN SERVICIOS B ON A.IDSERVICIO = B.IDSERVICIO WHERE FECHA > TO_DATE(?, 'YYYY-MM-DD') AND FECHA < TO_DATE(?, 'YYYY-MM-DD')";
+		//System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+
+	public List serviciosPorEmpleado(long numDocEmpleado){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT DISTINCT B.IDSERVICIO, B.NOMBRESERVICIO FROM FACTURAS A INNER JOIN SERVICIOS B ON A.IDSERVICIO = B.IDSERVICIO WHERE  NUMDOCEMPLEADO = ?";
+		//System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(numDocEmpleado);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+	public List verBuenosClientes(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT D.IDCLIENTE, E.NOMBRE, TOTALCONSUMIDO, TOTALDIAS FROM ( ((SELECT  IDCLIENTE, SUM (PRECIO) AS TOTALCONSUMIDO FROM( (SELECT * FROM FACTURAS INNER JOIN ESTADIAS ON FACTURAS.IDESTADIA = ESTADIAS.IDESTADIA)) c GROUP BY C.IDCLIENTE, IDCLIENTE )D FULL OUTER JOIN" +  
+				"(SELECT *  FROM( SELECT IDCLIENTE, SUM(TOTAL) AS TOTALDIAS, A.NOMBRE FROM( SELECT IDCLIENTE, (FECHASALIDA - FECHALLEGADA ) as TOTAL, USUARIOS.NOMBRE FROM ESTADIAS, USUARIOS WHERE ESTADIAS.IDCLIENTE IS NOT NULL AND ESTADIAS.IDCLIENTE = USUARIOS.NUMERODOCUMENTO)A GROUP BY IDCLIENTE, A.NOMBRE) )E ON E.IDCLIENTE = D.IDCLIENTE))" + 
+				"WHERE (TOTALCONSUMIDO > 1500000 OR TOTALDIAS > 7)";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [4];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+
+	}
+
+	public List serviciosPocaDemanda(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT IDSERVICIO, NOMBRESERVICIO, MAX (TOTFACTURAS) AS TOTALFACTURASSEMANA FROM( SELECT SERVICIOS.IDSERVICIO, SERVICIOS.NOMBRESERVICIO , to_char(FECHA - 7/24,'IYYY') AS ANIO, to_char(FECHA - 7/24,'IW') AS SEMANA , COUNT(NUMFACTURA) AS TOTFACTURAS FROM FACTURAS FULL OUTER JOIN SERVICIOS ON SERVICIOS.IDSERVICIO = FACTURAS.IDSERVICIO " +
+		" GROUP BY SERVICIOS.IDSERVICIO, SERVICIOS.NOMBRESERVICIO, to_char(FECHA - 7/24,'IYYY'), to_char(FECHA - 7/24,'IW') " +
+		" HAVING  (to_char(FECHA - 7/24,'IYYY') IS NULL OR to_char(FECHA - 7/24,'IYYY') = 2019) ) "	+
+		" GROUP BY IDSERVICIO, NOMBRESERVICIO HAVING MAX (TOTFACTURAS) < 3 ";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+
 }

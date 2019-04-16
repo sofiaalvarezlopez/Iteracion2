@@ -1,0 +1,61 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Consultas",
+		  "options":
+			[
+				{
+					"label": "Dinero recolectado por servicios por habitacion",
+					"event": "dineroServiciosPorHabitacion"
+				},
+				
+				{
+					"label": "20 servicios mas populares",
+					"event": "topPopulares"
+				},
+				
+				{
+					"label": "Indice ocupacion de habitaciones",
+					"event": "indiceOcupacion"
+				},
+				
+				{
+					"label": "Mostrar servicios por caracteristica",
+					"event": "serviciosCaracteristica"
+				},
+				{
+					"label": "Ver consumo por usuario en rango de fechas",
+					"event": "consumoPorUsuarioPorFecha"
+				},
+				{
+					"label": "Analizar la operacion de HotelAndes",
+					"event": "operacionHotelAndes"
+				},
+				{
+					"label": "Ver buenos clientes",
+					"event": "verBuenosClientes"
+				},
+				{
+					"label": "Ver servicios con poca demanda",
+					"event": "serviciosPocaDemanda"
+				}
+			]
+		},
+		{
+		"menuTitle": "Acerca de",
+		"options":
+			[
+				{
+					"label": "Acerca de",
+					"event": "acercaDe"
+				}
+			]
+		}	
+		
+	]
+}
+	

@@ -1,0 +1,54 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Registrar convención",
+		  "options":
+			[
+				{
+					"label": "Crear plan para una convencion",
+					"event": "crearPlanConvencion"
+				},
+				{
+					"label": "Registrar una convención",
+					"event": "crearConvencion"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Cancelar convencion",
+		  "options":
+			[
+				{
+					"label": "Cancelar convencion",
+					"event": "cancelarConvencion"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Finalizar convencion",
+		  "options":
+			[
+				{
+					"label": "Finalizar convencion",
+					"event": "finalizarConvencion"
+				}
+			]
+		},
+		
+		{ "menuTitle": "Acerca de ...",
+		  "options":
+			[
+				{
+					"label": "Acerca de ...",
+					"event": "acercaDe"
+				}
+			]
+		}		
+		
+	]
+}
+	

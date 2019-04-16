@@ -9,6 +9,7 @@ public class Reservas implements VOReserva
 	private long idServicio;
 	private long idHorario;
 	private long idConvencion;
+	private long capacidad;
 	
 	public Reservas(){
 		numReserva = 0;
@@ -17,15 +18,17 @@ public class Reservas implements VOReserva
 		idServicio = 0;
 		idHorario = 0;
 		setIdConvencion(0);
+		setCapacidad(0);
 	}
 	
-	public Reservas(long idReserva, long idConsumo, long idEstadia, long idServicio, long idHorario, long idConvencion){
+	public Reservas(long idReserva, long idConsumo, long idEstadia, long idServicio, long idHorario, long idConvencion, long capacidad){
 		this.numReserva = idReserva;
 		this.idConsumo = idConsumo;
 		this.idEstadia = idEstadia;
 		this.idServicio = idServicio;
 		this.idHorario = idHorario;
 		this.setIdConvencion(idConvencion);
+		this.setCapacidad(capacidad);
 	}
 
 	public long getNumReserva() {
@@ -97,6 +100,14 @@ public class Reservas implements VOReserva
 
 	public void setIdConvencion(long idConvencion) {
 		this.idConvencion = idConvencion;
+	}
+
+	public long getCapacidad() {
+		return capacidad;
+	}
+
+	public void setCapacidad(long capacidad) {
+		this.capacidad = capacidad;
 	}
 	
 	

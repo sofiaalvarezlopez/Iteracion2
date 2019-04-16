@@ -489,10 +489,10 @@ public class HotelAndes {
 	/* ****************************************************************
 	 * 			Métodos para manejar Reserva
 	 ********************************************************/
-	public Reservas adicionarReserva(long numReserva, long idEstadia, long idServicio, long idHorario, long idConsumo, long idConvencion)
+	public Reservas adicionarReserva(long numReserva, long idEstadia, long idServicio, long idHorario, long idConsumo, long idConvencion, long capacidad)
 	{
 		log.info ("Adicionando Reserva ");
-		Reservas r = pp.adicionarReserva(numReserva, idEstadia, idServicio, idHorario, idConsumo, idConvencion);
+		Reservas r = pp.adicionarReserva(numReserva, idEstadia, idServicio, idHorario, idConsumo, idConvencion, capacidad);
         log.info ("Adicionando Reserva: " + r);
         return r;
 	}
@@ -535,7 +535,71 @@ public class HotelAndes {
 		return pp.cambiarFacturasAPagada(idFactura);
 	}
 	
+	public List<long []> dineroServiciosPorHabitacion ()
+	{
+
+        log.info ("Listando dinero servicios por habitacion");
+        List tuplas = pp.dineroServiciosPorHabitacion();
+        log.info ("Listando dinero servicios por habitacion: Listo!");
+        return tuplas;
+	}
 	
+	public List<Object []> topPopulares(){
+		log.info ("Listando top 20");
+        List tuplas = pp.topPopulares();
+        log.info ("Listando top 20: Listo!");
+        return tuplas;
+	}
+	
+	public List<long []> indiceOcupacion(){
+		log.info ("Mostrando indice ocupacion");
+        List tuplas = pp.indiceOcupacion();
+        log.info ("Mostrado indice ocupacion");
+        return tuplas;
+	}
+	
+	public List<long []> consumoPorUsuarioPorFecha(long idCliente, String fechaI, String fechaF){
+		log.info ("Mostrando consumo por usuario por fecha");
+        List tuplas = pp.consumoPorUsuarioPorFecha(idCliente, fechaI, fechaF);
+        log.info ("Mostrado consumo por usuario por fecha");
+        return tuplas;
+	}
+	
+	public List<Object []> serviciosPrecioEnRango(long abajo, long arriba){
+		log.info ("Mostrando servicios en rango " + abajo + "-" + arriba);
+        List tuplas = pp.serviciosPrecioEnRango(abajo, arriba);
+        log.info ("Mostraddo servicios en rango " + abajo + "-" + arriba);
+        return tuplas;
+	}
+	
+	public List<Object []> serviciosFechaEnRango(String inicio, String fin){
+		log.info ("Mostrando servicios en rango " + inicio + "-" + fin);
+        List tuplas = pp.serviciosFechaEnRango(inicio, fin);
+        log.info ("Mostraddo servicios en rango " + inicio + "-" + fin);
+        return tuplas;
+	}
+	
+	public List<Object []> serviciosPorEmpleado(long idEmpleado){
+		log.info ("Mostrando servicios del empleado: " + idEmpleado + "\n");
+        List tuplas = pp.serviciosPorEmpleado(idEmpleado);
+        log.info ("Mostrado servicios del empleado: " + idEmpleado + "\n");
+        return tuplas;
+	}
+	
+	public List<Object []> verBuenosClientes(){
+		log.info ("Mostrando buenos clientes");
+        List tuplas = pp.verBuenosClientes();
+        log.info ("Mostrado buenos clientes");
+        return tuplas;
+	}
+	
+	public List<Object []> verServiciosPocaDemanda(){
+		log.info("Mostrando servicios poca demanda");
+		List tuplas = pp.serviciosPocaDemanda();
+		log.info("Mostrado servicios poca demanda");
+		return tuplas;
+
+	}
 	
 	
 	
