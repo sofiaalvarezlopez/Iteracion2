@@ -1425,8 +1425,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		Long idConvencion = Long.parseLong(idC);
 		String desres = JOptionPane.showInputDialog(this, "Digite la cantidad de habitaciones que desea desreservar");
 		int desReservas = Integer.parseInt(desres);
+		String servs = JOptionPane.showInputDialog(this, "Digite los ids de las reservas que desea desreservar. \n Ej: 2,5");
+		String[] idsServicios = servs.split(",");		
 		try{
-			hotelAndes.rf13(idConvencion, desReservas);
+			hotelAndes.rf13(idConvencion, desReservas, idsServicios);
 			JOptionPane.showMessageDialog(this, "Se desreservo exitosamente");
 		}
 		catch (Exception e) {

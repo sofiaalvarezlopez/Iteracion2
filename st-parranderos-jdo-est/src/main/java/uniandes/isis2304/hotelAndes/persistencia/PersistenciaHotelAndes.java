@@ -864,7 +864,7 @@ public class PersistenciaHotelAndes
 		}
 
 	}
-	
+
 	public Horarios adicionarHorarioServiciosConvencion( long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1990,7 +1990,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List<Object []> darReservasEnFechasRF12(Timestamp fechaInicio, Timestamp fechaFin, long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT NUMRESERVA, IDESTADIA, CAPACIDAD FROM RESERVAS INNER JOIN HORARIOS ON RESERVAS.IDHORARIO = HORARIOS.IDHORARIO WHERE RESERVAS.IDSERVICIO = ? AND ((FECHAINICIO < ? AND FECHAFIN> ?) OR (FECHAINICIO BETWEEN  ? AND ?) OR(FECHAFIN BETWEEN ? AND ?))";
@@ -2008,7 +2008,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List<Object []> darVentasProductorf12(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, CAPACIDAD FROM VENTAPRODUCTOS WHERE IDSERVICIO = ?";
@@ -2025,7 +2025,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List<Long []> darSalonesrf12(long idServicio){
 		List<Long []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, CAPACIDAD FROM SALONES WHERE IDSERVICIO = ?";
@@ -2042,7 +2042,7 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
+
 	public List<Object []> darServiciosAdicionalesrf12(long idServicio){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT IDSERVICIO, CAPACIDAD FROM SERVICIOSADICIONALES WHERE IDSERVICIO = ?";
@@ -2059,8 +2059,8 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
-	
-	
+
+
 	public long darTotalCapacidad(Timestamp fechaInicio, Timestamp fechaFin, long idServicio){
 		String sql = "SELECT NUMRESERVA, CAPACIDAD FROM RESERVAS INNER JOIN HORARIOS ON RESERVAS.IDHORARIO = HORARIOS.IDHORARIO WHERE RESERVAS.IDSERVICIO = ? AND ((FECHAINICIO < ? AND FECHAFIN> ?) OR (FECHAINICIO BETWEEN  ? AND ?) OR(FECHAFIN BETWEEN ? AND ?))";
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
@@ -2086,7 +2086,7 @@ public class PersistenciaHotelAndes
 	public BigDecimal selectMaxHorario(){
 		return sqlHorario.selectMaxHorario(pmf.getPersistenceManager());
 	}
-	
+
 	public BigDecimal selectMaxReserva(){
 		return sqlReserva.selectMaxReserva(pmf.getPersistenceManager());
 	}
@@ -2185,9 +2185,9 @@ public class PersistenciaHotelAndes
 						Long [] datosResp = new Long [2];
 
 						datosResp [1] = (tupla [1]);
-						
+
 						if(cantidadPersonas > (tupla [1])){
-							
+
 							throw new Exception("El servicio no tiene la capacidad requerida");
 						}
 						else if(!darReservasEnFechasRF12(fechaInicio, fechaFin, idServicios).isEmpty())
@@ -2195,7 +2195,7 @@ public class PersistenciaHotelAndes
 							throw new Exception("Ya hay una reserva para ese salon");
 						}
 					}
-					
+
 
 				}
 				else if(!ventaProductos.isEmpty())
@@ -2207,14 +2207,14 @@ public class PersistenciaHotelAndes
 
 						datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
 						datosResp [1] = ((Double) tupla [1]).doubleValue();
-						
+
 						if(((Double) tupla [1]).doubleValue() - cantidad < cantidadPersonas)
 						{
 							throw new Exception ("no hay sillas disponibles para ese servicio");
 						}
 					}
-				
-					
+
+
 				}
 				else if (!serviciosAdicionales.isEmpty())
 				{
@@ -2225,14 +2225,14 @@ public class PersistenciaHotelAndes
 						datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
 						datosResp [1] = ((Double) tupla [1]).doubleValue();
 						if(cantidadPersonas > ((Double) tupla [1]).doubleValue()){
-							
+
 							throw new Exception("El servicio no tiene la capacidad requerida");
 						}
 						else if(!darReservasEnFechasRF12(fechaInicio, fechaFin, idServicios).isEmpty())
 						{
 							throw new Exception("Ya hay una reserva para ese servicio Adicional");
 						}
-						
+
 					}
 
 				}
@@ -2242,7 +2242,7 @@ public class PersistenciaHotelAndes
 				adicionarReserva(maxNumReserva, null, idServicios, maxHorario, null, idConvencion, Long.valueOf(cantidadPersonas).longValue());
 				maxNumReserva++;
 				maxHorario++;
-				
+
 			}
 
 			tx.commit();
@@ -2280,8 +2280,25 @@ public class PersistenciaHotelAndes
 			tx.commit();}
 	}
 
+	public List<Long []> darReservasPorConvencion(long idReserva, long idConvencion){
+		List<Long []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMRESERVA,IDCONVENCION FROM RESERVAS  WHERE NUMRESERVA = ? AND IDCONVENCION = ?";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idReserva, idConvencion);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Long [] datosResp = new Long [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
 	@SuppressWarnings("rawtypes")
-	public void rf13(Long idConvencion, int desReservas) throws Exception{
+	public void rf13(Long idConvencion, int desReservas, String[] idsServicios) throws Exception{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
 		tx.begin();
 		try{
@@ -2302,10 +2319,33 @@ public class PersistenciaHotelAndes
 				tx.rollback();
 				throw new Exception("No se pudo desreservar 1");
 			}
+			
 			for (int i = 0; i < desReservas; i++)
 			{
 				Long cant =  (Long) resp.get(i)[0];
 				sqlEstadia.eliminarEstadia(pmf.getPersistenceManager(), cant);
+			}
+			if(idsServicios.length > 0)
+			{	
+				for (int i = 0; i < idsServicios.length; i++) {
+					Long idReserva = Long.parseLong(idsServicios[i]);
+					List<Long []> listica = darReservasPorConvencion(idReserva, idConvencion);
+					if(listica.isEmpty())
+					{
+						throw new Exception("No se pudo encontrar la reserva");
+					}
+					else{
+						for ( Long [] tupla : listica)
+						{
+							Long [] datosResp = new Long [2];
+
+							datosResp [0] = (tupla [0]);
+							
+							sqlReserva.eliminarReserva(pmf.getPersistenceManager(), datosResp [0]);
+						}
+						
+					}
+				}
 			}
 			tx.commit();
 

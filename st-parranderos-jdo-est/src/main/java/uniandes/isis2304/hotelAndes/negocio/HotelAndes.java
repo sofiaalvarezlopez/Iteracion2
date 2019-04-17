@@ -760,8 +760,8 @@ public class HotelAndes {
 		pp.rf12(idPlan, tipo, costo, descuentoAlojamiento, fecha, idDescuento, idServicio, idProducto, valor, limiteVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta, rpta2);
 	}
 
-	public void rf13(Long idConvencion, int desReservas) throws Exception {
-		pp.rf13(idConvencion, desReservas);
+	public void rf13(Long idConvencion, int desReservas, String[] idsServicios) throws Exception {
+		pp.rf13(idConvencion, desReservas, idsServicios);
 	}
 
 	public void rf14(Long idConvencion) throws Exception{
