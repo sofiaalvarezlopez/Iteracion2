@@ -19,7 +19,7 @@ public class Estadias implements VOEstadia
 	private int checkin; 
 	private int pagado;
 	private Long idCliente;
-	private long idConvencion;
+	private Long idConvencion;
 	
 	
 	public Estadias(){
@@ -29,13 +29,13 @@ public class Estadias implements VOEstadia
 		numeroPersonas = 0;
 		checkin = 0;
 		pagado = 0;
-		setIdCliente(0);
+		idCliente = Long.valueOf("0");
+		idConvencion = Long.valueOf("0");
 		setIdPlan(0);
 		setIdHabitacion(0);
-		setIdConvencion(0);
 	}
 	
-	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, long idPlan, long idHabitacion, int checkin, int pagado, Long idCliente, long idConvencion){
+	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, long idPlan, long idHabitacion, int checkin, int pagado, Long idCliente, Long idConvencion){
 		this.idEstadia = idEstadia;
 		this.fechaLlegada = fechaLlegada;
 		this.fechaSalida = fechaSalida;
@@ -160,21 +160,21 @@ public class Estadias implements VOEstadia
 		this.pagado = pagado;
 	}
 	
-	public long getIdCliente() {
+	public Long getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(long idCliente) {
+	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
 	}
 
 	
 
-	public long getIdConvencion() {
+	public Long getIdConvencion() {
 		return idConvencion;
 	}
 
-	public void setIdConvencion(long idConvencion) {
+	public void setIdConvencion(Long idConvencion) {
 		this.idConvencion = idConvencion;
 	}
 	

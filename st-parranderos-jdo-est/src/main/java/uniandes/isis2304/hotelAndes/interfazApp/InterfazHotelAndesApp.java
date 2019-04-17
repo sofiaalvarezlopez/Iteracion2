@@ -1422,7 +1422,15 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public void finalizarConvencion(){
-
+		String idC = JOptionPane.showInputDialog(this, "Digite el id de la convencion");
+		Long idConvencion = Long.parseLong(idC);
+		try{
+			hotelAndes.rf14(idConvencion);
+			JOptionPane.showMessageDialog(this, "Se ha logrado finalizar la convencion");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 	/**

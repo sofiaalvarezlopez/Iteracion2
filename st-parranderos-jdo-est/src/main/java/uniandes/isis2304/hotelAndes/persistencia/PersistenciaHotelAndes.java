@@ -842,7 +842,7 @@ public class PersistenciaHotelAndes
 			pm.close();
 		}
 	}
-	
+
 	public Horarios adicionarHorarioConvencion( long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -1974,54 +1974,54 @@ public class PersistenciaHotelAndes
 					throw new Exception("No fue posible agregar la convencion: No hay habitaciones suficientes");	
 				}
 			}
-//			for(int j = 0; j<rpta2.length; j+=4)
-//			{
-//				String tipoServicio = rpta2[j];
-//				String cantidadP = rpta2[j+1];
-//				String fechaIni = rpta2[j+2];
-//				String fechaFini = rpta[j+3];
-//				long idServicios = Long.parseLong(tipoServicio);
-//				int cantidadPersonas = Integer.parseInt(cantidadP);
-//				Timestamp fechaInicioServicio;
-//				if(fechaIni == null || fechaIni == "")
-//				{
-//					fechaInicioServicio = null;
-//				}
-//				else
-//				{
-//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-//					try
-//					{
-//						Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaIni)).getTime());
-//						fechaInicioServicio = ts;
-//					}
-//					catch (Exception e)
-//					{
-//						fechaInicioServicio = null;
-//					}
-//
-//				}
-//				
-//				Timestamp fechaFinServicio;
-//				if(fechaFini == null || fechaFini == "")
-//				{
-//					fechaFinServicio = null;
-//				}
-//				else
-//				{
-//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-//					try
-//					{
-//						Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaFini)).getTime());
-//						fechaFinServicio = ts;
-//					}
-//					catch (Exception e)
-//					{
-//						fechaFinServicio = null;
-//					}
-//				}
-//			}
-			
+			//			for(int j = 0; j<rpta2.length; j+=4)
+			//			{
+			//				String tipoServicio = rpta2[j];
+			//				String cantidadP = rpta2[j+1];
+			//				String fechaIni = rpta2[j+2];
+			//				String fechaFini = rpta[j+3];
+			//				long idServicios = Long.parseLong(tipoServicio);
+			//				int cantidadPersonas = Integer.parseInt(cantidadP);
+			//				Timestamp fechaInicioServicio;
+			//				if(fechaIni == null || fechaIni == "")
+			//				{
+			//					fechaInicioServicio = null;
+			//				}
+			//				else
+			//				{
+			//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			//					try
+			//					{
+			//						Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaIni)).getTime());
+			//						fechaInicioServicio = ts;
+			//					}
+			//					catch (Exception e)
+			//					{
+			//						fechaInicioServicio = null;
+			//					}
+			//
+			//				}
+			//				
+			//				Timestamp fechaFinServicio;
+			//				if(fechaFini == null || fechaFini == "")
+			//				{
+			//					fechaFinServicio = null;
+			//				}
+			//				else
+			//				{
+			//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			//					try
+			//					{
+			//						Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaFini)).getTime());
+			//						fechaFinServicio = ts;
+			//					}
+			//					catch (Exception e)
+			//					{
+			//						fechaFinServicio = null;
+			//					}
+			//				}
+			//			}
+
 			tx.commit();
 		}
 		catch(Exception e){
@@ -2049,9 +2049,9 @@ public class PersistenciaHotelAndes
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		if(tx.isActive()){
-			
-			
-			
+
+
+
 			tx.commit();}
 	}
 
@@ -2083,7 +2083,7 @@ public class PersistenciaHotelAndes
 				sqlEstadia.eliminarEstadia(pmf.getPersistenceManager(), cant);
 			}
 			tx.commit();
-		
+
 		}
 		catch(Exception e){
 			tx.rollback();
@@ -2097,10 +2097,82 @@ public class PersistenciaHotelAndes
 			}
 			pmf.getPersistenceManager().close();
 		}
-		
+
+
+
 	}
 
-	
+	public void rf14(Long idConvencion) throws Exception{
+		Transaction tx=pmf.getPersistenceManager().currentTransaction();
+		tx.begin();
+		try{
+			List<Object []> resp = new LinkedList<>();
+			String sql = "SELECT NUMFACTURA, FUEPAGADA FROM FACTURAS WHERE IDCONVENCION = ?  AND FUEPAGADA = 0";
+			Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+			q.setParameters(idConvencion);
+			List<Object []> tuplas = q.executeList();
+			if(!tuplas.isEmpty()){
+				for ( Object[] tupla : tuplas)
+				{
+					Object [] datosResp = new Object [2];
+
+					datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+					datosResp [1] = ((String) tupla [1]).toString ();
+					resp.add (datosResp);
+				}
+				for (int i = 0; i < tuplas.size(); i++)
+				{
+					Long id =  (Long) resp.get(i)[0];
+					sqlFactura.cambiarAPagada(pmf.getPersistenceManager(), id);
+				}
+			}
+			List<Object []> resp1 = new LinkedList<>();
+			String sql1 = "SELECT IDESTADIA, NUMEROPERSONAS FROM ESTADIAS WHERE IDCONVENCION = ? AND PAGADO = 0 AND CHECKIN = 1";
+			Query q1 = pmf.getPersistenceManager().newQuery(SQL, sql1);
+			q1.setParameters(idConvencion);
+			List<Object []> tuplas1 = q1.executeList();
+			if(!tuplas1.isEmpty()){
+				for ( Object[] tupla : tuplas1)
+				{
+					Object [] datosResp = new Object [2];
+
+					datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+					datosResp [1] = ((BigDecimal) tupla [1]).longValue();
+					resp1.add (datosResp);
+				}
+				for (int i = 0; i < resp1.size(); i++)
+				{
+					Long id =  (Long) resp1.get(i)[0];
+					List facturas = darFacturaPorIdEstadia(id);
+					
+					for(Object l: facturas)
+					{
+						
+						cambiarFacturasAPagada(((BigDecimal) l).longValue());
+					}
+					cambiarEstadiaAPagada(id);
+				}
+			}
+			sqlConvencion.cambiarAPagada(pmf.getPersistenceManager(), idConvencion);
+			tx.commit();
+
+		}
+		catch(Exception e){
+			tx.rollback();
+			throw new Exception("No se pudo finalizar la convencion");
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();;
+			}
+			pmf.getPersistenceManager().close();
+		}
+
+	}
+
+
 
 
 }

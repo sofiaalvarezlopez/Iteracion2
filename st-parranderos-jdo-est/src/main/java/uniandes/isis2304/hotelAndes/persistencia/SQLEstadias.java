@@ -18,7 +18,7 @@ public class SQLEstadias {
 		this.pha = pha;
 	}
 	
-	public long adicionarEstadia(PersistenceManager pm, long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, Long numDoc, long idConvencion) 
+	public long adicionarEstadia(PersistenceManager pm, long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, Long numDoc, Long idConvencion) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO ESTADIAS"  + "(IDESTADIA, FECHALLEGADA, FECHASALIDA, NUMEROPERSONAS, IDPLAN, IDHABITACION, CHECKIN, PAGADO, IDCLIENTE, IDCONVENCION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);

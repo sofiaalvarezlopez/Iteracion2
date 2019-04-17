@@ -759,6 +759,11 @@ public class HotelAndes {
 	public void rf13(Long idConvencion, int desReservas) throws Exception {
 		pp.rf13(idConvencion, desReservas);
 	}
+
+	public void rf14(Long idConvencion) throws Exception{
+		pp.rf14(idConvencion);
+		
+	}
 	
 	
 	
