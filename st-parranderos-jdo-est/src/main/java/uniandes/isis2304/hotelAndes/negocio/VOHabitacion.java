@@ -2,9 +2,9 @@ package uniandes.isis2304.hotelAndes.negocio;
 
 public interface VOHabitacion {
 
-	long getNumeroHabitacion();
+	Long getNumeroHabitacion();
 
-	void setNumeroHabitacion(long numeroHabitacion);
+	void setNumeroHabitacion(Long numeroHabitacion);
 
 	String toString();
 

@@ -778,6 +778,18 @@ public class HotelAndes {
 		pp.rf16Servicio(resp);
 		
 	}
+
+	public void rf15Habitaciones(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio,
+			Timestamp fechaFin) throws Exception{
+		
+		pp.rf15Habitaciones(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+		
+	}
+
+	public void rf16Habitacion(String[] resp) throws Exception {
+		pp.rf16Habitacion(resp);
+		
+	}
 	
 	
 	

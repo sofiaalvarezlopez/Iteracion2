@@ -1,5 +1,6 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -17,20 +18,20 @@ public class SQLHabitaciones {
 		this.pha = pha;
 	}
 	
-	public long adicionarHabitacion(PersistenceManager pm, long numHabitacion, long idTipoHabitaciones) 
+	public Long adicionarHabitacion(PersistenceManager pm, Long numHabitacion, Long idTipoHabitaciones) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO HABITACIONES"  + "(NUMEROHABITACION, TIPOHABITACION) VALUES (?, ?)");
 		q.setParameters(numHabitacion, idTipoHabitaciones);
-		return (long) q.executeUnique();
+		return (Long) q.executeUnique();
 	}
 	
-	public long eliminarHabitacion(PersistenceManager pm, long numHabitacion){
+	public Long eliminarHabitacion(PersistenceManager pm, Long numHabitacion){
 		Query q = pm.newQuery(SQL, "DELETE FROM HABITACIONES" + " WHERE NUMEROHABITACION = ?");
 		q.setParameters(numHabitacion);
-		return (long) q.executeUnique();
+		return (Long) q.executeUnique();
 	}
 	
-	public Habitaciones darHabitacionPorNumeroHabitacion (PersistenceManager pm, long numHabitacion) 
+	public Habitaciones darHabitacionPorNumeroHabitacion (PersistenceManager pm, Long numHabitacion) 
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM HABITACIONES" + " WHERE NUMEROHABITACION = ?");
 		q.setResultClass(Habitaciones.class);
@@ -43,6 +44,12 @@ public class SQLHabitaciones {
 		Query q = pm.newQuery(SQL, "SELECT * FROM HABITACIONES");
 		q.setResultClass(Habitaciones.class);
 		return (List<Habitaciones>) q.executeList();
+	}
+	
+	public Long darTipoHabitacionDeHabitacion(PersistenceManager pm, Long numHabitacion){
+		Query q = pm.newQuery(SQL, "SELECT TIPOHABITACION FROM HABITACIONES" + " WHERE NUMEROHABITACION = ?");
+		q.setParameters(numHabitacion);
+		return ((BigDecimal) q.executeUnique()).longValue();
 	}
 	
 	

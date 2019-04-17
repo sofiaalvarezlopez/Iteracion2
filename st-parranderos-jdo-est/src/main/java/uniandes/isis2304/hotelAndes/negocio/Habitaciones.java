@@ -4,16 +4,16 @@ package uniandes.isis2304.hotelAndes.negocio;
 
 public class Habitaciones implements VOHabitacion 
 {
-	private long numeroHabitacion;
-	private long tipoHabitacion;
+	private Long numeroHabitacion;
+	private Long tipoHabitacion;
 	
 	
 	public Habitaciones(){
-		numeroHabitacion = 0;
-		setTipoHabitacion(0);
+		numeroHabitacion = 0L;
+		setTipoHabitacion(0L);
 	}
 	
-	public Habitaciones(long numeroHabitacion, long idTipoHabitacion) {
+	public Habitaciones(Long numeroHabitacion, Long idTipoHabitacion) {
 		this.numeroHabitacion = numeroHabitacion;
 		this.setTipoHabitacion(idTipoHabitacion);
 	}
@@ -22,15 +22,15 @@ public class Habitaciones implements VOHabitacion
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHabitacion#getNumeroHabitacion()
 	 */
 	@Override
-	public long getNumeroHabitacion() {
+	public Long getNumeroHabitacion() {
 		return numeroHabitacion;
 	}
 
 	/* (non-Javadoc)
-	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHabitacion#setNumeroHabitacion(long)
+	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOHabitacion#setNumeroHabitacion(Long)
 	 */
 	@Override
-	public void setNumeroHabitacion(long numeroHabitacion) {
+	public void setNumeroHabitacion(Long numeroHabitacion) {
 		this.numeroHabitacion = numeroHabitacion;
 	}
 	
@@ -46,14 +46,14 @@ public class Habitaciones implements VOHabitacion
 	/**
 	 * @return the idTipoHabitacion
 	 */
-	public long getTipoHabitacion() {
+	public Long getTipoHabitacion() {
 		return tipoHabitacion;
 	}
 
 	/**
 	 * @param idTipoHabitacion the idTipoHabitacion to set
 	 */
-	public void setTipoHabitacion(long tipoHabitacion) {
+	public void setTipoHabitacion(Long tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 

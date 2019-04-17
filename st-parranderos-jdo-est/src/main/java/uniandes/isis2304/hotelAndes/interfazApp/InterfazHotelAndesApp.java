@@ -749,7 +749,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			idConv = Long.parseLong(idConvencion);
 		}
 		try{
-		hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, cedula, idConv);}
+			hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, cedula, idConv);}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1448,17 +1448,13 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 	}
 
-	public void mantenimientoHabitaciones(){
-
-	}
-
-	public void mantenimientoServicios(){
+	public void mantenimientoHabitaciones() {
 		String idm = JOptionPane.showInputDialog(this, "Ingrese el id del mantenimiento");
 		Long idMantenimiento = Long.parseLong(idm);
 		String causa = JOptionPane.showInputDialog(this, "Ingrese la causa del mantenimiento");
-		String ids = JOptionPane.showInputDialog(this, "Ingrese los ids de servicios a mantener \n. Separe los ids con comas. \n Ejemplo: 2,11,3");
+		String ids = JOptionPane.showInputDialog(this, "Ingrese los ids de las habitaciones a mantener \n. Separe los ids con comas. \n Ejemplo: 28,7");
 		String[] arregloIds = ids.split(",");
-		String fechaIni = JOptionPane.showInputDialog("Ingrese la fecha  inicial de la reserva. " + "\n"
+		String fechaIni = JOptionPane.showInputDialog("Ingrese la fecha inicial del mantenimiento. " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
 		Timestamp fechaInicio;
 		if(fechaIni == null || fechaIni == "")
@@ -1479,7 +1475,62 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			}
 
 		}
-		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final de la reserva " + "\n"
+		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final del mantenimiento " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaFin;
+		if(fechaFini == null || fechaFini == "")
+		{
+			fechaFin = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaFini)).getTime());
+				fechaFin = ts;
+			}
+			catch (Exception e)
+			{
+				fechaFin = null;
+			}
+		}
+		try{
+			hotelAndes.rf15Habitaciones(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+			JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento los servicios");}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
+
+	public void mantenimientoServicios(){
+		String idm = JOptionPane.showInputDialog(this, "Ingrese el id del mantenimiento");
+		Long idMantenimiento = Long.parseLong(idm);
+		String causa = JOptionPane.showInputDialog(this, "Ingrese la causa del mantenimiento");
+		String ids = JOptionPane.showInputDialog(this, "Ingrese los ids de servicios a mantener \n. Separe los ids con comas. \n Ejemplo: 2,11,3");
+		String[] arregloIds = ids.split(",");
+		String fechaIni = JOptionPane.showInputDialog("Ingrese la fecha  inicial del mantenimiento " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaInicio;
+		if(fechaIni == null || fechaIni == "")
+		{
+			fechaInicio = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaIni)).getTime());
+				fechaInicio = ts;
+			}
+			catch (Exception e)
+			{
+				fechaInicio = null;
+			}
+
+		}
+		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final del mantenimiento " + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
 		Timestamp fechaFin;
 		if(fechaFini == null || fechaFini == "")
@@ -1500,11 +1551,23 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			}
 		}
 		hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
-		JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento los servicios");
+		JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento las habitaciones");
 
 	}
 
 	public void finMantenimientoHabitaciones(){
+		String servicito = JOptionPane.showInputDialog(this, "Digite el id de las habitaciones a sacar de mantenimiento, separados por comas. ej (20,11)");
+		if(servicito == null || servicito.equals("")){
+			JOptionPane.showMessageDialog(this, "No hay mantenimientos a finalizar");
+		}
+		String[] resp = servicito.split(",");
+		try{
+		hotelAndes.rf16Habitacion(resp);
+		JOptionPane.showMessageDialog(this, "Se finalizaron correctamente los mantenimientos");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 
 	}
 
@@ -1512,8 +1575,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String servicito = JOptionPane.showInputDialog(this, "Digite el id de los servicios a sacar de mantenimiento, separados por comas. ej (20,11)");
 		String[] resp = servicito.split(",");
 		try{
-		hotelAndes.rf16Servicio(resp);
-		JOptionPane.showMessageDialog(this, "Mantenimientos finalizados exitosamente");
+			hotelAndes.rf16Servicio(resp);
+			JOptionPane.showMessageDialog(this, "Mantenimientos finalizados exitosamente");
 		}
 		catch(Exception e){
 			JOptionPane.showMessageDialog(this, e.getMessage());

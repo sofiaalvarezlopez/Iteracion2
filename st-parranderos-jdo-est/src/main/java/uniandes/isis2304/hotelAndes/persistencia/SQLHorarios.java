@@ -19,7 +19,7 @@ public class SQLHorarios {
 		this.pha = pha;
 	}
 	
-	public long adicionarHorario(PersistenceManager pm, long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaINICIO, String horaFIN, Timestamp fechaFin) 
+	public long adicionarHorario(PersistenceManager pm, long idHorario, String duracion, Long idServicio, Timestamp fechaInicio, String dia, String horaINICIO, String horaFIN, Timestamp fechaFin) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO HORARIOS"  + "(IDHORARIO, DURACION, IDSERVICIO, FECHAINICIO, DIA, HORAINICIO, HORAFIN, FECHAFIN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(idHorario, duracion, idServicio, fechaInicio, dia, horaINICIO, horaFIN, fechaFin);

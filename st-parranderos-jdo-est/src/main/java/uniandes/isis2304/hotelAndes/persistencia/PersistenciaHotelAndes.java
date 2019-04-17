@@ -844,7 +844,7 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Horarios adicionarHorarioMantenimiento( long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
+	public Horarios adicionarHorarioMantenimiento( long idHorario, String duracion, Long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		try
@@ -1957,7 +1957,7 @@ public class PersistenciaHotelAndes
 		return resp;	
 	}
 
-	public List darHabitacionesLibresPorTipo(Timestamp fechaInicio, Timestamp fechaFin, long idTipo){
+	public List darHabitacionesLibresPorTipo(Timestamp fechaInicio, Timestamp fechaFin, Long idTipo){
 		List<Object []> resp = new LinkedList<> ();
 		String sql = "SELECT * FROM HABITACIONES WHERE NUMEROHABITACION NOT IN ( SELECT IDHABITACION FROM ESTADIAS  WHERE ((FECHALLEGADA < ? AND FECHASALIDA > ?) OR (FECHALLEGADA BETWEEN  ? AND ?) OR(FECHASALIDA BETWEEN ? AND ?))  )  AND TIPOHABITACION = ? ";
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
@@ -1972,6 +1972,25 @@ public class PersistenciaHotelAndes
 			resp.add (datosResp);
 		}
 		return resp;	
+	}
+
+	public List<Object []> darHabitacionesLibresEnFechas(Timestamp fechaInicio, Timestamp fechaFin, Long idHabitacion){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT IDESTADIA, FECHALLEGADA, FECHASALIDA, IDPLAN FROM ESTADIAS WHERE IDHABITACION = ? AND ((FECHALLEGADA < ? AND FECHASALIDA > ?) OR (FECHALLEGADA BETWEEN  ? AND ?) OR(FECHASALIDA BETWEEN ? AND ?)) ";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idHabitacion, fechaInicio, fechaFin, fechaInicio, fechaFin, fechaInicio, fechaFin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [4];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = new Date(((Timestamp) tupla [1]).getYear(), ((Timestamp) tupla [1]).getMonth(), ((Timestamp) tupla [1]).getDate());
+			datosResp [2] = new Date(((Timestamp) tupla [2]).getYear(), ((Timestamp) tupla [2]).getMonth(), ((Timestamp) tupla [2]).getDate());
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
 	}
 
 	public List<Object []> darReservasEnFechas(Timestamp fechaInicio, Timestamp fechaFin, long idServicio){
@@ -2041,6 +2060,41 @@ public class PersistenciaHotelAndes
 			resp.add (datosResp);
 		}
 		return resp;	
+	}
+
+	public List<Long []> darPrecioMayor(Long idTipoHab){
+		List<Long []> resp = new LinkedList<> ();
+		String sql = "SELECT PRECIOPORNOCHE, IDTIPOHABITACION FROM TIPOSHABITACION WHERE IDTIPOHABITACION = ?";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idTipoHab);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Long [] datosResp = new Long [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
+
+	public List<Long []> listaTipoMayor(Long precio){
+		List<Long []> resp = new LinkedList<> ();
+		String sql = "SELECT IDTIPOHABITACION, PRECIOPORNOCHE FROM TIPOSHABITACION WHERE PRECIOPORNOCHE > ? ORDER BY PRECIOPORNOCHE ";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(precio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Long [] datosResp = new Long [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue();
+			resp.add (datosResp);
+		}
+		return resp;	
+
 	}
 
 	public List<Object []> darServiciosAdicionalesrf12(long idServicio){
@@ -2319,7 +2373,7 @@ public class PersistenciaHotelAndes
 				tx.rollback();
 				throw new Exception("No se pudo desreservar 1");
 			}
-			
+
 			for (int i = 0; i < desReservas; i++)
 			{
 				Long cant =  (Long) resp.get(i)[0];
@@ -2340,10 +2394,10 @@ public class PersistenciaHotelAndes
 							Long [] datosResp = new Long [2];
 
 							datosResp [0] = (tupla [0]);
-							
+
 							sqlReserva.eliminarReserva(pmf.getPersistenceManager(), datosResp [0]);
 						}
-						
+
 					}
 				}
 			}
@@ -2459,7 +2513,6 @@ public class PersistenciaHotelAndes
 			tx.commit();
 		}
 		catch (Exception e) {
-			tx.rollback();
 			throw e;
 		}
 		finally
@@ -2473,6 +2526,123 @@ public class PersistenciaHotelAndes
 		}
 
 	}
+
+	
+	public Long darDescuentoPlan(Long idPlan){
+		String sql = "SELECT DESCUENTOALOJAMIENTO FROM PLANES WHERE IDPLAN = ?";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idPlan);
+		return (Long) q.executeUnique();
+	}
+
+	
+	public void rf15Habitaciones(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) throws Exception {
+		Transaction tx=pmf.getPersistenceManager().currentTransaction();
+		tx.begin();
+		try {
+			for (int i = 0; i < arregloIds.length; i++) {
+				String idsito = arregloIds[i];
+				Long idHabitacion = Long.parseLong(idsito);
+				Long max = selectMaxHorario().longValue() + 1;
+				adicionarHorarioMantenimiento(max, null, null, fechaInicio, null, null, null, fechaFin);
+				sqlMantenimiento.adicionarMantenimiento(pmf.getPersistenceManager(), idMantenimiento, causa, max, null, idHabitacion, 0);
+				List<Object []> listica = darHabitacionesLibresEnFechas(fechaInicio, fechaFin, idHabitacion);
+				if(!listica.isEmpty()){
+					Long tipoHab = sqlHabitacion.darTipoHabitacionDeHabitacion(pmf.getPersistenceManager(), idHabitacion);
+					for ( Object[] tupla : listica)
+					{
+						List<Object []> habitacionesLibres = darHabitacionesLibresPorTipo(fechaInicio, fechaFin, tipoHab);
+						Long idEstadia = ((Long) tupla[0]).longValue ();
+						if(!habitacionesLibres.isEmpty()){
+							Object [] habitacionLibre = habitacionesLibres.get(0);
+							Long idHab = ((Long) habitacionLibre[0]).longValue();
+							cambiarNumHabEstadia(idHab, idEstadia);
+
+						}
+						else
+						{
+							List<Long []> precio = darPrecioMayor(tipoHab);
+							Long precioOriginal = precio.get(0)[0];
+							boolean encontradaHab = false;
+							while(!encontradaHab)
+							{
+								//Buscamos el precio de ese tipo de habitacion
+								List<Long []> precios = darPrecioMayor(tipoHab);
+								Long precioMayor = precios.get(0)[0];
+								//Buscamos el primer tipo de habitacion con un precio inmediatamente mayor
+								List<Long []> listaTipoMayor = listaTipoMayor(precioMayor);
+								if(!listaTipoMayor.isEmpty())
+								{ 
+									habitacionesLibres = darHabitacionesLibresPorTipo(fechaInicio, fechaFin, tipoHab);
+									//BuscarHabitacionesLibresDeEsaCategoria
+									if(!habitacionesLibres.isEmpty())
+									{
+										Object [] habitacionLibre = habitacionesLibres.get(0);
+										Long idHab = ((Long) habitacionLibre[0]).longValue();
+										Long idPlan = ((Long) listica.get(0)[3]).longValue ();
+										if(idPlan != 0){
+											Long descuento = darDescuentoPlan(idPlan);
+											Double op = Math.floor(100 * ((listaTipoMayor.get(0) [1]) -  (precioOriginal*descuento/100)/(listaTipoMayor.get(0) [1]) ));
+											Long nuevoDescuento = op.longValue();
+											String sql1 = "UPDATE PLANES SET DESCUENTOALOJAMIENTO = ? WHERE IDPLAN = ?";
+											Query q1 = pmf.getPersistenceManager().newQuery(SQL, sql1);
+											q1.setParameters(nuevoDescuento, idPlan);
+											q1.executeUnique();
+											
+										}
+										else{
+											Double op = Math.floor(100 * ((listaTipoMayor.get(0) [1]) -  (precioOriginal)/(listaTipoMayor.get(0) [1]) ));
+											Long nuevoDescuento = op.longValue();
+											sqlPlan.adicionarPlan(pmf.getPersistenceManager(), idPlan, "PLAN MANTENIMIENTO", 0, nuevoDescuento, null);
+											//agragarle nuevo plan
+										}
+										encontradaHab = true;
+										cambiarNumHabEstadia(idHab, idEstadia);
+									}
+									else{
+										tipoHab = listaTipoMayor.get(0)[0];
+										
+									}
+									
+								}
+								else{
+									throw new Exception("No hay habitaciones libres para reacomodar al cliente");
+								}
+							}
+						}
+						
+					}
+
+				}
+				max++;
+				idMantenimiento++;
+			}
+			tx.commit();
+		}
+		catch (Exception e) {
+			System.out.println("holaaaaaaa");
+			throw e;
+			
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+
+			}
+			pmf.getPersistenceManager().close();
+		}
+	}
+	
+	public void cambiarNumHabEstadia(Long idHabitacion, Long idEstadia){
+		String sql = "UPDATE ESTADIAS SET IDHABITACION = ? WHERE IDESTADIA = ?";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idHabitacion, idEstadia);
+		q.executeUnique();
+	}
+
+
 
 	public void rf16Servicio(String[] resp) throws Exception {
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
@@ -2522,6 +2692,58 @@ public class PersistenciaHotelAndes
 			pmf.getPersistenceManager().close();
 		}
 	}
+
+	public void rf16Habitacion(String[] resp) throws Exception {
+		Transaction tx=pmf.getPersistenceManager().currentTransaction();
+		tx.begin();
+		try {
+			for (int i = 0; i < resp.length; i++) {
+				List<Object []> listica = new LinkedList<>();
+				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO  FROM MANTENIMIENTO WHERE NUMHABITACION = ? AND FINALIZADO = 0";
+				Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+				Long idHabitacion = Long.parseLong(resp[i]);
+				q.setParameters(idHabitacion);
+				List<Object []> tuplas = q.executeList();
+				if(!tuplas.isEmpty()){
+					for ( Object[] tupla : tuplas)
+					{
+						Object [] datosResp = new Object [2];
+
+						datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+						datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+						listica.add (datosResp);
+					}
+					for (int j = 0; j < tuplas.size(); j++)
+					{
+						Long idMantenimiento =  (Long) listica.get(j)[0];
+						Long idHorario = (Long) listica.get(j)[1];
+						sqlMantenimiento.actualizarAFinalizado(pmf.getPersistenceManager(), idMantenimiento);
+						sqlHorario.actualizarHorario(pmf.getPersistenceManager(), idHorario);
+					}
+				}
+				else
+				{
+					throw new Exception ("No hay mantenimientos en ese servicio para finalizar");
+				}			
+			}
+			tx.commit();
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+
+			}
+			pmf.getPersistenceManager().close();
+		}
+		
+	}
+
+
 
 
 

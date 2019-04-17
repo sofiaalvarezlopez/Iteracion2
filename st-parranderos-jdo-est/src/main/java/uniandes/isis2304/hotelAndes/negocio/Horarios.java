@@ -7,7 +7,7 @@ public class Horarios implements VOHorario
 {
 	private long idHorario;
 	private String duracion;
-	private long idServicio;
+	private Long idServicio;
 	private Timestamp fechaInicio;
 	private String dia;
 	private String horaInicio;
@@ -25,17 +25,17 @@ public class Horarios implements VOHorario
 		duracion = "";
 		fechaInicio = new Timestamp (0); 
 		fechaFin = new Timestamp(0);
-		setIdServicio(0);
+		setIdServicio(0L);
 	}
 	
-	public Horarios(long idHorario, String dia, String horaInicio, String horaFin, String duracion, Timestamp fechaInicio, long idServicio, Timestamp fechaFin){
+	public Horarios(long idHorario, String dia, String horaInicio, String horaFin, String duracion, Timestamp fechaInicio, Long idServicio, Timestamp fechaFin){
 		this.idHorario = idHorario;
 		this.dia = dia;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.duracion = duracion;
 		this.fechaInicio = fechaInicio;
-		this.setIdServicio(0);
+		this.setIdServicio(0L);
 		this.fechaFin = fechaFin;
 		
 	}
@@ -165,14 +165,14 @@ public class Horarios implements VOHorario
 	/**
 	 * @return the idServicio
 	 */
-	public long getIdServicio() {
+	public Long getIdServicio() {
 		return idServicio;
 	}
 
 	/**
 	 * @param idServicio the idServicio to set
 	 */
-	public void setIdServicio(long idServicio) {
+	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
 	
