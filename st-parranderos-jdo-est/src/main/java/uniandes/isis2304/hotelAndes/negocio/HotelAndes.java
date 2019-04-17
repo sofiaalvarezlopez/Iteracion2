@@ -764,6 +764,11 @@ public class HotelAndes {
 		pp.rf14(idConvencion);
 		
 	}
+
+	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) {
+		pp.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+		
+	}
 	
 	
 	

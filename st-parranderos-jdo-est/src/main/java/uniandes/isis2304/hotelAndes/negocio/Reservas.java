@@ -3,25 +3,25 @@ package uniandes.isis2304.hotelAndes.negocio;
 
 public class Reservas implements VOReserva
 {
-	private long numReserva;
-	private long idConsumo;
-	private long idEstadia;
-	private long idServicio;
-	private long idHorario;
-	private long idConvencion;
-	private long capacidad;
+	private Long numReserva;
+	private Long idConsumo;
+	private Long idEstadia;
+	private Long idServicio;
+	private Long idHorario;
+	private Long idConvencion;
+	private Long capacidad;
 	
 	public Reservas(){
-		numReserva = 0;
-		idConsumo = 0;
-		idEstadia = 0;
-		idServicio = 0;
-		idHorario = 0;
-		setIdConvencion(0);
-		setCapacidad(0);
+		numReserva = 0L;
+		idConsumo = 0L;
+		idEstadia = 0L;
+		idServicio = 0L;
+		idHorario = 0L;
+		setIdConvencion(0L);
+		setCapacidad(0L);
 	}
 	
-	public Reservas(long idReserva, long idConsumo, long idEstadia, long idServicio, long idHorario, long idConvencion, long capacidad){
+	public Reservas(Long idReserva, Long idConsumo, Long idEstadia, Long idServicio, Long idHorario, Long idConvencion, Long capacidad){
 		this.numReserva = idReserva;
 		this.idConsumo = idConsumo;
 		this.idEstadia = idEstadia;
@@ -31,61 +31,61 @@ public class Reservas implements VOReserva
 		this.setCapacidad(capacidad);
 	}
 
-	public long getNumReserva() {
+	public Long getNumReserva() {
 		return numReserva;
 	}
 
-	public void setNumReserva(long numReserva) {
+	public void setNumReserva(Long numReserva) {
 		this.numReserva = numReserva;
 	}
 
-	public long getIdConsumo() {
+	public Long getIdConsumo() {
 		return idConsumo;
 	}
 
-	public void setIdConsumo(long idConsumo) {
+	public void setIdConsumo(Long idConsumo) {
 		this.idConsumo = idConsumo;
 	}
 	
 	/**
 	 * @return the idEstadia
 	 */
-	public long getIdEstadia() {
+	public Long getIdEstadia() {
 		return idEstadia;
 	}
 
 	/**
 	 * @param idEstadia the idEstadia to set
 	 */
-	public void setIdEstadia(long idEstadia) {
+	public void setIdEstadia(Long idEstadia) {
 		this.idEstadia = idEstadia;
 	}
 
 	/**
 	 * @return the idServicio
 	 */
-	public long getIdServicio() {
+	public Long getIdServicio() {
 		return idServicio;
 	}
 
 	/**
 	 * @param idServicio the idServicio to set
 	 */
-	public void setIdServicio(long idServicio) {
+	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
 
 	/**
 	 * @return the idHorario
 	 */
-	public long getIdHorario() {
+	public Long getIdHorario() {
 		return idHorario;
 	}
 
 	/**
 	 * @param idHorario the idHorario to set
 	 */
-	public void setIdHorario(long idHorario) {
+	public void setIdHorario(Long idHorario) {
 		this.idHorario = idHorario;
 	}
 	
@@ -94,19 +94,19 @@ public class Reservas implements VOReserva
 		return "Reserva [idReserva=" + numReserva + ", id del consumo=" + idConsumo + "]";
 	}
 
-	public long getIdConvencion() {
+	public Long getIdConvencion() {
 		return idConvencion;
 	}
 
-	public void setIdConvencion(long idConvencion) {
+	public void setIdConvencion(Long idConvencion) {
 		this.idConvencion = idConvencion;
 	}
 
-	public long getCapacidad() {
+	public Long getCapacidad() {
 		return capacidad;
 	}
 
-	public void setCapacidad(long capacidad) {
+	public void setCapacidad(Long capacidad) {
 		this.capacidad = capacidad;
 	}
 	

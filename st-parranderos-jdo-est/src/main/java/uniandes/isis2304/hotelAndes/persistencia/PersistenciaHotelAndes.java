@@ -843,17 +843,14 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Horarios adicionarHorarioConvencion( long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
+	public Horarios adicionarHorarioMantenimiento( long idHorario, String duracion, long idServicio, Timestamp fechaInicio, String dia, String horaInicio, String horaFin, Timestamp fechaFin)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
 		try
 		{
-			tx.begin();
 			long tuplasInsertadas = sqlHorario.adicionarHorario(pm, idHorario, duracion, idServicio, fechaInicio, dia, horaInicio, horaFin, fechaFin);
 			log.trace ("Insercion de horario: " + idHorario + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			tx.commit();
 
 
 			return new Horarios(idHorario, dia, horaInicio, horaFin, duracion, fechaInicio, idServicio, fechaFin);
@@ -864,14 +861,7 @@ public class PersistenciaHotelAndes
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+
 	}
 
 	public Hoteles adicionarHotel( long idHotel, String nombre, String direccion, String ciudad, int estrellas, long idCadenaHotelera) 
@@ -1933,10 +1923,31 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
+	
+	public List<Object []> darReservasEnFechas(Timestamp fechaInicio, Timestamp fechaFin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMRESERVA, IDESTADIA  FROM RESERVAS INNER JOIN HORARIOS ON RESERVAS.IDHORARIO = HORARIOS.IDHORARIO WHERE RESERVAS.IDSERVICIO = ? AND ((FECHAINICIO < ? AND FECHAFIN> ?) OR (FECHAINICIO BETWEEN  ? AND ?) OR(FECHAFIN BETWEEN ? AND ?))";
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio, fechaInicio, fechaFin, fechaInicio, fechaFin, fechaInicio, fechaFin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;	
+	}
 
 	public BigDecimal selectMax(){
 
 		return sqlEstadia.selectMax(pmf.getPersistenceManager());
+	}
+	
+	public BigDecimal selectMaxHorario(){
+		return sqlHorario.selectMaxHorario(pmf.getPersistenceManager());
 	}
 
 	public void rf12(long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha, long idDescuento, long idServicio, Long idProducto, long valor, int limiteVeces, 
@@ -2170,6 +2181,42 @@ public class PersistenciaHotelAndes
 			pmf.getPersistenceManager().close();
 		}
 
+	}
+
+	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) {
+		Transaction tx=pmf.getPersistenceManager().currentTransaction();
+		tx.begin();
+		try {
+		for (int i = 0; i < arregloIds.length; i++) {
+			String idsito = arregloIds[i];
+			Long idServicio = Long.parseLong(idsito);
+			Long max = selectMaxHorario().longValue() + 1;
+			adicionarHorarioMantenimiento(max, null, idServicio, fechaInicio, null, null, null, fechaFin);
+			sqlMantenimiento.adicionarMantenimiento(pmf.getPersistenceManager(), idMantenimiento, causa, max, idServicio, null, 0);
+			max++;
+			List<Object []> reservas = darReservasEnFechas(fechaInicio, fechaFin, idServicio);
+			for ( Object[] tupla : reservas)
+			{
+				sqlReserva.eliminarReserva(pmf.getPersistenceManager(), ((Long) tupla [0]));
+			}
+		}
+		
+		tx.commit();
+		}
+		catch (Exception e) {
+			tx.rollback();
+			e.getMessage();
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+
+			}
+			pmf.getPersistenceManager().close();
+		}
+		
 	}
 
 

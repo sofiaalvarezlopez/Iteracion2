@@ -17,20 +17,20 @@ public class SQLReservas {
 		this.pha = pha;
 	}
 	
-	public long adicionarReserva(PersistenceManager pm, long numReserva, long idEstadia, long idServicio, long idHorario, long idConsumo, long idConvencion, long capacidad) 
+	public Long adicionarReserva(PersistenceManager pm, Long numReserva, Long idEstadia, Long idServicio, Long idHorario, Long idConsumo, Long idConvencion, Long capacidad) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO RESERVAS"  + "(NUMRESERVA, IDESTADIA, IDSERVICIO, IDHORARIO, IDCONSUMO, IDCONVENCION, CAPACIDAD) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(numReserva, idEstadia, idServicio, idHorario, idConsumo, idConvencion, capacidad);
-		return (long) q.executeUnique();
+		return (Long) q.executeUnique();
 	}
 	
-	public long eliminarReserva(PersistenceManager pm, long idReserva){
+	public Long eliminarReserva(PersistenceManager pm, Long idReserva){
 		Query q = pm.newQuery(SQL, "DELETE FROM RESERVAS" + " WHERE NUMRESERVA = ?");
 		q.setParameters(idReserva);
-		return (long) q.executeUnique();
+		return (Long) q.executeUnique();
 	}
 	
-	public Reservas darReservaPorId (PersistenceManager pm, long idReserva) 
+	public Reservas darReservaPorId (PersistenceManager pm, Long idReserva) 
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM RESERVAS" + " WHERE NUMRESERVA = ?");
 		q.setResultClass(Reservas.class);

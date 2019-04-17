@@ -1433,6 +1433,72 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 	}
 
+	public void mantenimientoHabitaciones(){
+
+	}
+
+	public void mantenimientoServicios(){
+		String idm = JOptionPane.showInputDialog(this, "Ingrese el id del mantenimiento");
+		Long idMantenimiento = Long.parseLong(idm);
+		String causa = JOptionPane.showInputDialog(this, "Ingrese la causa del mantenimiento");
+		String ids = JOptionPane.showInputDialog(this, "Ingrese los ids de servicios a mantener \n. Separe los ids con comas. \n Ejemplo: 2,11,3");
+		String[] arregloIds = ids.split(",");
+		String fechaIni = JOptionPane.showInputDialog("Ingrese la fecha  inicial de la reserva. " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaInicio;
+		if(fechaIni == null || fechaIni == "")
+		{
+			fechaInicio = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaIni)).getTime());
+				fechaInicio = ts;
+			}
+			catch (Exception e)
+			{
+				fechaInicio = null;
+			}
+
+		}
+		String fechaFini = JOptionPane.showInputDialog("Ingrese la fecha final de la reserva " + "\n"
+				+ "Ingrese la fecha en formato: yyyy-mm-dd");
+		Timestamp fechaFin;
+		if(fechaFini == null || fechaFini == "")
+		{
+			fechaFin = null;
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try
+			{
+				Timestamp ts = new Timestamp(((java.util.Date)sdf.parse(fechaFini)).getTime());
+				fechaFin = ts;
+			}
+			catch (Exception e)
+			{
+				fechaFin = null;
+			}
+		}
+		hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+		JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento los servicios");
+		
+	
+	
+	}
+
+	public void finMantenimientoHabitaciones(){
+
+	}
+
+	public void finMantenimientoServicios(){
+
+	}
+
 	/**
 	 * Abre el archivo dado como parámetro con la aplicación por defecto del sistema
 	 * @param nombreArchivo - El nombre del archivo que se quiere mostrar
