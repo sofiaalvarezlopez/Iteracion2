@@ -37,6 +37,14 @@ public class SQLEstadias {
 		return (Estadias) q.executeUnique();
 
 	}
+	
+	public Estadias buscarPorId(PersistenceManager pm, Long id){
+		Query q = pm.newQuery(SQL, "SELECT * FROM ESTADIAS" + " WHERE IDESTADIA = ?");
+		q.setResultClass(Estadias.class);
+		q.setParameters(id);
+		return (Estadias) q.executeUnique();
+
+	}
 
 	public List<Estadias> darEstadias (PersistenceManager pm)
 	{
