@@ -700,20 +700,21 @@ public class PersistenciaHotelAndes
 		}
 	}
 
-	public Estadias adicionarEstadia( long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, long numDoc, long idConvencion)
+	public Estadias adicionarEstadia( long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, long numDoc, Long idConvencion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlEstadia.adicionarEstadia(pm, idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
-			log.trace ("Insercion de estadia: " + idEstadia + ": " + tuplasInsertadas + " tuplas insertadas");
+			Query q = pm.newQuery(SQL, "INSERT INTO ESTADIAS"  + "(IDESTADIA, FECHALLEGADA, FECHASALIDA, NUMEROPERSONAS, IDPLAN, IDHABITACION, CHECKIN, PAGADO, IDCLIENTE, IDCONVENCION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			q.setParameters(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
+			q.executeUnique();
+			log.trace ("Insercion de estadia: " + idEstadia + ": " + " tuplas insertadas");
 
 			tx.commit();
-
-
 			return new Estadias(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
+
 		}
 		catch (Exception e)
 		{
@@ -1356,6 +1357,34 @@ public class PersistenciaHotelAndes
 			pm.close();
 		}
 	}
+	
+	public long regIdCliente (long idEstadia, long cedCliente)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long resp = sqlEstadia.registrarIdCliente(pm, idEstadia, cedCliente);
+			tx.commit();
+			return resp;
+		}
+		catch (Exception e)
+		{
+			//	        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
 
 	public List<Habitaciones> darHabitaciones(){
 		return sqlHabitacion.darHabitaciones(pmf.getPersistenceManager());
@@ -2194,6 +2223,7 @@ public class PersistenciaHotelAndes
 			adicionarHorarioMantenimiento(max, null, idServicio, fechaInicio, null, null, null, fechaFin);
 			sqlMantenimiento.adicionarMantenimiento(pmf.getPersistenceManager(), idMantenimiento, causa, max, idServicio, null, 0);
 			max++;
+			idMantenimiento++;
 			List<Object []> reservas = darReservasEnFechas(fechaInicio, fechaFin, idServicio);
 			for ( Object[] tupla : reservas)
 			{
@@ -2205,7 +2235,7 @@ public class PersistenciaHotelAndes
 		}
 		catch (Exception e) {
 			tx.rollback();
-			e.getMessage();
+			throw e;
 		}
 		finally
 		{
@@ -2217,6 +2247,55 @@ public class PersistenciaHotelAndes
 			pmf.getPersistenceManager().close();
 		}
 		
+	}
+
+	public void rf16Servicio(String[] resp) throws Exception {
+		Transaction tx=pmf.getPersistenceManager().currentTransaction();
+		tx.begin();
+		try {
+		for (int i = 0; i < resp.length; i++) {
+			List<Object []> listica = new LinkedList<>();
+			String sql = "SELECT IDMANTENIMIENTO, IDHORARIO  FROM MANTENIMIENTO WHERE IDSERVICIO = ? AND FINALIZADO = 0";
+			Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+			Long idServicio = Long.parseLong(resp[i]);
+			q.setParameters(idServicio);
+			List<Object []> tuplas = q.executeList();
+			if(!tuplas.isEmpty()){
+				for ( Object[] tupla : tuplas)
+				{
+					Object [] datosResp = new Object [2];
+
+					datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+					datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+					listica.add (datosResp);
+				}
+				for (int j = 0; j < tuplas.size(); j++)
+				{
+					Long idMantenimiento =  (Long) listica.get(j)[0];
+					Long idHorario = (Long) listica.get(j)[1];
+					sqlMantenimiento.actualizarAFinalizado(pmf.getPersistenceManager(), idMantenimiento);
+					sqlHorario.actualizarHorario(pmf.getPersistenceManager(), idHorario);
+				}
+			}
+			else
+			{
+				throw new Exception ("No hay mantenimientos en ese servicio para finalizar");
+			}			
+		}
+		tx.commit();
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+
+			}
+			pmf.getPersistenceManager().close();
+		}
 	}
 
 

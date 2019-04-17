@@ -18,7 +18,7 @@ public class SQLEstadias {
 		this.pha = pha;
 	}
 	
-	public long adicionarEstadia(PersistenceManager pm, long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, Long numDoc, Long idConvencion) 
+	public long adicionarEstadia(PersistenceManager pm, long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, long idPlan, long idHabitacion, int checkIn, int pago, long numDoc, Long idConvencion) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO ESTADIAS"  + "(IDESTADIA, FECHALLEGADA, FECHASALIDA, NUMEROPERSONAS, IDPLAN, IDHABITACION, CHECKIN, PAGADO, IDCLIENTE, IDCONVENCION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		q.setParameters(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
@@ -32,8 +32,7 @@ public class SQLEstadias {
 	}
 	
 	public Estadias buscarEstadiaPorId(PersistenceManager pm, Long id){
-		Query q = pm.newQuery(SQL, "SELECT * FROM ESTADIAS" + " WHERE IDESTADIA = ?");
-		q.setResultClass(Estadias.class);
+		Query q = pm.newQuery(SQL, "SELECT IDESTADIA FROM ESTADIAS" + " WHERE IDESTADIA = ?");
 		q.setParameters(id);
 		return (Estadias) q.executeUnique();
 
@@ -57,6 +56,12 @@ public class SQLEstadias {
 		 Query q = pm.newQuery(SQL, "UPDATE ESTADIAS" + " SET CHECKIN = 1 WHERE IDESTADIA = ?");
 	     q.setParameters(idEstadia);
 	     return (long) q.executeUnique();       
+	}
+	
+	public long registrarIdCliente(PersistenceManager pm, Long idEstadia, Long cedCliente){
+		 Query q = pm.newQuery(SQL, "UPDATE ESTADIAS" + " SET IDCLIENTE = 1 WHERE IDESTADIA = ?");
+	     q.setParameters(idEstadia);
+	     return (long) q.executeUnique();  
 	}
 	
 	public List<Estadias> darEstadiasConvencion(PersistenceManager pm, long idConvencion){

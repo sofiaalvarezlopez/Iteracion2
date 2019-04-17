@@ -369,6 +369,10 @@ public class HotelAndes {
 		log.info("Buscando DotacionSalon por ID: "  + id);
 		return  pp.darDotacionSalonPorId(id);
 	}
+	
+	public long regIdCliente(long idEstadia, long idCliente){
+		return pp.regIdCliente(idEstadia, idCliente);
+	}
 	/* ****************************************************************
 	 * 			Métodos para manejar CaracteristicaAdicional
 	 ********************************************************/
@@ -480,7 +484,7 @@ public class HotelAndes {
 	{
 		log.info ("Adicionando Estadia ");
 		Estadias e = pp.adicionarEstadia(idEstadia, fechaLlegada, fechaSalida, numPersonas, idPlan, idHabitacion, checkIn, pago, numDoc, idConvencion);
-        log.info ("Adicionando Estadia: " + e);
+        log.info ("Adicionando Estadia: " + idEstadia);
         return e;
 	}
 	
@@ -767,6 +771,11 @@ public class HotelAndes {
 
 	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) {
 		pp.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+		
+	}
+
+	public void rf16Servicio(String[] resp) throws Exception{
+		pp.rf16Servicio(resp);
 		
 	}
 	

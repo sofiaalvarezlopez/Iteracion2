@@ -1,5 +1,7 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -42,6 +44,13 @@ public class SQLMantenimiento {
 		Query q = pm.newQuery(SQL, "SELECT * FROM MANTENIMIENTO");
 		q.setResultClass(Mantenimiento.class);
 		return (List<Mantenimiento>) q.executeList();
+	}
+
+	public void actualizarAFinalizado(PersistenceManager pm, Long idMantenimiento) {
+		Query q = pm.newQuery(SQL, "UPDATE MANTENIMIENTO SET FINALIZADO = 1 WHERE IDMANTENIMIENTO = ?");
+		q.setParameters(idMantenimiento);
+		q.executeUnique();
+		
 	}
 
 }

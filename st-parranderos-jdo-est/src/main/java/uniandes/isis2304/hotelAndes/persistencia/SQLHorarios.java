@@ -2,6 +2,8 @@ package uniandes.isis2304.hotelAndes.persistencia;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -48,6 +50,15 @@ public class SQLHorarios {
 	public BigDecimal selectMaxHorario(PersistenceManager pm){
 		Query q = pm.newQuery(SQL, "SELECT MAX(IDHORARIO) FROM HORARIOS");
 		return (BigDecimal) q.executeUnique();
+		
+	}
+
+	public void actualizarHorario(PersistenceManager pm, Long idHorario) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Timestamp hoy = Timestamp.valueOf(sdf.format(new Date()));
+		Query q = pm.newQuery(SQL, "UPDATE HORARIOS SET FECHAFIN = ? WHERE IDHORARIO = ?");
+		q.setParameters(hoy, idHorario);
+		q.executeUnique();
 		
 	}
 	

@@ -685,6 +685,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 	public void reservarEstadia()
 	{
+		String ced = JOptionPane.showInputDialog(this, "Digite su cedula");
+		long cedula = Long.parseLong(ced);
 		String fechaLlegada = JOptionPane.showInputDialog("Ingrese la fecha de llegada" + "\n"
 				+ "Ingrese la fecha en formato: yyyy-mm-dd");
 		Timestamp fechaL;
@@ -727,8 +729,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			}
 
 		}
-		String idEst = JOptionPane.showInputDialog(this, "Ingrese su cedula");
-		long idEstadia = Long.parseLong(idEst);
+		String idE = hotelAndes.selectMax().toString();
+		long idEstadia = Long.parseLong(idE);
+		idEstadia++;
 		String numH = JOptionPane.showInputDialog(this, "Ingrese el numero de habitacion que desea");
 		long numHabitacion = Long.parseLong(numH);
 		String numPersonas = JOptionPane.showInputDialog(this, "Ingrese el numero de personas con quienes viene a hotelandes");
@@ -737,13 +740,20 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		long idPlan = Long.parseLong(idPla);
 
 		String idConvencion = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");
-		long idConv = Long.parseLong(idConvencion);
-
-		Estadias estadia = hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, idEstadia, idConv);
-		if(estadia == null){
-			JOptionPane.showMessageDialog(this, "No fue posible agregar la estadía","hotelandes", JOptionPane.PLAIN_MESSAGE);
-			return;
+		Long idConv;
+		if(idConvencion == null || idConvencion.equals(""))
+		{
+			idConv = null;
 		}
+		else{
+			idConv = Long.parseLong(idConvencion);
+		}
+		try{
+		hotelAndes.adicionarEstadia(idEstadia, fechaL, fechaS, cantPersonas, idPlan, numHabitacion, 0, 0, cedula, idConv);}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 
 	}
 
@@ -811,6 +821,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public void registrarLlegada(){
+		String ced = JOptionPane.showInputDialog(this, "Ingrese la cedula del cliente");
+		long cedula = Long.parseLong(ced);
 		String num = JOptionPane.showInputDialog(this, "Ingrese el numero de reserva de la estadia");
 		long numReserva = Long.parseLong(num);
 		Estadias est = hotelAndes.darEstadiaPorId(numReserva);
@@ -818,6 +830,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(this, "No fue posible registrar la llegada del cliente","hotelandes", JOptionPane.PLAIN_MESSAGE);
 			return;
 		}
+		//hotelAndes.regIdCliente(numReserva, cedula);
 		hotelAndes.checkInCliente(numReserva);
 		JOptionPane.showMessageDialog(this, "¡Check in realizado exitosamente!");
 
@@ -1486,9 +1499,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 		hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
 		JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento los servicios");
-		
-	
-	
+
 	}
 
 	public void finMantenimientoHabitaciones(){
@@ -1496,6 +1507,15 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public void finMantenimientoServicios(){
+		String servicito = JOptionPane.showInputDialog(this, "Digite el id de los servicios a sacar de mantenimiento, separados por comas. ej (20,11)");
+		String[] resp = servicito.split(",");
+		try{
+		hotelAndes.rf16Servicio(resp);
+		JOptionPane.showMessageDialog(this, "Mantenimientos finalizados exitosamente");
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 
 	}
 
