@@ -875,7 +875,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 
 	}
-	
+
 	private String listarFacturas(List<Object []> list){
 		String resp = "";
 		int i = 1;
@@ -1166,7 +1166,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				}
 				panelDatos.actualizarInterfaz(resp);				
 			}
-			
+
 		}
 		else if(unidad.equals("2")){
 			String opcion = JOptionPane.showInputDialog("Digite 1 para consultar analisis de operacion de servicio, 2 para consultar habitacion de HotelAndes: \n"
@@ -1263,7 +1263,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				panelDatos.actualizarInterfaz(resp);				
 			}	
 		}
-		
+
 	}
 
 	public String verBuenosClientes(){
@@ -1392,20 +1392,33 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		int cantVeces = Integer.parseInt(numVeces);
 		String valorDesc = JOptionPane.showInputDialog(this, "Ingrese el porcentaje de descuento (Numero entre 1 y 100)");
 		long descuentito = Long.valueOf( valorDesc);
-		
+
 		String cant = JOptionPane.showInputDialog(this, "¿Cuantas habitaciones desea reservar? \n Separe los tipos y las cantidades con comas \n Ej: 1,2,2,3 Busca 2 habitaciones tipo 1 y 3 tipo 2 ");
 		String[] rpta = cant.split(",");
+
+		String cant2 = JOptionPane.showInputDialog(this, "¿Cuantos servicios desea reservar? \n Separe los tipos y las cantidades y las horas con comas \n Ej: 20,2,2019-03-03 11:00,2019-03-03 12:00 hace una reserva para el servicio 20 para 2 personas desde las 11 hasta las 12 el 3 de marzo del 2019 ");
+		String[] rpta2 = cant2.split(",");
 		try{
 			hotelAndes.rf12(idP, tipo, costoPlan, descuento, fechaFin, idDescu, idServicio, idProducto, descuentito, cantVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta);
+			JOptionPane.showMessageDialog(this, "La convencion se pudo registrar exitosamente");
 		}
 		catch(Exception e){
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
-		JOptionPane.showMessageDialog(this, "La convencion se pudo registrar exitosamente");
 	}
 
 	public void cancelarConvencion(){
-
+		String idC = JOptionPane.showInputDialog(this, "Digite el id de la convencion");
+		Long idConvencion = Long.parseLong(idC);
+		String desres = JOptionPane.showInputDialog(this, "Digite la cantidad de habitaciones que desea desreservar");
+		int desReservas = Integer.parseInt(desres);
+		try{
+			hotelAndes.rf13(idConvencion, desReservas);
+			JOptionPane.showMessageDialog(this, "Se desreservo exitosamente");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 	public void finalizarConvencion(){

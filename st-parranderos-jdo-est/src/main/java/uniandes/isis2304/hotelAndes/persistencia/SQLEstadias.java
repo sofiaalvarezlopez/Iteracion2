@@ -59,6 +59,13 @@ public class SQLEstadias {
 	     return (long) q.executeUnique();       
 	}
 	
+	public List<Estadias> darEstadiasConvencion(PersistenceManager pm, long idConvencion){
+		Query q = pm.newQuery(SQL, "SELECT * FROM ESTADIAS WHERE IDCONVENCION = ?");
+		q.setResultClass(Estadias.class);
+		q.setParameters(idConvencion);
+		return (List<Estadias>) q.executeList();
+	}
+	
 	public BigDecimal selectMax(PersistenceManager pm){
 		Query q = pm.newQuery(SQL, "SELECT MAX(IDESTADIA) FROM ESTADIAS");
 		return (BigDecimal) q.executeUnique();

@@ -755,6 +755,10 @@ public class HotelAndes {
 	{
 		pp.rf12(idPlan, tipo, costo, descuentoAlojamiento, fecha, idDescuento, idServicio, idProducto, valor, limiteVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta);
 	}
+
+	public void rf13(Long idConvencion, int desReservas) throws Exception {
+		pp.rf13(idConvencion, desReservas);
+	}
 	
 	
 	
