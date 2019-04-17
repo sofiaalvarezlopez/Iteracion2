@@ -1,5 +1,6 @@
 package uniandes.isis2304.hotelAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -43,6 +44,11 @@ public class SQLReservas {
 		Query q = pm.newQuery(SQL, "SELECT * FROM RESERVAS");
 		q.setResultClass(Reservas.class);
 		return (List<Reservas>) q.executeList();
+	}
+
+	public BigDecimal selectMaxReserva(PersistenceManager pm) {
+		Query q = pm.newQuery(SQL, "SELECT MAX(NUMRESERVA) FROM RESERVAS");
+		return (BigDecimal) q.executeUnique();
 	}
 	
 	

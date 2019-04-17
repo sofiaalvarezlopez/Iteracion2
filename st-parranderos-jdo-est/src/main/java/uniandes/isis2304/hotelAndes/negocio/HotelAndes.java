@@ -755,9 +755,9 @@ public class HotelAndes {
 	}
 	
 	public void rf12(long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha, long idDescuento, long idServicio, Long idProducto, long valor, int limiteVeces, 
-			long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, String [] rpta) throws Exception
+			long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, String [] rpta, String[] rpta2) throws Exception
 	{
-		pp.rf12(idPlan, tipo, costo, descuentoAlojamiento, fecha, idDescuento, idServicio, idProducto, valor, limiteVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta);
+		pp.rf12(idPlan, tipo, costo, descuentoAlojamiento, fecha, idDescuento, idServicio, idProducto, valor, limiteVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta, rpta2);
 	}
 
 	public void rf13(Long idConvencion, int desReservas) throws Exception {

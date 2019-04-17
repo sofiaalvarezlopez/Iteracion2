@@ -10,38 +10,38 @@ import java.sql.Timestamp;
 
 public class Estadias implements VOEstadia
 {
-	private long idEstadia;
+	private Long idEstadia;
 	private Timestamp fechaLlegada;
 	private Timestamp fechaSalida;
 	private int numeroPersonas;
-	private long idPlan;
-	private long idHabitacion;
+	private Long idPlan;
+	private Long idHabitacion;
 	private int checkin; 
 	private int pagado;
-	private long idCliente;
+	private Long idCliente;
 	private Long idConvencion;
 	
 	
 	public Estadias(){
-		idEstadia = 0;
+		idEstadia = 0L;
 		fechaLlegada = new Timestamp(0);
 		fechaSalida = new Timestamp(0);
 		numeroPersonas = 0;
 		checkin = 0;
 		pagado = 0;
-		idCliente = 0;
+		idCliente = 0L;
 		idConvencion = Long.valueOf("0");
 		setIdPlan(0);
 		setIdHabitacion(0);
 	}
 	
-	public Estadias(long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numeroPersonas, long idPlan, long idHabitacion, int checkin, int pagado, long idCliente, Long idConvencion){
+	public Estadias(Long idEstadia, Timestamp fechaLlegada, Timestamp fechaSalida, int numPersonas, Long idPlan, Long idHabitacion, int checkIn, int pago, Long numDoc, Long idConvencion){
 		this.idEstadia = idEstadia;
 		this.fechaLlegada = fechaLlegada;
 		this.fechaSalida = fechaSalida;
-		this.numeroPersonas = numeroPersonas;
-		this.checkin = checkin;
-		this.pagado = pagado;
+		this.numeroPersonas = numPersonas;
+		this.checkin = checkIn;
+		this.pagado = pago;
 		this.setIdCliente(idCliente);
 		this.setIdPlan(idPlan);
 		this.setIdHabitacion(idHabitacion);

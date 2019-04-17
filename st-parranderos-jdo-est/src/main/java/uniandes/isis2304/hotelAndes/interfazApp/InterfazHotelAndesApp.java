@@ -1409,10 +1409,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String cant = JOptionPane.showInputDialog(this, "¿Cuantas habitaciones desea reservar? \n Separe los tipos y las cantidades con comas \n Ej: 1,2,2,3 Busca 2 habitaciones tipo 1 y 3 tipo 2 ");
 		String[] rpta = cant.split(",");
 
-		String cant2 = JOptionPane.showInputDialog(this, "¿Cuantos servicios desea reservar? \n Separe los tipos y las cantidades y las horas con comas \n Ej: 20,2,2019-03-03 11:00,2019-03-03 12:00 hace una reserva para el servicio 20 para 2 personas desde las 11 hasta las 12 el 3 de marzo del 2019 ");
+		String cant2 = JOptionPane.showInputDialog(this, "¿Cuantos servicios desea reservar? \n Separe los tipos y las cantidades y las horas con comas \n Ej: 20,2,2019-03-03 11:00:00,2019-03-03 12:00:00 hace una reserva para el servicio 20 para 2 personas desde las 11 hasta las 12 el 3 de marzo del 2019 ");
 		String[] rpta2 = cant2.split(",");
 		try{
-			hotelAndes.rf12(idP, tipo, costoPlan, descuento, fechaFin, idDescu, idServicio, idProducto, descuentito, cantVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta);
+			hotelAndes.rf12(idP, tipo, costoPlan, descuento, fechaFin, idDescu, idServicio, idProducto, descuentito, cantVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta, rpta2);
 			JOptionPane.showMessageDialog(this, "La convencion se pudo registrar exitosamente");
 		}
 		catch(Exception e){
