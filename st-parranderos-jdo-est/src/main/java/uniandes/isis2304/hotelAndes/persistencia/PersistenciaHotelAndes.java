@@ -633,8 +633,7 @@ public class PersistenciaHotelAndes
 		catch (Exception e)
 		{
 			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			throw e;
 		}
 
 	}
@@ -959,10 +958,11 @@ public class PersistenciaHotelAndes
 		catch (Exception e)
 		{
 			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			throw e;
 		}
 	}
+
+
 
 
 	public Productos adicionarProducto( long idProducto, double precio, String nombre, int cantidad, int duracion, String categoria, long idVentaProducto) 
@@ -983,8 +983,7 @@ public class PersistenciaHotelAndes
 		catch (Exception e)
 		{
 			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			throw e;
 		}
 		finally
 		{
@@ -1217,8 +1216,7 @@ public class PersistenciaHotelAndes
 		catch (Exception e)
 		{
 			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			throw e;
 		}
 	}
 
@@ -2144,12 +2142,110 @@ public class PersistenciaHotelAndes
 	public BigDecimal selectMaxReserva(){
 		return sqlReserva.selectMaxReserva(pmf.getPersistenceManager());
 	}
+	
+	public void desadicionarPlanConvencion(long idPlan)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+
+			long tuplasInsertadas = sqlPlan.eliminarPlan(pm, idPlan);
+			log.trace ("Eliminacion de plan: " + idPlan + ": " + tuplasInsertadas + " tuplas insertadas");
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+	}
+	
+	public void desadicionarDescuentoConvencion(long idDescuento)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlDescuento.eliminarDescuento(pm, idDescuento);
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+	}
+	
+	public void desadicionarConvencion(long idConvencion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlConvencion.eliminarConvencion(pm, idConvencion);
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+	}
+	
+	public void desadicionarEstadias(long idEstadia){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlEstadia.eliminarEstadia(pm, idEstadia);
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		
+	}
+	
+	public void desadicionarReservaConvencion(long idReserva){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlReserva.eliminarReserva(pm, idReserva);
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		
+	}
+	
+	public void desadicionarHorarioServicioConvencion(long idHorario){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlHorario.eliminarHorario(pm, idHorario);
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		
+	}
+	
+	
 
 	public void rf12(long idPlan, String tipo, double costo, double descuentoAlojamiento, Timestamp fecha, long idDescuento, long idServicio, Long idProducto, long valor, int limiteVeces, 
 			long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, String[] rpta, String[] rpta2) throws Exception
 	{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
 		tx.begin();
+		List<Estadias> estadias = new LinkedList<>();
+		List<Horarios> horarios = new LinkedList<>();
+		List<Reservas> reservas = new LinkedList<>();
+
 		try{
 			adicionarPlanConvencion(idPlan, tipo, costo, descuentoAlojamiento, fecha);
 			adicionarDescuentoConvencion(idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
@@ -2168,7 +2264,8 @@ public class PersistenciaHotelAndes
 						j++;
 						long maximo = selectMax().longValue() + 1;
 						long idHab =  ((Long) tupla [0]).longValue ();
-						adicionarEstadiaConvencion(maximo, fechaInicio, fechaFin, 1, idPlan, idHab, 0, 0, null, idConvencion);
+						Estadias e = adicionarEstadiaConvencion(maximo, fechaInicio, fechaFin, 1, idPlan, idHab, 0, 0, null, idConvencion);
+						estadias.add(e);
 						maximo++;
 						if(j == cantHab){
 							break;
@@ -2292,8 +2389,10 @@ public class PersistenciaHotelAndes
 				}
 				long maxHorario = selectMaxHorario().longValue() + 1;
 				long maxNumReserva = selectMaxReserva().longValue() + 1;
-				adicionarHorarioServiciosConvencion(maxHorario, null, idServicios, fechaInicioServicio, null, null, null, fechaFinServicio);
-				adicionarReserva(maxNumReserva, null, idServicios, maxHorario, null, idConvencion, Long.valueOf(cantidadPersonas).longValue());
+				Horarios h = adicionarHorarioServiciosConvencion(maxHorario, null, idServicios, fechaInicioServicio, null, null, null, fechaFinServicio);
+				Reservas r = adicionarReserva(maxNumReserva, null, idServicios, maxHorario, null, idConvencion, Long.valueOf(cantidadPersonas).longValue());
+				horarios.add(h);
+				reservas.add(r);
 				maxNumReserva++;
 				maxHorario++;
 
@@ -2303,7 +2402,20 @@ public class PersistenciaHotelAndes
 		}
 		catch(Exception e){
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			throw e;
+			desadicionarDescuentoConvencion(idDescuento);
+			for (int i = 0; i < estadias.size(); i++) {
+				desadicionarEstadias(estadias.get(i).getIdEstadia());
+			}
+			for (int i = 0; i < horarios.size(); i++) {
+				desadicionarHorarioServicioConvencion(horarios.get(i).getIdHorario());
+			}
+			for (int i = 0; i < reservas.size(); i++) {
+				desadicionarReservaConvencion(reservas.get(i).getIdHorario());
+			}
+			desadicionarConvencion(idConvencion);
+			desadicionarPlanConvencion(idPlan);
+			
+			throw new Exception("No fue posible crear la convencion");
 		}
 		finally
 		{
@@ -2323,7 +2435,7 @@ public class PersistenciaHotelAndes
 		if(tx.isActive()){
 			tx.rollback();	}
 	}
-	
+
 
 
 	public void commit(){
@@ -2529,7 +2641,7 @@ public class PersistenciaHotelAndes
 
 	}
 
-	
+
 	public Long darDescuentoPlan(Long idPlan){
 		String sql = "SELECT DESCUENTOALOJAMIENTO FROM PLANES WHERE IDPLAN = ?";
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
@@ -2537,7 +2649,7 @@ public class PersistenciaHotelAndes
 		return (Long) q.executeUnique();
 	}
 
-	
+
 	public void rf15Habitaciones(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) throws Exception {
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
 		tx.begin();
@@ -2590,7 +2702,7 @@ public class PersistenciaHotelAndes
 											Query q1 = pmf.getPersistenceManager().newQuery(SQL, sql1);
 											q1.setParameters(nuevoDescuento, idPlan);
 											q1.executeUnique();
-											
+
 										}
 										else{
 											Double op = Math.floor(100 * ((listaTipoMayor.get(0) [1]) -  (precioOriginal)/(listaTipoMayor.get(0) [1]) ));
@@ -2603,16 +2715,16 @@ public class PersistenciaHotelAndes
 									}
 									else{
 										tipoHab = listaTipoMayor.get(0)[0];
-										
+
 									}
-									
+
 								}
 								else{
 									throw new Exception("No hay habitaciones libres para reacomodar al cliente");
 								}
 							}
 						}
-						
+
 					}
 
 				}
@@ -2624,7 +2736,7 @@ public class PersistenciaHotelAndes
 		catch (Exception e) {
 			System.out.println("holaaaaaaa");
 			throw e;
-			
+
 		}
 		finally
 		{
@@ -2636,7 +2748,7 @@ public class PersistenciaHotelAndes
 			pmf.getPersistenceManager().close();
 		}
 	}
-	
+
 	public void cambiarNumHabEstadia(Long idHabitacion, Long idEstadia){
 		String sql = "UPDATE ESTADIAS SET IDHABITACION = ? WHERE IDESTADIA = ?";
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
@@ -2743,7 +2855,7 @@ public class PersistenciaHotelAndes
 			}
 			pmf.getPersistenceManager().close();
 		}
-		
+
 	}
 
 
