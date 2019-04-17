@@ -2323,6 +2323,8 @@ public class PersistenciaHotelAndes
 		if(tx.isActive()){
 			tx.rollback();	}
 	}
+	
+
 
 	public void commit(){
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -2718,6 +2720,7 @@ public class PersistenciaHotelAndes
 						Long idMantenimiento =  (Long) listica.get(j)[0];
 						Long idHorario = (Long) listica.get(j)[1];
 						sqlMantenimiento.actualizarAFinalizado(pmf.getPersistenceManager(), idMantenimiento);
+						System.out.println("Hola");
 						sqlHorario.actualizarHorario(pmf.getPersistenceManager(), idHorario);
 					}
 				}
