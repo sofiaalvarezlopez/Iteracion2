@@ -1425,7 +1425,7 @@ public class PersistenciaHotelAndes
 		return sqlHabitacion.darHabitaciones(pmf.getPersistenceManager());
 	}
 
-	public Habitaciones darHabitacionPorId(long numHabitacion){
+	public Habitaciones darHabitacionPorId(Long numHabitacion){
 		return sqlHabitacion.darHabitacionPorNumeroHabitacion(pmf.getPersistenceManager(), numHabitacion);
 	}
 
@@ -2721,6 +2721,10 @@ public class PersistenciaHotelAndes
 			for (int i = 0; i < arregloIds.length; i++) {
 				String idsito = arregloIds[i];
 				Long idHabitacion = Long.parseLong(idsito);
+				if(darHabitacionPorId(idHabitacion) == null)
+				{
+					throw new Exception("No existe una habitacion con ese id. Rollback.");
+				}
 				Long max = selectMaxHorario().longValue() + 1;
 				adicionarHorarioMantenimiento(max, null, null, fechaInicio, null, null, null, fechaFin);
 				sqlMantenimiento.adicionarMantenimiento(pmf.getPersistenceManager(), idMantenimiento, causa, max, null, idHabitacion, 0);
@@ -2881,9 +2885,13 @@ public class PersistenciaHotelAndes
 		try {
 			for (int i = 0; i < resp.length; i++) {
 				List<Object []> listica = new LinkedList<>();
-				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO  FROM MANTENIMIENTO WHERE NUMHABITACION = ? AND FINALIZADO = 0";
+				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO FROM MANTENIMIENTO WHERE NUMHABITACION = ? AND FINALIZADO = 0";
 				Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 				Long idHabitacion = Long.parseLong(resp[i]);
+				if(darHabitacionPorId(idHabitacion) == null)
+				{
+					throw new Exception("No existe una habitacion con ese id. Rollback.");
+				}
 				q.setParameters(idHabitacion);
 				List<Object []> tuplas = q.executeList();
 				if(!tuplas.isEmpty()){

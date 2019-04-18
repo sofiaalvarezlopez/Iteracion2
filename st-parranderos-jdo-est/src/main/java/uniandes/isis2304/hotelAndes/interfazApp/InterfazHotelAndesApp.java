@@ -1823,7 +1823,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	public void rf15HabitacionesMal(){
 		Long idMantenimiento = Long.parseLong("100");
 		String causa = "PLAGAS";
-		String [] arregloIds = {"17","287"};
+		String [] arregloIds = {"287","17"};
 		Timestamp fechaInicio = new Timestamp(2021, 4, 7, 10, 0, 0, 0);
 		Timestamp fechaFin = new Timestamp(2021, 3, 4, 8, 11, 0, 0);
 
@@ -1850,7 +1850,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public void rf16HabitacionesMal(){
-		String[] resp = {"17", "287"};
+		String[] resp = {"287", "11"};
 		
 		try{
 			hotelAndes.rf16Habitacion(resp);
