@@ -86,6 +86,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	 * Ruta al archivo de configuración de la interfaz PARA LOS CLIENTES
 	 */
 	private static final String CONFIG_INTERFAZ_CLIENTES = "./src/main/resources/config/interfaceConfigAppCliente.json"; 
+	private static final String CONFIG_INTERFAZ_DEMO = "./src/main/resources/config/interfaceDemo.json"; 
+
 
 	/**
 	 * Ruta al archivo de configuración de la interfaz PARA LOS USUARIOS DE PERSONAL
@@ -165,7 +167,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
 		hotelAndes = new HotelAndes (tableConfig);
 
-		Object[] options = {"Cliente", "Empleado", "Recepcionista", "Gerente", "Administrador De Datos", "Organizador Eventos"};
+		Object[] options = {"Cliente", "Empleado", "Recepcionista", "Gerente", "Administrador De Datos", "Organizador Eventos", "Demo"};
 		int n = JOptionPane.showOptionDialog(this,"¿Cómo desea ingresar?","HotelAndes",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[2]);
 		if(n == 0)
 		{
@@ -286,6 +288,11 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				//TODO cambiar a interfaz Organizador Eventos
 				guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_ORGANIZADOR_EVENTOS);
 			}
+		}
+		else{
+			estadoAplicacion = 7;
+			//TODO cambiar a interfaz Organizador Eventos
+			guiConfig = openConfig ("Interfaz", CONFIG_INTERFAZ_DEMO);
 		}
 
 		// Configura la apariencia del frame que contiene la interfaz gráfica
@@ -1497,7 +1504,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 		try{
 			hotelAndes.rf15Habitaciones(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
-			JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento los servicios");}
+			JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento las habitaciones");}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
@@ -1551,8 +1558,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			}
 		}
 		try{
-		hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
-		JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento las habitaciones");
+			hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+			JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento las habitaciones");
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
@@ -1567,8 +1574,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		}
 		String[] resp = servicito.split(",");
 		try{
-		hotelAndes.rf16Habitacion(resp);
-		JOptionPane.showMessageDialog(this, "Se finalizaron correctamente los mantenimientos");
+			hotelAndes.rf16Habitacion(resp);
+			JOptionPane.showMessageDialog(this, "Se finalizaron correctamente los mantenimientos");
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
@@ -1626,6 +1633,121 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			e.printStackTrace();
 		} 
 	}
+
+	public void rf12(){
+		long idP = 200;
+		String tipo = "Plan feria";
+		 double costo = 300000;
+		 double descuentoAlojamiento = 10;
+		 Timestamp fecha = null;
+		 long idDescuento = 300;
+		 long idServicio = 4;
+		 Long idProducto = 2L;
+		 long valor = 70;
+		 int limiteVeces = 2;
+		long idConvencion = 100;
+		String nombre = "FERIA";
+		int capacidad = 300;
+		Timestamp fechaInicio = new Timestamp(2021, 10, 1, 0, 0, 0, 0);
+		Timestamp fechaFin = new Timestamp(2021, 10, 5, 0, 0, 0, 0);
+		long idOrganizador = 19135679;
+		String [] rpta = {"1", "2", "2", "3"};
+		String[] rpta2 = {"20", "5", "04/10/2021 11:00", "04/10/2021 12:00"};
+		
+		try{
+			hotelAndes.rf12(idP, tipo, costo, descuentoAlojamiento, fechaFin, idDescuento, idServicio, idProducto, valor, limiteVeces, idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, rpta, rpta2);
+			JOptionPane.showMessageDialog(this, "La convencion se pudo registrar exitosamente");
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
+
+	public void rf13(){
+		long idConvencion = 100;
+		int desReservas = 2;
+		String[] idsServicios = {"5"};
+		
+		
+		try{
+			hotelAndes.rf13(idConvencion, desReservas, idsServicios);
+			JOptionPane.showMessageDialog(this, "Se desreservo exitosamente");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+		
+	}
+
+	public void rf14(){
+		Long idConvencion = Long.parseLong("100");
+		try{
+			hotelAndes.rf14(idConvencion);
+			JOptionPane.showMessageDialog(this, "Se ha logrado finalizar la convencion.");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
+
+	public void rf15Servicios(){
+		Long idMantenimiento = Long.parseLong("300");
+		String causa = "APAGON";
+		String[] arregloIds = {"11","20"};
+		Timestamp fechaInicio = new Timestamp(2021, 3, 2, 10, 0, 0, 0);
+		Timestamp fechaFin = new Timestamp(2021, 3, 2, 11, 0, 0, 0);
+		try{
+			hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+			JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento los servicios");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+
+	}
+
+	public void rf15Habitaciones(){
+		Long idMantenimiento = Long.parseLong("100");
+		String causa = "PLAGAS";
+		String [] arregloIds = {"17","28"};
+		Timestamp fechaInicio = new Timestamp(2021, 4, 7, 10, 0, 0, 0);
+		Timestamp fechaFin = new Timestamp(2021, 3, 4, 8, 11, 0, 0);
+
+		try{
+			hotelAndes.rf15Habitaciones(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
+			JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento las habitaciones");}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+
+	}
+
+	public void rf16Servicios(){
+		String[] resp = {"11", "20"};
+		
+		try{
+			hotelAndes.rf16Servicio(resp);
+			JOptionPane.showMessageDialog(this, "Mantenimientos finalizados exitosamente");
+		}
+		catch(Exception e){
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+
+	}
+
+	public void rf16Habitaciones(){
+		String[] resp = {"17", "28"};
+		
+		try{
+			hotelAndes.rf16Habitacion(resp);
+			JOptionPane.showMessageDialog(this, "Se finalizaron correctamente los mantenimientos");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+
+	}
+
 
 	/* ****************************************************************
 	 * 			Programa principal

@@ -1,0 +1,57 @@
+{
+	"title": "Aplicación transaccional del Hotel Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath": "./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Demo",
+		  "options":
+			[
+				{
+					"label": "RF 12",
+					"event": "rf12"
+				},
+				
+				{
+					"label": "RF 13",
+					"event": "rf13"
+				},
+				
+				{
+					"label": "RF 14",
+					"event": "rf14"
+				},
+				
+				{
+					"label": "RF 15 Servicios",
+					"event": "rf15Servicios"
+				},
+				{
+					"label": "RF 15 Habitaciones",
+					"event": "rf15Habitaciones"
+				},
+				{
+					"label": "RF 16 Servicios",
+					"event": "rf16Servicios"
+				},
+				{
+					"label": "RF 16 Habitaciones",
+					"event": "rf16Habitaciones"
+				}
+			]
+		},
+		{
+		"menuTitle": "Acerca de",
+		"options":
+			[
+				{
+					"label": "Acerca de",
+					"event": "acercaDe"
+				}
+			]
+		}	
+		
+	]
+}
+	

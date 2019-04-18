@@ -2577,7 +2577,7 @@ public class PersistenciaHotelAndes
 		tx.begin();
 		try{
 			List<Object []> resp = new LinkedList<>();
-			String sql = "SELECT NUMFACTURA, FUEPAGADA FROM FACTURAS WHERE IDCONVENCION = ?  AND FUEPAGADA = 0";
+			String sql = "SELECT NUMFACTURA, FUEPAGADA FROM FACTURAS WHERE IDCONVENCION = ? AND FUEPAGADA = 0";
 			Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 			q.setParameters(idConvencion);
 			List<Object []> tuplas = q.executeList();
@@ -2595,9 +2595,6 @@ public class PersistenciaHotelAndes
 					Long id =  (Long) resp.get(i)[0];
 					sqlFactura.cambiarAPagada(pmf.getPersistenceManager(), id);
 				}
-			}
-			else{
-				throw new Exception("No se pudo ejecutar la transaccion. Rollback.");
 			}
 			List<Object []> resp1 = new LinkedList<>();
 			String sql1 = "SELECT IDESTADIA, NUMEROPERSONAS FROM ESTADIAS WHERE IDCONVENCION = ? AND PAGADO = 0 AND CHECKIN = 1";
@@ -2625,9 +2622,6 @@ public class PersistenciaHotelAndes
 					}
 					cambiarEstadiaAPagada(id);
 				}
-			}
-			else{
-				throw new Exception("No se pudo ejecutar la transaccion. Rollback.");
 			}
 			sqlConvencion.cambiarAPagada(pmf.getPersistenceManager(), idConvencion);
 			tx.commit();
