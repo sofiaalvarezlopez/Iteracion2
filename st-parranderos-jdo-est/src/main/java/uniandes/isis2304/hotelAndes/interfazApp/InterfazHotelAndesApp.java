@@ -1550,8 +1550,13 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				fechaFin = null;
 			}
 		}
+		try{
 		hotelAndes.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
 		JOptionPane.showMessageDialog(this, "Se entraron a mantenimiento las habitaciones");
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 
 	}
 

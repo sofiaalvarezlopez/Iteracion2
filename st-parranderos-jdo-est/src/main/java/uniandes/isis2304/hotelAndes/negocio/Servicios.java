@@ -9,16 +9,16 @@ package uniandes.isis2304.hotelAndes.negocio;
 
 public class Servicios implements VOServicio
 {
-	protected long idServicio;
+	protected Long idServicio;
 
 	private String nombreServicio;	
 
 	public Servicios(){
-		idServicio = 0;
+		idServicio = 0L;
 		nombreServicio = "";
 	}
 	
-	public Servicios(long idServicio, String nombreServicio){
+	public Servicios(Long idServicio, String nombreServicio){
 		this.idServicio = idServicio;
 		this.nombreServicio = nombreServicio;
 	}
@@ -27,7 +27,7 @@ public class Servicios implements VOServicio
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOServicio#getIdServicio()
 	 */
 	@Override
-	public long getIdServicio() {
+	public Long getIdServicio() {
 		return idServicio;
 	}
 
@@ -35,7 +35,7 @@ public class Servicios implements VOServicio
 	 * @see main.java.uniandes.isis2304.hotelAndes.negocio.VOServicio#setIdServicio(long)
 	 */
 	@Override
-	public void setIdServicio(long idServicio) {
+	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
 

@@ -13,13 +13,13 @@ public class Salones extends Servicios implements VOSalon
 	
 
 	public Salones(){
-		idServicio = 0;
+		idServicio = 0L;
 		this.capacidad = 0;
 		this.costoPorHora = 0;
 		this.setTipo("");
 	}
 	
-	public Salones(long idSalon, int capacidad, double costoPorHora, String tipo){
+	public Salones(Long idSalon, int capacidad, double costoPorHora, String tipo){
 		idServicio = idSalon;
 		this.capacidad = capacidad;
 		this.costoPorHora = costoPorHora;

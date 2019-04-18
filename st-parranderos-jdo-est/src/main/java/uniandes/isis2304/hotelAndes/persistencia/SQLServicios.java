@@ -16,20 +16,20 @@ public class SQLServicios {
 		this.pha = pha;
 	}
 	
-	public long adicionarServicio(PersistenceManager pm, long idServicio, String nombreServicio) 
+	public long adicionarServicio(PersistenceManager pm, Long idServicio, String nombreServicio) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO SERVICIOS"  + "(IDSERVICIO, NOMBRESERVICIO) VALUES (?, ?)");
 		q.setParameters(idServicio, nombreServicio);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarServicio(PersistenceManager pm, long idServicio){
+	public long eliminarServicio(PersistenceManager pm, Long idServicio){
 		Query q = pm.newQuery(SQL, "DELETE FROM SERVICIOS" + " WHERE IDSERVICIO = ?");
 		q.setParameters(idServicio);
 		return (long) q.executeUnique();
 	}
 	
-	public Servicios darServicioPorId (PersistenceManager pm, long idServicio) 
+	public Servicios darServicioPorId (PersistenceManager pm, Long idServicio) 
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM SERVICIOS" + " WHERE IDSERVICIO = ?");
 		q.setResultClass(Servicios.class);

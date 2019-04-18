@@ -2,14 +2,14 @@ package uniandes.isis2304.hotelAndes.negocio;
 
 public interface VOServicio {
 
-	long getIdServicio();
-
-	void setIdServicio(long idServicio);
+	Long getIdServicio();
 
 	String getNombreServicio();
 
 	void setNombreServicio(String nombreServicio);
 
 	String toString();
+
+	void setIdServicio(Long idServicio);
 
 }

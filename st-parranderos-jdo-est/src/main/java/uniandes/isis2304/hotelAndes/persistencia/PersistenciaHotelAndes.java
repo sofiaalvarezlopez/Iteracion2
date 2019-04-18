@@ -27,6 +27,7 @@ import uniandes.isis2304.hotelAndes.negocio.Facturas;
 import uniandes.isis2304.hotelAndes.negocio.Habitaciones;
 import uniandes.isis2304.hotelAndes.negocio.Horarios;
 import uniandes.isis2304.hotelAndes.negocio.Hoteles;
+import uniandes.isis2304.hotelAndes.negocio.Mantenimiento;
 import uniandes.isis2304.hotelAndes.negocio.Planes;
 import uniandes.isis2304.hotelAndes.negocio.Productos;
 import uniandes.isis2304.hotelAndes.negocio.Reservas;
@@ -1219,6 +1220,21 @@ public class PersistenciaHotelAndes
 			throw e;
 		}
 	}
+	
+	public Mantenimiento adicionarMantenimiento(Long idMantenimiento, String causa, Long idHorario, Long idServicio, Long numHabitacion, int finalizado) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlMantenimiento.adicionarMantenimiento(pm, idMantenimiento, causa, idHorario, idServicio, numHabitacion, finalizado);
+			return new Mantenimiento(idMantenimiento, causa, idHorario, idServicio, numHabitacion, finalizado);
+		}	
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			throw e;
+		}
+	}
 
 	/**
 	 * MÃ©todo que consulta todas las tuplas en la tabla TipoUsuario
@@ -1449,7 +1465,7 @@ public class PersistenciaHotelAndes
 		return sqlReserva.darReservas(pmf.getPersistenceManager());
 	}
 
-	public Reservas darReservaPorId(long idReserva){
+	public Reservas darReservaPorId(Long idReserva){
 		return sqlReserva.darReservaPorId(pmf.getPersistenceManager(), idReserva);
 	}
 
@@ -1465,7 +1481,7 @@ public class PersistenciaHotelAndes
 		return sqlServicio.darServicios(pmf.getPersistenceManager());
 	}
 
-	public Servicios darServicio(long idServicio){
+	public Servicios darServicio(Long idServicio){
 		return sqlServicio.darServicioPorId(pmf.getPersistenceManager(), idServicio);
 	}
 
@@ -2220,11 +2236,26 @@ public class PersistenciaHotelAndes
 
 	}
 
-	public void desadicionarHorarioServicioConvencion(long idHorario){
+	public void desadicionarHorario(long idHorario){
 		PersistenceManager pm = pmf.getPersistenceManager();
 		try
 		{
 			sqlHorario.eliminarHorario(pm, idHorario);
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+
+	}
+	
+	public void eliminarMantenimiento(long idMantenimiento){
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try
+		{
+			sqlMantenimiento.eliminarMantenimiento(pm, idMantenimiento);
 
 		}
 		catch (Exception e)
@@ -2407,7 +2438,7 @@ public class PersistenciaHotelAndes
 				desadicionarEstadias(estadias.get(i).getIdEstadia());
 			}
 			for (int i = 0; i < horarios.size(); i++) {
-				desadicionarHorarioServicioConvencion(horarios.get(i).getIdHorario());
+				desadicionarHorario(horarios.get(i).getIdHorario());
 			}
 			for (int i = 0; i < reservas.size(); i++) {
 				desadicionarReservaConvencion(reservas.get(i).getIdHorario());
@@ -2603,8 +2634,7 @@ public class PersistenciaHotelAndes
 
 		}
 		catch(Exception e){
-			tx.rollback();
-			throw new Exception("No se pudo finalizar la convencion");
+			throw e;
 		}
 		finally
 		{
@@ -2617,28 +2647,50 @@ public class PersistenciaHotelAndes
 
 	}
 
-	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) {
+	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) throws Exception{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
 		tx.begin();
+		List<Horarios> horarios = new LinkedList<>();
+		List<Mantenimiento> mantenimientos = new LinkedList<>();
+		List<Reservas> reservations = new LinkedList<>();
 		try {
 			for (int i = 0; i < arregloIds.length; i++) {
 				String idsito = arregloIds[i];
 				Long idServicio = Long.parseLong(idsito);
 				Long max = selectMaxHorario().longValue() + 1;
-				adicionarHorarioMantenimiento(max, null, idServicio, fechaInicio, null, null, null, fechaFin);
-				sqlMantenimiento.adicionarMantenimiento(pmf.getPersistenceManager(), idMantenimiento, causa, max, idServicio, null, 0);
-				max++;
-				idMantenimiento++;
+				Horarios h = adicionarHorarioMantenimiento(max, null, idServicio, fechaInicio, null, null, null, fechaFin);
+				horarios.add(h);
+				Mantenimiento m = adicionarMantenimiento(idMantenimiento, causa, max, idServicio, null, 0);
+				mantenimientos.add(m);
+				
 				List<Object []> reservas = darReservasEnFechas(fechaInicio, fechaFin, idServicio);
+				if(darServicio(idServicio) == null){
+					throw new Exception("El servicio no existe");
+				}
+				
 				for ( Object[] tupla : reservas)
 				{
+					Reservas r = darReservaPorId((Long) tupla [0]);
+					reservations.add(r);
 					sqlReserva.eliminarReserva(pmf.getPersistenceManager(), ((Long) tupla [0]));
 				}
+				max++;
+				idMantenimiento++;
 			}
-
 			tx.commit();
 		}
 		catch (Exception e) {
+			for (int i = 0; i < reservations.size(); i++) {
+				Reservas r = reservations.get(i);
+				sqlReserva.adicionarReserva(pmf.getPersistenceManager(), r.getNumReserva(), r.getIdEstadia(), r.getIdServicio(), r.getIdHorario(), r.getIdConsumo(), r.getIdConvencion(), r.getCapacidad());
+			}
+			for (int i = 0; i < mantenimientos.size(); i++) {
+				eliminarMantenimiento(mantenimientos.get(i).getIdMantenimiento());
+			}
+			for (int i = 0; i < horarios.size(); i++) {
+				desadicionarHorario(horarios.get(i).getIdHorario());
+			}
+			
 			throw e;
 		}
 		finally
@@ -2646,6 +2698,7 @@ public class PersistenciaHotelAndes
 			if (tx.isActive())
 			{
 				tx.rollback();
+				System.out.println("hola");
 
 			}
 			pmf.getPersistenceManager().close();

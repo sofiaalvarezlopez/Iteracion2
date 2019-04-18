@@ -11,14 +11,14 @@ public class VentaProductos extends Servicios implements VOVentaProducto
 	private String tipo;
 
 	public VentaProductos(){
-		idServicio = 0;
+		idServicio = 0L;
 		estilo = "";
 		capacidad = 0;
 		tipo = "";
 
 	}
 	
-	public VentaProductos(long idVentaProducto, String estilo, int capacidad, String tipo){
+	public VentaProductos(Long idVentaProducto, String estilo, int capacidad, String tipo){
 		idServicio = idVentaProducto;
 		this.estilo = estilo;
 		this.capacidad = capacidad;

@@ -769,7 +769,7 @@ public class HotelAndes {
 		
 	}
 
-	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) {
+	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) throws Exception{
 		pp.rf15Servicios(idMantenimiento, causa, arregloIds, fechaInicio, fechaFin);
 		
 	}

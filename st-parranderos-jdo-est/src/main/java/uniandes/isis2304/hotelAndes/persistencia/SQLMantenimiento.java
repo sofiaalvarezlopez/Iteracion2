@@ -18,11 +18,11 @@ public class SQLMantenimiento {
 		this.pha = pha;
 	}
 
-	public long adicionarMantenimiento(PersistenceManager pm, Long idMantenimiento, String causa, Long idHorario, Long idServicio, Long numHabitacion, int finalizado) 
+	public void adicionarMantenimiento(PersistenceManager pm, Long idMantenimiento, String causa, Long idHorario, Long idServicio, Long numHabitacion, int finalizado) 
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO MANTENIMIENTO"  + "(IDMANTENIMIENTO, CAUSA, IDHORARIO, IDSERVICIO, NUMHABITACION, FINALIZADO) VALUES (?, ?, ?, ?, ?, ?)");
 		q.setParameters(idMantenimiento, causa, idHorario, idServicio, numHabitacion, finalizado);
-		return (long) q.executeUnique();
+		q.executeUnique();
 	}
 
 	public long eliminarMantenimiento(PersistenceManager pm, Long idMantenimiento){

@@ -8,11 +8,11 @@ public class ServiciosAdicionales extends Servicios implements VOServicioAdicion
 	private int capacidad;
 	
 	public ServiciosAdicionales(){
-		idServicio = 0;
+		idServicio = 0L;
 		capacidad = 0;
 	}
 	
-	public ServiciosAdicionales(long idServicioAdicional, int capacidad){
+	public ServiciosAdicionales(Long idServicioAdicional, int capacidad){
 		idServicio = idServicioAdicional;
 		this.capacidad = capacidad;
 	}
