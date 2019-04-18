@@ -2829,9 +2829,13 @@ public class PersistenciaHotelAndes
 		try {
 			for (int i = 0; i < resp.length; i++) {
 				List<Object []> listica = new LinkedList<>();
-				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO  FROM MANTENIMIENTO WHERE IDSERVICIO = ? AND FINALIZADO = 0";
+				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO FROM MANTENIMIENTO WHERE IDSERVICIO = ? AND FINALIZADO = 0";
 				Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 				Long idServicio = Long.parseLong(resp[i]);
+				if(darServicio(idServicio) == null)
+				{
+					throw new Exception("No existe un servicio con ese id. Rollback.");
+				}
 				q.setParameters(idServicio);
 				List<Object []> tuplas = q.executeList();
 				if(!tuplas.isEmpty()){
@@ -2853,7 +2857,7 @@ public class PersistenciaHotelAndes
 				}
 				else
 				{
-					throw new Exception ("No hay mantenimientos en ese servicio para finalizar");
+					throw new Exception ("No hay mantenimientos en ese servicio para finalizar. Rollback");
 				}			
 			}
 			tx.commit();
