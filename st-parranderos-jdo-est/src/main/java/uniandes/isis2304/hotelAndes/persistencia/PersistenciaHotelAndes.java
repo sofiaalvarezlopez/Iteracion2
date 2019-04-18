@@ -2572,6 +2572,7 @@ public class PersistenciaHotelAndes
 
 	}
 
+	
 	public void rf14(Long idConvencion) throws Exception{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
 		tx.begin();
@@ -2580,6 +2581,10 @@ public class PersistenciaHotelAndes
 			String sql = "SELECT NUMFACTURA, FUEPAGADA FROM FACTURAS WHERE IDCONVENCION = ? AND FUEPAGADA = 0";
 			Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 			q.setParameters(idConvencion);
+			if(sqlConvencion.darConvencionPorId(pmf.getPersistenceManager(), idConvencion) == null){
+				throw new Exception("La convencion no existe");
+			}
+			
 			List<Object []> tuplas = q.executeList();
 			if(!tuplas.isEmpty()){
 				for ( Object[] tupla : tuplas)

@@ -5,7 +5,7 @@
 	"bannerPath": "./src/main/resources/config/banner.png",
 	"menuBar":
 	[
-		{ "menuTitle": "Demo",
+		{ "menuTitle": "Demo: casos bien",
 		  "options":
 			[
 				{
@@ -38,6 +38,42 @@
 				{
 					"label": "RF 16 Habitaciones",
 					"event": "rf16Habitaciones"
+				}
+			]
+		},
+		{ "menuTitle": "Demo: casos mal",
+		  "options":
+			[
+				{
+					"label": "RF 12",
+					"event": "rf12Mal"
+				},
+				
+				{
+					"label": "RF 13",
+					"event": "rf13Mal"
+				},
+				
+				{
+					"label": "RF 14",
+					"event": "rf14Mal"
+				},
+				
+				{
+					"label": "RF 15 Servicios",
+					"event": "rf15ServiciosMal"
+				},
+				{
+					"label": "RF 15 Habitaciones",
+					"event": "rf15HabitacionesMal"
+				},
+				{
+					"label": "RF 16 Servicios",
+					"event": "rf16ServiciosMal"
+				},
+				{
+					"label": "RF 16 Habitaciones",
+					"event": "rf16HabitacionesMal"
 				}
 			]
 		},
