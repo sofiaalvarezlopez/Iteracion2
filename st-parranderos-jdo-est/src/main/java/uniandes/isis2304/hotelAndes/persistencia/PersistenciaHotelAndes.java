@@ -2272,12 +2272,12 @@ public class PersistenciaHotelAndes
 			long idConvencion, String nombre, int capacidad, Timestamp fechaInicio, Timestamp fechaFin, long idOrganizador, String[] rpta, String[] rpta2) throws Exception
 	{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
-		tx.begin();
 		List<Estadias> estadias = new LinkedList<>();
 		List<Horarios> horarios = new LinkedList<>();
 		List<Reservas> reservas = new LinkedList<>();
 
 		try{
+			tx.begin();
 			adicionarPlanConvencion(idPlan, tipo, costo, descuentoAlojamiento, fecha);
 			adicionarDescuentoConvencion(idDescuento, idPlan, idServicio, idProducto, valor, limiteVeces);
 			adicionarConvencion(idConvencion, nombre, capacidad, fechaInicio, fechaFin, idOrganizador, idPlan, 0);
@@ -2500,8 +2500,8 @@ public class PersistenciaHotelAndes
 	public void rf13(Long idConvencion, int desReservas, String[] idsServicios) throws Exception{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
 		List<Estadias> estadias = new LinkedList<>();
-		tx.begin();
 		try{
+			tx.begin();
 			List<Object []> resp = new LinkedList<>();
 			String sql = "SELECT IDESTADIA, NUMEROPERSONAS FROM ESTADIAS WHERE IDCONVENCION = ?";
 			Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
@@ -2575,8 +2575,8 @@ public class PersistenciaHotelAndes
 	
 	public void rf14(Long idConvencion) throws Exception{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
-		tx.begin();
 		try{
+			tx.begin();
 			List<Object []> resp = new LinkedList<>();
 			String sql = "SELECT NUMFACTURA, FUEPAGADA FROM FACTURAS WHERE IDCONVENCION = ? AND FUEPAGADA = 0";
 			Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
@@ -2648,11 +2648,11 @@ public class PersistenciaHotelAndes
 
 	public void rf15Servicios(Long idMantenimiento, String causa, String[] arregloIds, Timestamp fechaInicio, Timestamp fechaFin) throws Exception{
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
-		tx.begin();
 		List<Horarios> horarios = new LinkedList<>();
 		List<Mantenimiento> mantenimientos = new LinkedList<>();
 		List<Reservas> reservations = new LinkedList<>();
 		try {
+			tx.begin();
 			for (int i = 0; i < arregloIds.length; i++) {
 				String idsito = arregloIds[i];
 				Long idServicio = Long.parseLong(idsito);
@@ -2828,8 +2828,8 @@ public class PersistenciaHotelAndes
 
 	public void rf16Servicio(String[] resp) throws Exception {
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
-		tx.begin();
 		try {
+			tx.begin();
 			for (int i = 0; i < resp.length; i++) {
 				List<Object []> listica = new LinkedList<>();
 				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO FROM MANTENIMIENTO WHERE IDSERVICIO = ? AND FINALIZADO = 0";
@@ -2881,8 +2881,8 @@ public class PersistenciaHotelAndes
 
 	public void rf16Habitacion(String[] resp) throws Exception {
 		Transaction tx=pmf.getPersistenceManager().currentTransaction();
-		tx.begin();
 		try {
+			tx.begin();
 			for (int i = 0; i < resp.length; i++) {
 				List<Object []> listica = new LinkedList<>();
 				String sql = "SELECT IDMANTENIMIENTO, IDHORARIO FROM MANTENIMIENTO WHERE NUMHABITACION = ? AND FINALIZADO = 0";
