@@ -28,7 +28,7 @@ FROM
           WHERE reservas.idEstadia = estadias.idestadia
           AND reservas.idhorario = horarios.idhorario
           AND servicios.idservicio = reservas.idservicio
-          AND (IDSERVICIO = 8 OR NOMBRESERVICIO BETWEEN 11 AND 15))
+          AND (servicios.IDSERVICIO = 8 OR servicios.idSERVICIO BETWEEN 11 AND 15))
 GROUP BY IDCLIENTE, NOMBRESERVICIO, IDESTADIA)
 GROUP BY IDCLIENTE, NOMBRESERVICIO
    HAVING MIN(MAX_ESTADIA) >= 4;

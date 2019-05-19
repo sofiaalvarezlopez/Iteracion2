@@ -1520,10 +1520,10 @@ public class PersistenciaHotelAndes
 
 	public List dineroServiciosPorHabitacion(){
 		List<long []> resp = new LinkedList<long []> ();
-		long tiempoInicial = System.currentTimeMillis();
-		String sql = "SELECT IDHABITACION, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM(SELECT IDHABITACION, PRECIO FROM((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE('2019-01-01', 'YYYY-MM-DD'))A INNER JOIN ESTADIAS ON A.IDESTADIA = ESTADIAS.IDESTADIA))GROUP BY IDHABITACION";
+		String sql = "SELECT IDHABITACION, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM(SELECT IDHABITACION, PRECIO FROM((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA BETWEEN '01/01/2019' AND '31/12/2019')A INNER JOIN ESTADIAS ON A.IDESTADIA = ESTADIAS.IDESTADIA))GROUP BY IDHABITACION";
 		//System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		long tiempoInicial = System.currentTimeMillis();
 		List<Object[]> tuplas = q.executeList();
 		long tiempoFinal = System.currentTimeMillis();
 		for ( Object [] tupla : tuplas)
@@ -1538,12 +1538,13 @@ public class PersistenciaHotelAndes
 		return resp;		
 	}
 
-	public List topPopulares(){
+	public List topPopulares(String inicio, String fin){
 		List<Object []> resp = new LinkedList<> ();
 		long tiempoInicial = System.currentTimeMillis();
-		String sql = "SELECT NOMBRESERVICIO, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM ((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE('2019-01-01', 'YYYY-MM-DD') AND FECHA < TO_DATE('2019-12-31', 'YYYY-MM-DD'))A INNER JOIN SERVICIOS ON A.IDSERVICIO = SERVICIOS.IDSERVICIO) GROUP BY A.IDSERVICIO, NOMBRESERVICIO ORDER BY SUM(PRECIO) DESC FETCH FIRST 20 ROWS ONLY";
+		String sql = "SELECT NOMBRESERVICIO, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM ((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE(?, 'YYYY-MM-DD') AND FECHA < TO_DATE(?, 'YYYY-MM-DD'))A INNER JOIN SERVICIOS ON A.IDSERVICIO = SERVICIOS.IDSERVICIO) GROUP BY A.IDSERVICIO, NOMBRESERVICIO ORDER BY SUM(PRECIO) DESC FETCH FIRST 20 ROWS ONLY";
 		//System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin);
 		List<Object[]> tuplas = q.executeList();
 		long tiempoFinal = System.currentTimeMillis();
 		for ( Object [] tupla : tuplas)
@@ -1560,19 +1561,22 @@ public class PersistenciaHotelAndes
 	}
 
 	public List indiceOcupacion(){
-		List<long []> resp = new LinkedList<long []> ();
-		String sql = "SELECT IDHABITACION, (NUMEROPERSONAS / CAPACIDAD * 100) AS PORCENTAJEOCUPACION FROM (ESTADIAS A INNER JOIN HABITACIONES B ON A.IDHABITACION = B.NUMEROHABITACION) INNER JOIN TIPOSHABITACION D ON TIPOHABITACION = D.IDTIPOHABITACION";
+		List<Object []> resp = new LinkedList<Object []> ();
+		String sql = "SELECT IDHABITACION, round(AVG(NUMEROPERSONAS/CAPACIDAD), 3) as indice FROM ESTADIAS,HABITACIONES,TIPOSHABITACION WHERE ESTADIAS.IDHABITACION = HABITACIONES.NUMEROHABITACION AND HABITACIONES.TIPOHABITACION = TIPOSHABITACION.IDTIPOHABITACION GROUP BY IDHABITACION";
 		//System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		long tiempoInicial = System.currentTimeMillis();
 		List<Object []> tuplas = q.executeList();
+		long tiempoFinal = System.currentTimeMillis();
 		for ( Object [] tupla : tuplas)
 		{
-			long [] datosResp = new long [2];
+			Object [] datosResp = new Object [2];
 
 			datosResp [0] = ((BigDecimal) tupla [0]).longValue();
-			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).doubleValue ();
 			resp.add (datosResp);
 		}
+		System.out.println("Tiempo total de ejecución de la query: " + (tiempoFinal - tiempoInicial) + " ms");
 		return resp;		
 
 	}

@@ -975,9 +975,11 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public String topPopulares(){
+		String inicio  = JOptionPane.showInputDialog(this, "Digite la fecha de inicio de consulta en formato yyyy-mm-dd");
+		String fin  = JOptionPane.showInputDialog(this, "Digite la fecha de fin de consulta en formato yyyy-mm-dd");
 		String resp = "Los 20 servicios más populares son:\n";
 		int i = 1;
-		for ( Object [] tupla : hotelAndes.topPopulares())
+		for ( Object [] tupla : hotelAndes.topPopulares(inicio, fin))
 		{
 			Object [] datos = tupla;
 			String resp1 = i++ + ". " + "[";
@@ -994,9 +996,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	public String indiceOcupacion() {
 		String resp = "Indice ocupacion:\n";
 		int i = 1;
-		for ( long [] tupla : hotelAndes.indiceOcupacion())
+		for ( Object [] tupla : hotelAndes.indiceOcupacion())
 		{
-			long [] datos = tupla;
+			Object [] datos = tupla;
 			String resp1 = i++ + ". " + "[";
 			resp1 += "Id habitacion: " + datos [0] + ", ";
 			resp1 += "Porcentaje de ocupacion: " + datos [1];

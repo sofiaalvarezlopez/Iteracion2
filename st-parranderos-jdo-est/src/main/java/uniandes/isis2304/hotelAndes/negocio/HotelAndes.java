@@ -587,14 +587,14 @@ public class HotelAndes {
         return tuplas;
 	}
 	
-	public List<Object []> topPopulares(){
+	public List<Object []> topPopulares(String inicio, String fin){
 		log.info ("Listando top 20");
-        List tuplas = pp.topPopulares();
+        List tuplas = pp.topPopulares(inicio, fin);
         log.info ("Listando top 20: Listo!");
         return tuplas;
 	}
 	
-	public List<long []> indiceOcupacion(){
+	public List<Object []> indiceOcupacion(){
 		log.info ("Mostrando indice ocupacion");
         List tuplas = pp.indiceOcupacion();
         log.info ("Mostrado indice ocupacion");
