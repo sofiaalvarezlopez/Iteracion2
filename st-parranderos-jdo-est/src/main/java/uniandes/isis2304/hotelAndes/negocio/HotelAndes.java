@@ -912,6 +912,26 @@ public class HotelAndes {
         return tuplas;
 	}
 	
+	public List<Object []> rfc12_1(){
+		log.info("Consultando rfc12");
+		List tuplas = pp.rfc12_1();
+		log.info("Consultado rfc12");
+		return tuplas;
+	}
+	
+	public List<Object []> rfc12_2(){
+		log.info("Consultando rfc12");
+		List tuplas = pp.rfc12_2();
+		log.info("Consultado rfc12");
+		return tuplas;
+	}
+	
+	public List<Object []> rfc12_3(){
+		log.info("Consultando rfc12");
+		List tuplas = pp.rfc12_3();
+		log.info("Consultado rfc12");
+		return tuplas;
+	}
 	
 	public BigDecimal selectMax(){
 		return pp.selectMax();

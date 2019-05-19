@@ -1848,9 +1848,63 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resp);
 		}
 		else{
-			String resp = "Opcion no valida.";
+			JOptionPane.showMessageDialog(this, "La opcion digitada no es valida.");
+		}
+	}
+	
+	public void rfc12(){
+		String opcion = JOptionPane.showInputDialog("Seleccione la opcion para discriminar a sus buenos clientes: \n"
+				+ "1. Ver clientes que realizan estancias 1 vez por trimestre \n"
+				+ "2. Ver clientes que siempre consumen servicios mayores a $300,000 \n"
+				+ "3. Ver clientes que en cada estancia reservan salones/spa por mas de 4 horas");
+		if(opcion.equals("1")){
+			String resp = "Los clientes que realizan estancias 1 vez por trimestre son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc12_1())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Anio: " + datos [0] + ", ";
+				resp1 += "Num doc cliente: " + datos [1] + ", ";
+				resp1 += "Num veces visitado: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
 			panelDatos.actualizarInterfaz(resp);
 		}
+		else if(opcion.equals("2")){
+			String resp = "Los clientes que siempre consumen servicios mayores a $300,000 son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc12_2())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num doc cliente: " + datos [0] + ", ";
+				resp1 += "Minimo consumido: " + datos [1];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+			panelDatos.actualizarInterfaz(resp);
+		}
+		else if(opcion.equals("3")){
+			String resp = "Los clientes que en cada estancia reservan salones/spa por mas de 4 horas son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc12_3())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num doc cliente: " + datos [0] + ", ";
+				resp1 += "Nombre servicio: " + datos [1] + ", ";
+				resp1 += "Minimo consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+			panelDatos.actualizarInterfaz(resp);
+		}
+		else{
+			JOptionPane.showMessageDialog(this, "La opcion digitada no es valida.");
+		}
+		
 	}
 	
 	

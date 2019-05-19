@@ -54,6 +54,10 @@
 				{
 					"label": "Consultar funcionamiento",
 					"event": "rfc11"
+				},
+				{
+					"label": "Consultar buenos clientes",
+					"event": "rfc12"
 				}
 				
 			]

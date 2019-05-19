@@ -17,21 +17,20 @@ FROM
    GROUP BY idcliente
    HAVING MIN(consumido) > 300000;
 --servios de spa con reserva de mayor 4h
-   SELECT idcliente, MIN(MAX_ESTADIA) AS MINIMO_CONSUMIDO
-   FROM (SELECT IDCLIENTE, NOMBRESERVICIO, IDESTADIA, MAX(TIEMPO) AS MAX_ESTADIA
-      FROM(SELECT Estadias.idCliente, servicios.nombreservicio, estadias.idEstadia, horarios.fechainicio, horarios.fechafin, horarios.horainicio, horarios.horaFin
+SELECT idcliente, NOMBRESERVICIO, MIN(MAX_ESTADIA) AS MINIMO_CONSUMIDO
+FROM
+(SELECT IDCLIENTE, NOMBRESERVICIO, IDESTADIA, MAX(TIEMPO) AS MAX_ESTADIA
+FROM
+(SELECT Estadias.idCliente, servicios.nombreservicio, estadias.idEstadia, horarios.fechainicio, horarios.fechafin, horarios.horainicio, horarios.horaFin
           ,CASE WHEN FECHAINICIO <> FECHAFIN THEN 24
           ELSE TO_NUMBER(HORAFIN) - TO_NUMBER(HORAINICIO) END AS TIEMPO
           FROM  SERVICIOS, EStadias, RESERVAS, HORARIOS
           WHERE reservas.idEstadia = estadias.idestadia
           AND reservas.idhorario = horarios.idhorario
           AND servicios.idservicio = reservas.idservicio
-          AND NOMBRESERVICIO = 'SPA')
-      GROUP BY IDCLIENTE, NOMBRESERVICIO, IDESTADIA
-   )
-   GROUP BY IDCLIENTE, NOMBRESERVICIO
+          AND (IDSERVICIO = 8 OR NOMBRESERVICIO BETWEEN 11 AND 15))
+GROUP BY IDCLIENTE, NOMBRESERVICIO, IDESTADIA)
+GROUP BY IDCLIENTE, NOMBRESERVICIO
    HAVING MIN(MAX_ESTADIA) >= 4;
- 
- 
    
  

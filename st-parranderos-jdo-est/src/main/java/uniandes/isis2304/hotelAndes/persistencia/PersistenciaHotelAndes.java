@@ -2399,6 +2399,59 @@ public class PersistenciaHotelAndes
 		}
 		return resp;
 	}
+	
+	public List rfc12_1(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT ANIO, IDCLIENTE, COUNT (VECES) AS NUM_TRIMESTRES FROM(SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada  - 7/24,'Q') AS trimestre, idcliente, COUNT(idcliente) AS VECES FROM ESTADIAS where IDCLIENTE IS NOT null group by to_char(estadias.fechallegada  - 7/24,'IYYY'), to_char(estadias.fechallegada  - 7/24,'Q'), idcliente) GROUP BY ANIO, IDCLIENTE HAVING COUNT (VECES) = 4";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((String) tupla [0]).toString ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc12_2(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT idcliente, MIN(consumido) AS MINIMO_CONSUMIDO FROM ( SELECT estadias.idcliente,  MAX(PRECIO) AS CONSUMIDO FROM FACTURAS, EStadias WHERE Facturas.idestadia = estadias.idestadia GROUP BY facturas.IDESTADIA, estadias.idcliente) GROUP BY idcliente HAVING MIN(consumido) > 300000";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [2];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc12_3(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT idcliente, NOMBRESERVICIO, MIN(MAX_ESTADIA) AS MINIMO_CONSUMIDO FROM(SELECT IDCLIENTE, NOMBRESERVICIO, IDESTADIA, MAX(TIEMPO) AS MAX_ESTADIA FROM(SELECT Estadias.idCliente, servicios.nombreservicio, estadias.idEstadia, horarios.fechainicio, horarios.fechafin, horarios.horainicio, horarios.horaFin,CASE WHEN FECHAINICIO <> FECHAFIN THEN 24 ELSE TO_NUMBER(HORAFIN) - TO_NUMBER(HORAINICIO) END AS TIEMPO FROM  SERVICIOS, EStadias, RESERVAS, HORARIOS WHERE reservas.idEstadia = estadias.idestadia AND reservas.idhorario = horarios.idhorario AND servicios.idservicio = reservas.idservicio AND (servicios.IDSERVICIO = 8 OR servicios.idSERVICIO BETWEEN 11 AND 15))GROUP BY IDCLIENTE, NOMBRESERVICIO, IDESTADIA)GROUP BY IDCLIENTE, NOMBRESERVICIO HAVING MIN(MAX_ESTADIA) >= 4";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
 
 
 

@@ -37,7 +37,7 @@ where rn = 1;
 --habitacion mas solicitada
 select ANIO, SEMANA, IDHABITACION, VECES
 from (
-  select ANIO, SEMANA, IDHABITACION, VECES,
+  select ANIO, EMANA, IDHABITACION, VECES,
     row_number() over (partition by anio, semana order by veces asc) as rn
   from (
     SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES
