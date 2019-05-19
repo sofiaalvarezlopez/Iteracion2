@@ -1520,10 +1520,12 @@ public class PersistenciaHotelAndes
 
 	public List dineroServiciosPorHabitacion(){
 		List<long []> resp = new LinkedList<long []> ();
+		long tiempoInicial = System.currentTimeMillis();
 		String sql = "SELECT IDHABITACION, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM(SELECT IDHABITACION, PRECIO FROM((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE('2019-01-01', 'YYYY-MM-DD'))A INNER JOIN ESTADIAS ON A.IDESTADIA = ESTADIAS.IDESTADIA))GROUP BY IDHABITACION";
 		//System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 		List<Object[]> tuplas = q.executeList();
+		long tiempoFinal = System.currentTimeMillis();
 		for ( Object [] tupla : tuplas)
 		{
 			long [] datosResp = new long [2];
@@ -1532,15 +1534,18 @@ public class PersistenciaHotelAndes
 			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
 			resp.add (datosResp);
 		}
+		System.out.println("Tiempo total de ejecución de la query: " + (tiempoFinal - tiempoInicial) + " ms");
 		return resp;		
 	}
 
 	public List topPopulares(){
 		List<Object []> resp = new LinkedList<> ();
+		long tiempoInicial = System.currentTimeMillis();
 		String sql = "SELECT NOMBRESERVICIO, SUM(PRECIO) AS TOTAL_RECOLECTADO FROM ((SELECT * FROM FACTURAS WHERE IDSERVICIO IS NOT NULL AND FECHA > TO_DATE('2019-01-01', 'YYYY-MM-DD') AND FECHA < TO_DATE('2019-12-31', 'YYYY-MM-DD'))A INNER JOIN SERVICIOS ON A.IDSERVICIO = SERVICIOS.IDSERVICIO) GROUP BY A.IDSERVICIO, NOMBRESERVICIO ORDER BY SUM(PRECIO) DESC FETCH FIRST 20 ROWS ONLY";
 		//System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
 		List<Object[]> tuplas = q.executeList();
+		long tiempoFinal = System.currentTimeMillis();
 		for ( Object [] tupla : tuplas)
 		{
 			Object [] datosResp = new Object [2];
@@ -1549,6 +1554,7 @@ public class PersistenciaHotelAndes
 			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
 			resp.add (datosResp);
 		}
+		System.out.println("Tiempo total de ejecución de la query: " + (tiempoFinal - tiempoInicial) + " ms");
 		return resp;		
 
 	}
@@ -1924,6 +1930,398 @@ public class PersistenciaHotelAndes
 		}
 		return resp;	
 	}
+	
+	public List rfc9basicaGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, NOMBRE, COUNT(NUMFACTURA) AS NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9numdocascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, NOMBRE, COUNT(NUMFACTURA) AS NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE ORDER BY NUMERODOCUMENTO";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9numdocdescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, NOMBRE, COUNT(NUMFACTURA) AS NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE ORDER BY NUMERODOCUMENTO DESC";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9nombreascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, NOMBRE, COUNT(NUMFACTURA) AS NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE ORDER BY NOMBRE";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9nombredescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, NOMBRE, COUNT(NUMFACTURA) AS NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE ORDER BY NOMBRE DESC";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9basicOrganizador(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, USUARIOS.nombre, count(numfactura) as NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, USUARIOS.nombre";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9OrganizadorNombreAsc(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, USUARIOS.nombre, count(numfactura) as NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, USUARIOS.nombre ORDER BY USUARIOS.NOMBRE";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9OrganizadorNombreDesc(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, USUARIOS.nombre, count(numfactura) as NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, USUARIOS.nombre ORDER BY USUARIOS.NOMBRE DESC";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9OrganizadorConvAsc(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, USUARIOS.nombre, count(numfactura) as NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, USUARIOS.nombre, convenciones.nombre ORDER BY CONVENCIONES.NOMBRE";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc9OrganizadorConvDesc(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT NUMERODOCUMENTO, USUARIOS.nombre, count(numfactura) as NUM_VECES FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, USUARIOS.nombre, convenciones.nombre ORDER BY CONVENCIONES.NOMBRE DESC";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [3];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10basicaGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10basicaOrganizador(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT USUARIOS.NOMBRE, usuarios.numerodocumento,  usuarios.correoelectronico, convenciones.nombre as NOMBRE_CONVENCION FROM USUARIOS,ESTADIAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND numeroDocumento NOT IN (SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND IDSERVICIO = ? AND facturas.fecha BETWEEN ? AND ?) AND idtipousuario = 5" ;
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio, inicio, fin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+			
+			datosResp [0] = ((String) tupla [0]).toString();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10nombreascOrganizador(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT USUARIOS.NOMBRE, usuarios.numerodocumento,  usuarios.correoelectronico, convenciones.nombre as NOMBRE_CONVENCION FROM USUARIOS,ESTADIAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND numeroDocumento NOT IN (SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND IDSERVICIO = ? AND facturas.fecha BETWEEN ? AND ?) AND idtipousuario = 5 ORDER BY USUARIOS.NOMBRE" ;
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio, inicio, fin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+			
+			datosResp [0] = ((String) tupla [0]).toString();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10nombredescOrganizador(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT USUARIOS.NOMBRE, usuarios.numerodocumento,  usuarios.correoelectronico, convenciones.nombre as NOMBRE_CONVENCION FROM USUARIOS,ESTADIAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND numeroDocumento NOT IN (SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND IDSERVICIO = ? AND facturas.fecha BETWEEN ? AND ?) AND idtipousuario = 5 ORDER BY USUARIOS.NOMBRE DESC" ;
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio, inicio, fin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+			
+			datosResp [0] = ((String) tupla [0]).toString();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10convascOrganizador(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT USUARIOS.NOMBRE, usuarios.numerodocumento,  usuarios.correoelectronico, convenciones.nombre as NOMBRE_CONVENCION FROM USUARIOS,ESTADIAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND numeroDocumento NOT IN (SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND IDSERVICIO = ? AND facturas.fecha BETWEEN ? AND ?) AND idtipousuario = 5 ORDER BY CONVENCIONES.NOMBRE" ;
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio, inicio, fin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+			
+			datosResp [0] = ((String) tupla [0]).toString();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10convdescOrganizador(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT USUARIOS.NOMBRE, usuarios.numerodocumento,  usuarios.correoelectronico, convenciones.nombre as NOMBRE_CONVENCION FROM USUARIOS,ESTADIAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND numeroDocumento NOT IN (SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS,CONVENCIONES WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND estadias.idconvencion = convenciones.idconvencion AND convenciones.idorganizador = 19135679 AND IDSERVICIO = ? AND facturas.fecha BETWEEN ? AND ?) AND idtipousuario = 5 ORDER BY CONVENCIONES.NOMBRE DESC" ;
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(idServicio, inicio, fin);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+			
+			datosResp [0] = ((String) tupla [0]).toString();
+			datosResp [1] = ((BigDecimal) tupla [1]).longValue ();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;		
+	}
+	
+	public List rfc10numdocascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NUMERODOCUMENTO";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+
+	public List rfc10numdocdescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NUMERODOCUMENTO DESC";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc10nombreascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NOMBRE";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc10nombredescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NOMBRE DESC";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(inicio, fin, idServicio);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((BigDecimal) tupla [0]).longValue ();
+			datosResp [1] = ((String) tupla [1]).toString();
+			datosResp [2] = ((String) tupla [2]).toString ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+
+
 
 	public List darFacturaPorIdEstadia(long idEstadia){
 		List<Object []> resp = new LinkedList<> ();

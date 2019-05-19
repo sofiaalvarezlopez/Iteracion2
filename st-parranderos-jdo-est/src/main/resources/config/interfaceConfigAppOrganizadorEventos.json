@@ -34,6 +34,19 @@
 				}
 			]
 		},
+		{ "menuTitle": "Consultas",
+		  "options":
+			[
+				{
+					"label": "Consultar consumo en las convenciones de HotelAndes",
+					"event": "rfc9Organizador"
+				},
+				{
+					"label": "Consultar consumo en las convenciones de HotelAndes (servicios no consumidos)",
+					"event": "rfc10Organizador"
+				}
+			]
+		},
 		
 		{ "menuTitle": "Acerca de ...",
 		  "options":

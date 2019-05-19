@@ -742,6 +742,150 @@ public class HotelAndes {
 		
 	}
 	
+	public List<Object []> rfc9basicaGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9basicaGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10basicaGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10basicaGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9basicOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9basicOrganizador(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10basicOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10basicaOrganizador(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9numdocascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9numdocascGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10numdocascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10numdocascGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9numdocdescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9numdocdescGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10numdocdescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10numdocdescGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9nombreascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9nombreascGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10nombreascGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10nombreascGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9nombreascOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9OrganizadorNombreAsc(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10nombreascOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10nombreascOrganizador(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10nombredescOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10nombredescOrganizador(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	
+	
+	public List<Object []> rfc9nombredescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9nombredescGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10nombredescGerenteYRecepcionista(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10nombredescGerenteYRecepcionista(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9nombredescOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9OrganizadorNombreDesc(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9convAscOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9OrganizadorConvAsc(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc9convDescOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc9OrganizadorConvDesc(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10convAscOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10convascOrganizador(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc10convDescOrganizador(String inicio, String fin, long idServicio){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc10convdescOrganizador(inicio, fin, idServicio);
+        log.info ("Generando las facturas de la estadia" + idServicio + " existentes");
+        return tuplas;
+	}
+	
+	
+	
 	public BigDecimal selectMax(){
 		return pp.selectMax();
 	}

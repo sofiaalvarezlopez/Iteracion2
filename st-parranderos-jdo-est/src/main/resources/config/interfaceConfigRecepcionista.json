@@ -25,7 +25,19 @@
 				}
 			]
 		},
-		
+		{ "menuTitle": "Consultas",
+		  "options":
+			[
+				{
+					"label": "Consultar consumo en HotelAndes",
+					"event": "rfc9GerenteYRegistrador"
+				},
+				{
+					"label": "Consultar consumo en HotelAndes (servicios no consumidos)",
+					"event": "rfc10GerenteYRegistrador"
+				}
+			]
+		},
 		{ "menuTitle": "Acerca de ...",
 		  "options":
 			[

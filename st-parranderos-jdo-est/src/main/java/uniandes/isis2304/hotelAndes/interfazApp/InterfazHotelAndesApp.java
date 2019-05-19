@@ -1086,7 +1086,117 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		return resp;
 
 	}
+	
+	public void rfc9Organizador(){
+		String opcion = JOptionPane.showInputDialog("Digite la opcion que desea para estudiar el consumo en las convenciones de HotelAndes: \n"
+				+ "1. Basico (Sin ordenar) \n" +
+				" 2. Ordenar por nombre de cliente, ascendentemente \n" + 
+				"3. Ordenar por nombre de cliente, descendentemente \n" +
+				"4. Ordenar por nombre convencion ascendentemente \n" + 
+				"5. Ordenar por nombre convencion descendentemente");
+		if(opcion.equals("1")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9basicOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("2")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";			
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9nombreascOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("3")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9nombredescOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("4")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9convAscOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("5")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9convDescOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+	}
 
+	
 
 	public void operacionHotelAndes(){
 		String unidad = JOptionPane.showInputDialog("Digite el numero de la unidad de tiempo para analizar la operacion de HotelAndes: \n"
@@ -1286,6 +1396,345 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 
 	}
 
+	public void rfc9GerenteYRegistrador(){
+		String opcion = JOptionPane.showInputDialog("Digite la opcion que desea para estudiar el consumo de HotelAndes: \n"
+				+ "1. Basico (Sin ordenar) \n" +
+				" 2. Ordenar por numero de Documento, ascendentemente \n" + 
+				"3. Ordenar por numero de Documento, descendentemente \n" +
+				"4. Ordenar por nombre ascendentemente \n" + 
+				"5. Ordenar por nombre descendentemente");
+		if(opcion.equals("1")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9basicaGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("2")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";			
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9numdocascGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("3")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9numdocdescGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("4")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9nombreascGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("5")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc9nombredescGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [0] + ", ";
+				resp1 += "Nombre: " + datos [1] + ", ";
+				resp1 += "Numero de veces consumido: " + datos [2];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+	}
+
+	public void rfc10GerenteYRegistrador(){
+		String opcion = JOptionPane.showInputDialog("Digite la opcion que desea para estudiar el consumo de HotelAndes (servicios no consumidos): \n"
+				+ "1. Basico (Sin ordenar) \n" +
+				" 2. Ordenar por numero de Documento, ascendentemente \n" + 
+				"3. Ordenar por numero de Documento, descendentemente \n" +
+				"4. Ordenar por nombre ascendentemente \n" + 
+				"5. Ordenar por nombre descendentemente");
+		if(opcion.equals("1")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10basicaGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += datos[1];
+				resp1 += datos [0] + ", ";
+				resp1 += "Nombre: " + datos [2] + ", ";
+				resp1 += "Correo: " + datos [3];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("2")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";			
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10numdocascGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += datos[1];
+				resp1 += datos [0] + ", ";
+				resp1 += "Nombre: " + datos [2] + ", ";
+				resp1 += "Correo: " + datos [3];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("3")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10numdocdescGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += datos[1];
+				resp1 += datos [0] + ", ";
+				resp1 += "Nombre: " + datos [2] + ", ";
+				resp1 += "Correo: " + datos [3];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("4")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10nombreascGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += datos[1];
+				resp1 += datos [0] + ", ";
+				resp1 += "Nombre: " + datos [2] + ", ";
+				resp1 += "Correo: " + datos [3];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("5")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10nombredescGerenteYRecepcionista(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += datos[1];
+				resp1 += datos [0] + ", ";
+				resp1 += "Nombre: " + datos [2] + ", ";
+				resp1 += "Correo: " + datos [3];
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+	}
+
+
+	public void rfc10Organizador(){
+		String opcion = JOptionPane.showInputDialog("Digite la opcion que desea para estudiar el consumo en las convenciones de HotelAndes (servicios no consumidos): \n"
+				+ "1. Basico (Sin ordenar) \n" +
+				" 2. Ordenar por nombre de cliente, ascendentemente \n" + 
+				"3. Ordenar por nombre de cliente, descendentemente \n" +
+				"4. Ordenar por nombre convencion ascendentemente \n" + 
+				"5. Ordenar por nombre convencion descendentemente");
+		if(opcion.equals("1")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10basicOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [1] + ", ";
+				resp1 += "Nombre: " + datos [0] + ", ";
+				resp1 += "Correo: " + datos [2] + ", ";
+				resp1 += "Convencion: " + datos [3] + ", ";
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("2")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";			
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10nombreascOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [1] + ", ";
+				resp1 += "Nombre: " + datos [0] + ", ";
+				resp1 += "Correo: " + datos [2] + ", ";
+				resp1 += "Convencion: " + datos [3] + ", ";
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("3")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10nombredescOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [1] + ", ";
+				resp1 += "Nombre: " + datos [0] + ", ";
+				resp1 += "Correo: " + datos [2] + ", ";
+				resp1 += "Convencion: " + datos [3] + ", ";
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("4")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10convAscOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [1] + ", ";
+				resp1 += "Nombre: " + datos [0] + ", ";
+				resp1 += "Correo: " + datos [2] + ", ";
+				resp1 += "Convencion: " + datos [3] + ", ";
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+		else if(opcion.equals("5")){
+			String id = JOptionPane.showInputDialog("Digite el id del servicio a analizar");
+			long idServicio = Long.parseLong(id);
+			String fechaInicial = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String fechaFinal = JOptionPane.showInputDialog("Digite la fecha inicial de consulta en formato dd/mm/yyyy");
+			String resp = "Consumo de hotel Andes para el servicio con " + id + "\n";
+			int i = 1;
+			List<Object []> listica = hotelAndes.rfc10convDescOrganizador(fechaInicial, fechaFinal, idServicio);
+			for ( Object [] tupla : listica)
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Num Doc Usuario: " + datos [1] + ", ";
+				resp1 += "Nombre: " + datos [0] + ", ";
+				resp1 += "Correo: " + datos [2] + ", ";
+				resp1 += "Convencion: " + datos [3] + ", ";
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+		panelDatos.actualizarInterfaz(resp);				
+		}
+	}
+	
+	
 	public String verBuenosClientes(){
 		String resp = "Los buenos clientes son:\n";
 		int i = 1;
