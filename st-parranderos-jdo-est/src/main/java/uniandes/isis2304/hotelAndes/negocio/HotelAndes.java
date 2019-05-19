@@ -884,6 +884,33 @@ public class HotelAndes {
         return tuplas;
 	}
 	
+	public List<Object []> rfc11_1(){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc11mejorServicioPorSemana();
+        log.info ("Generando las facturas de la estadia existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc11_2(){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc11servicioMenosConsumido();
+        log.info ("Generando las facturas de la estadia existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc11_3(){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc11habitacionMasSolicitada();
+        log.info ("Generando las facturas de la estadia existentes");
+        return tuplas;
+	}
+	
+	public List<Object []> rfc11_4(){
+		log.info ("Generando las facturas");        
+        List tuplas = pp.rfc11habitacionMenosSolicitada();
+        log.info ("Generando las facturas de la estadia existentes");
+        return tuplas;
+	}
 	
 	
 	public BigDecimal selectMax(){

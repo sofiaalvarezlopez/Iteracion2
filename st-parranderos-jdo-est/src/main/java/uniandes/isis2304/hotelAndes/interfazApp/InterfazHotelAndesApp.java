@@ -1770,10 +1770,96 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		return resp;	
 
 	}
+	
+	public void rfc11(){
+		String opcion = JOptionPane.showInputDialog(this, "Seleccione la opcion para consultar el funcionamiento de HotelAndes: \n"
+				+ "1. Servicio mas consumido \n" +
+				"2. Servicio menos consumido \n" +
+				"3. Habitacion mas solicitada \n" +
+				"4. Habitacion menos solicitada"); 
+		if(opcion.equals("1")){
+			String resp = "Los servicios mas consumidos por semana son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc11_1())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Anio: " + datos [0] + ", ";
+				resp1 += "Semana: " + datos [1] + ", ";
+				resp1 += "Id servicio: " + datos [2] + ", ";
+				resp1 += "Nombre Servicio: " + datos [3] + ", ";
+				resp1 += "Veces consumido: " + datos [4];
+
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+			panelDatos.actualizarInterfaz(resp);
+		}
+		else if(opcion.equals("2")){
+			String resp = "Los servicios menos consumidos por semana son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc11_2())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Anio: " + datos [0] + ", ";
+				resp1 += "Semana: " + datos [1] + ", ";
+				resp1 += "Id servicio: " + datos [2] + ", ";
+				resp1 += "Nombre Servicio: " + datos [3] + ", ";
+				resp1 += "Veces consumido: " + datos [4];
+
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+			panelDatos.actualizarInterfaz(resp);
+		}
+		else if(opcion.equals("3")){
+			String resp = "Las habitaciones mas solicitadas por semana son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc11_3())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Anio: " + datos [0] + ", ";
+				resp1 += "Semana: " + datos [1] + ", ";
+				resp1 += "Id habitacion: " + datos [2] + ", ";
+				resp1 += "Veces solicitdada: " + datos [3];
+
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+			panelDatos.actualizarInterfaz(resp);
+		}
+		else if(opcion.equals("4")){
+			String resp = "Las habitaciones menos solicitadas por semana son:\n";
+			int i = 1;
+			for ( Object [] tupla : hotelAndes.rfc11_4())
+			{
+				Object [] datos = tupla;
+				String resp1 = i++ + ". " + "[";
+				resp1 += "Anio: " + datos [0] + ", ";
+				resp1 += "Semana: " + datos [1] + ", ";
+				resp1 += "Id habitacion: " + datos [2] + ", ";
+				resp1 += "Veces solicitada: " + datos [3];
+
+				resp1 += "]";
+				resp += resp1 + "\n";
+			}
+			panelDatos.actualizarInterfaz(resp);
+		}
+		else{
+			String resp = "Opcion no valida.";
+			panelDatos.actualizarInterfaz(resp);
+		}
+	}
+	
+	
+	
 
 	public void crearPlanConvencion(){
 
 	}
+	
 
 	public void crearConvencion(){
 		String id = JOptionPane.showInputDialog(this, "Ingrese el id de la convencion");

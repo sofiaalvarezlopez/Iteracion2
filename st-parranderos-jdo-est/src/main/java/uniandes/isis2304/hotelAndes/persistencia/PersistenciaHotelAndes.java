@@ -2320,6 +2320,85 @@ public class PersistenciaHotelAndes
 		}
 		return resp;
 	}
+	
+	public List rfc11mejorServicioPorSemana(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "select ANIO, SEMANA,IDservicio, NombreServicio, VECES from (select ANIO, SEMANA,IDservicio, nombreServicio, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(facturas.fecha - 7/24,'IYYY') AS ANIO, to_char(facturas.fecha - 7/24,'IW') AS SEMANA, servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO, COUNT(sERVICIOS.IDSERVICIO) AS VECES FROM FACTURAS,SERVICIOS WHERE facturas.idservicio = servicios.idservicio group by to_char(facturas.fecha - 7/24,'IYYY'), to_char(facturas.fecha - 7/24,'IW'), servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO))where rn = 1";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((String) tupla [0]).toString ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc11servicioMenosConsumido(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "select ANIO, SEMANA,IDservicio, NombreServicio, VECES from (select ANIO, SEMANA,IDservicio, nombreServicio, VECES, row_number() over (partition by anio, semana order by veces asc) as rn from (SELECT to_char(facturas.fecha - 7/24,'IYYY') AS ANIO, to_char(facturas.fecha - 7/24,'IW') AS SEMANA, servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO, COUNT(sERVICIOS.IDSERVICIO) AS VECES FROM FACTURAS,SERVICIOS WHERE facturas.idservicio = servicios.idservicio group by to_char(facturas.fecha - 7/24,'IYYY'), to_char(facturas.fecha - 7/24,'IW'), servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO))where rn = 1";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [5];
+
+			datosResp [0] = ((String) tupla [0]).toString ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			datosResp [3] = ((String) tupla [3]).toString ();
+			datosResp [4] = ((BigDecimal) tupla [4]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc11habitacionMasSolicitada(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "select ANIO, SEMANA, IDHABITACION, VECES from (select ANIO, SEMANA, IDHABITACION, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES FROM ESTADIAS group by to_char(estadias.fechallegada - 7/24,'IYYY'), to_char(estadias.fechallegada - 7/24,'IW'), idHabitacion))where rn = 1";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [4];
+
+			datosResp [0] = ((String) tupla [0]).toString ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			resp.add (datosResp);
+			resp.add (datosResp);
+		}
+		return resp;
+	}
+	
+	public List rfc11habitacionMenosSolicitada(){
+		List<Object []> resp = new LinkedList<> ();
+		String sql = "select ANIO, SEMANA, IDHABITACION, VECES from (select ANIO, SEMANA, IDHABITACION, VECES, row_number() over (partition by anio, semana order by veces asc) as rn from (SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES FROM ESTADIAS group by to_char(estadias.fechallegada - 7/24,'IYYY'), to_char(estadias.fechallegada - 7/24,'IW'), idHabitacion))where rn = 1";
+		System.out.println(sql);
+		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		List<Object[]> tuplas = q.executeList();
+		for ( Object [] tupla : tuplas)
+		{
+			Object [] datosResp = new Object [4];
+
+			datosResp [0] = ((String) tupla [0]).toString ();
+			datosResp [1] = ((String) tupla [1]).toString ();
+			datosResp [2] = ((BigDecimal) tupla [2]).longValue ();
+			datosResp [3] = ((BigDecimal) tupla [3]).longValue ();
+			resp.add (datosResp);
+		}
+		return resp;
+	}
 
 
 

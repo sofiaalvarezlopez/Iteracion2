@@ -50,6 +50,10 @@
 				{
 					"label": "Consultar consumo en HotelAndes (servicios no consumidos)",
 					"event": "rfc10GerenteYRegistrador"
+				},
+				{
+					"label": "Consultar funcionamiento",
+					"event": "rfc11"
 				}
 				
 			]
