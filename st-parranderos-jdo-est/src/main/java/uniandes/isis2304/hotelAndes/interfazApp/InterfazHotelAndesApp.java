@@ -961,12 +961,11 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	public String dineroServiciosPorHabitacion(){
 		String resp = "Las habitaciones y el total de dinero recolectado son:\n";
 		int i = 1;
-		for ( long [] tupla : hotelAndes.dineroServiciosPorHabitacion())
+		for ( Object [] tupla : hotelAndes.dineroServiciosPorHabitacion())
 		{
-			long [] datos = tupla;
 			String resp1 = i++ + ". " + "[";
-			resp1 += "idHab: " + datos [0] + ", ";
-			resp1 += "total: " + datos [1];
+			resp1 += "idHab: " + tupla [0] + ", ";
+			resp1 += "total: " + tupla [1];
 			resp1 += "]";
 			resp += resp1 + "\n";
 		}
@@ -975,8 +974,8 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 
 	public String topPopulares(){
-		String inicio  = JOptionPane.showInputDialog(this, "Digite la fecha de inicio de consulta en formato yyyy-mm-dd");
-		String fin  = JOptionPane.showInputDialog(this, "Digite la fecha de fin de consulta en formato yyyy-mm-dd");
+		String inicio  = JOptionPane.showInputDialog(this, "Digite la fecha de inicio de consulta en formato dd/mm/yy");
+		String fin  = JOptionPane.showInputDialog(this, "Digite la fecha de fin de consulta en formato dd/mm/yy");
 		String resp = "Los 20 servicios más populares son:\n";
 		int i = 1;
 		for ( Object [] tupla : hotelAndes.topPopulares(inicio, fin))
@@ -1075,9 +1074,9 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		String fechaFin = JOptionPane.showInputDialog(this, "Ingrese la fecha de fin en formato yyyy-mm-dd");
 		String resp = "Consumo del usuario " + idCliente + " entre " + fechaInicio + " y " + fechaFin + "\n";
 		int i = 1;
-		for ( long [] tupla : hotelAndes.consumoPorUsuarioPorFecha(idCliente, fechaInicio, fechaFin))
+		for ( Object [] tupla : hotelAndes.consumoPorUsuarioPorFecha(idCliente, fechaInicio, fechaFin))
 		{
-			long [] datos = tupla;
+			Object [] datos = tupla;
 			String resp1 = i++ + ". " + "[";
 			resp1 += "Id cliente: " + datos [0] + ", ";
 			resp1 += "Consumo cliente: " + datos [1];
@@ -1737,28 +1736,53 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 	}
 	
 	
-	public String verBuenosClientes(){
+	public void verBuenosClientes(){
+		String opcion = JOptionPane.showInputDialog(this, "Ingrese el criterio para los buenos clientes.: \n"
+				+ "1. Consumo mayor a $15,000,000 \n"
+				+ "2. Estadias superiores a 2 semanas (14 dias)");
+		
+		if(opcion.equals("1"))
+		{
+		String inicio = JOptionPane.showInputDialog(this, "Ingrese la fecha inicio en formato dd/mm/yy");
+		String fin = JOptionPane.showInputDialog(this, "Ingrese la fecha final en formato dd/mm/yy");
 		String resp = "Los buenos clientes son:\n";
 		int i = 1;
-		for ( Object [] tupla : hotelAndes.verBuenosClientes())
+		for ( Object [] tupla : hotelAndes.verBuenosClientes1(inicio, fin))
 		{
 			Object [] datos = tupla;
 			String resp1 = i++ + ". " + "[";
 			resp1 += "Id cliente: " + datos [0] + ", ";
-			resp1 += "Nombre cliente: " + datos [1] + ", ";
-			resp1 += "Total consumido: " + datos [2] + ", ";
-			resp1 += "Total dias en HotelAndes: " + datos [3];
+			resp1 += "Total consumido: " + datos [1];
 			resp1 += "]";
 			resp += resp1 + "\n";
 		}
 		panelDatos.actualizarInterfaz(resp);
-		return resp;		
+		}
+		else if(opcion.equals("2"))
+		{
+		String inicio = JOptionPane.showInputDialog(this, "Ingrese la fecha inicio en formato dd/mm/yy");
+		String fin = JOptionPane.showInputDialog(this, "Ingrese la fecha final en formato dd/mm/yy");
+		String resp = "Los buenos clientes son:\n";
+		int i = 1;
+		for ( Object [] tupla : hotelAndes.verBuenosClientes2(inicio, fin))
+		{
+			Object [] datos = tupla;
+			String resp1 = i++ + ". " + "[";
+			resp1 += "Id cliente: " + datos [0] + ", ";
+			resp1 += "Total estadia: " + datos [1];
+			resp1 += "]";
+			resp += resp1 + "\n";
+		}
+		panelDatos.actualizarInterfaz(resp);
+		}
 	}
 
 	public String serviciosPocaDemanda(){
+		String an = JOptionPane.showInputDialog(this, "Digite el anio");
+		long anio = Long.parseLong(an);
 		String resp = "Los buenos clientes son:\n";
 		int i = 1;
-		for ( Object [] tupla : hotelAndes.verServiciosPocaDemanda())
+		for ( Object [] tupla : hotelAndes.verServiciosPocaDemanda(anio))
 		{
 			Object [] datos = tupla;
 			String resp1 = i++ + ". " + "[";

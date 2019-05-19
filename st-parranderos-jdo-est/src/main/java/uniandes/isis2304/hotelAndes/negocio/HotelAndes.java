@@ -578,7 +578,7 @@ public class HotelAndes {
 	
 	
 	
-	public List<long []> dineroServiciosPorHabitacion ()
+	public List<Object []> dineroServiciosPorHabitacion ()
 	{
 
         log.info ("Listando dinero servicios por habitacion");
@@ -601,7 +601,7 @@ public class HotelAndes {
         return tuplas;
 	}
 	
-	public List<long []> consumoPorUsuarioPorFecha(long idCliente, String fechaI, String fechaF){
+	public List<Object []> consumoPorUsuarioPorFecha(long idCliente, String fechaI, String fechaF){
 		log.info ("Mostrando consumo por usuario por fecha");
         List tuplas = pp.consumoPorUsuarioPorFecha(idCliente, fechaI, fechaF);
         log.info ("Mostrado consumo por usuario por fecha");
@@ -629,16 +629,23 @@ public class HotelAndes {
         return tuplas;
 	}
 	
-	public List<Object []> verBuenosClientes(){
+	public List<Object []> verBuenosClientes1(String inicio, String fin){
 		log.info ("Mostrando buenos clientes");
-        List tuplas = pp.verBuenosClientes();
+        List tuplas = pp.verBuenosClientes1(inicio, fin);
         log.info ("Mostrado buenos clientes");
         return tuplas;
 	}
 	
-	public List<Object []> verServiciosPocaDemanda(){
+	public List<Object []> verBuenosClientes2(String inicio, String fin){
+		log.info ("Mostrando buenos clientes");
+        List tuplas = pp.verBuenosClientes2(inicio, fin);
+        log.info ("Mostrado buenos clientes");
+        return tuplas;
+	}
+	
+	public List<Object []> verServiciosPocaDemanda(long anio){
 		log.info("Mostrando servicios poca demanda");
-		List tuplas = pp.serviciosPocaDemanda();
+		List tuplas = pp.serviciosPocaDemanda(anio);
 		log.info("Mostrado servicios poca demanda");
 		return tuplas;
 
