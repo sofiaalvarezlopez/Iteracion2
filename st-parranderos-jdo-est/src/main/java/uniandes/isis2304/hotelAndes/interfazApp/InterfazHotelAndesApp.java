@@ -1885,9 +1885,10 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				+ "1. Ver clientes que realizan estancias 1 vez por trimestre \n"
 				+ "2. Ver clientes que siempre consumen servicios mayores a $300,000 \n"
 				+ "3. Ver clientes que en cada estancia reservan salones/spa por mas de 4 horas");
-		String an = JOptionPane.showInputDialog("Digite el anio para consultar");
-		long anio = Long.parseLong(an);
+		
 		if(opcion.equals("1")){
+			String an = JOptionPane.showInputDialog("Digite el anio para consultar");
+			long anio = Long.parseLong(an);
 			String resp = "Los clientes que realizan estancias 1 vez por trimestre son:\n";
 			int i = 1;
 			for ( Object [] tupla : hotelAndes.rfc12_1(anio))
