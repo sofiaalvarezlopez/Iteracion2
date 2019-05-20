@@ -891,37 +891,37 @@ public class HotelAndes {
         return tuplas;
 	}
 	
-	public List<Object []> rfc11_1(){
+	public List<Object []> rfc11_1(long anio){
 		log.info ("Generando las facturas");        
-        List tuplas = pp.rfc11mejorServicioPorSemana();
+        List tuplas = pp.rfc11mejorServicioPorSemana(anio);
         log.info ("Generando las facturas de la estadia existentes");
         return tuplas;
 	}
 	
-	public List<Object []> rfc11_2(){
+	public List<Object []> rfc11_2(long anio){
 		log.info ("Generando las facturas");        
-        List tuplas = pp.rfc11servicioMenosConsumido();
+        List tuplas = pp.rfc11servicioMenosConsumido(anio);
         log.info ("Generando las facturas de la estadia existentes");
         return tuplas;
 	}
 	
-	public List<Object []> rfc11_3(){
+	public List<Object []> rfc11_3(long anio){
 		log.info ("Generando las facturas");        
-        List tuplas = pp.rfc11habitacionMasSolicitada();
+        List tuplas = pp.rfc11habitacionMasSolicitada(anio);
         log.info ("Generando las facturas de la estadia existentes");
         return tuplas;
 	}
 	
-	public List<Object []> rfc11_4(){
+	public List<Object []> rfc11_4(long anio){
 		log.info ("Generando las facturas");        
-        List tuplas = pp.rfc11habitacionMenosSolicitada();
+        List tuplas = pp.rfc11habitacionMenosSolicitada(anio);
         log.info ("Generando las facturas de la estadia existentes");
         return tuplas;
 	}
 	
-	public List<Object []> rfc12_1(){
+	public List<Object []> rfc12_1(long anio){
 		log.info("Consultando rfc12");
-		List tuplas = pp.rfc12_1();
+		List tuplas = pp.rfc12_1(anio);
 		log.info("Consultado rfc12");
 		return tuplas;
 	}

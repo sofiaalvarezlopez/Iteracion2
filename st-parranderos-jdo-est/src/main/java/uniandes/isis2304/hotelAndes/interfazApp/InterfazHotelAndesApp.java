@@ -1803,10 +1803,12 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				"2. Servicio menos consumido \n" +
 				"3. Habitacion mas solicitada \n" +
 				"4. Habitacion menos solicitada"); 
+		String an = JOptionPane.showInputDialog("Digite el anio para consultar");
+		long anio = Long.parseLong(an);
 		if(opcion.equals("1")){
 			String resp = "Los servicios mas consumidos por semana son:\n";
 			int i = 1;
-			for ( Object [] tupla : hotelAndes.rfc11_1())
+			for ( Object [] tupla : hotelAndes.rfc11_1(anio))
 			{
 				Object [] datos = tupla;
 				String resp1 = i++ + ". " + "[";
@@ -1824,7 +1826,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		else if(opcion.equals("2")){
 			String resp = "Los servicios menos consumidos por semana son:\n";
 			int i = 1;
-			for ( Object [] tupla : hotelAndes.rfc11_2())
+			for ( Object [] tupla : hotelAndes.rfc11_2(anio))
 			{
 				Object [] datos = tupla;
 				String resp1 = i++ + ". " + "[";
@@ -1842,7 +1844,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		else if(opcion.equals("3")){
 			String resp = "Las habitaciones mas solicitadas por semana son:\n";
 			int i = 1;
-			for ( Object [] tupla : hotelAndes.rfc11_3())
+			for ( Object [] tupla : hotelAndes.rfc11_3(anio))
 			{
 				Object [] datos = tupla;
 				String resp1 = i++ + ". " + "[";
@@ -1859,7 +1861,7 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 		else if(opcion.equals("4")){
 			String resp = "Las habitaciones menos solicitadas por semana son:\n";
 			int i = 1;
-			for ( Object [] tupla : hotelAndes.rfc11_4())
+			for ( Object [] tupla : hotelAndes.rfc11_4(anio))
 			{
 				Object [] datos = tupla;
 				String resp1 = i++ + ". " + "[";
@@ -1883,10 +1885,12 @@ public class InterfazHotelAndesApp extends JFrame implements ActionListener
 				+ "1. Ver clientes que realizan estancias 1 vez por trimestre \n"
 				+ "2. Ver clientes que siempre consumen servicios mayores a $300,000 \n"
 				+ "3. Ver clientes que en cada estancia reservan salones/spa por mas de 4 horas");
+		String an = JOptionPane.showInputDialog("Digite el anio para consultar");
+		long anio = Long.parseLong(an);
 		if(opcion.equals("1")){
 			String resp = "Los clientes que realizan estancias 1 vez por trimestre son:\n";
 			int i = 1;
-			for ( Object [] tupla : hotelAndes.rfc12_1())
+			for ( Object [] tupla : hotelAndes.rfc12_1(anio))
 			{
 				Object [] datos = tupla;
 				String resp1 = i++ + ". " + "[";

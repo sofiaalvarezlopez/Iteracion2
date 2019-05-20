@@ -3342,16 +3342,17 @@ public List<Object []> rfc10nombredescGerenteYRecepcionista(String inicio, Strin
 //		return resp;
 //	}
 
-public List<Object []> rfc11mejorServicioPorSemana(){
+public List<Object []> rfc11mejorServicioPorSemana(long anio){
 	
 	PersistenceManager pm = pmf.getPersistenceManager();
 	Transaction tx=pm.currentTransaction();
 	try
 	{
 		tx.begin();
-		String sql = "select ANIO, SEMANA,IDservicio, NombreServicio, VECES from (select ANIO, SEMANA,IDservicio, nombreServicio, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(facturas.fecha - 7/24,'IYYY') AS ANIO, to_char(facturas.fecha - 7/24,'IW') AS SEMANA, servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO, COUNT(sERVICIOS.IDSERVICIO) AS VECES FROM FACTURAS,SERVICIOS WHERE facturas.idservicio = servicios.idservicio group by to_char(facturas.fecha - 7/24,'IYYY'), to_char(facturas.fecha - 7/24,'IW'), servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO))where rn = 1";
+		String sql = "select ANIO, SEMANA,IDservicio, NombreServicio, VECES from (select ANIO, SEMANA,IDservicio, nombreServicio, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(facturas.fecha - 7/24,'IYYY') AS ANIO, to_char(facturas.fecha - 7/24,'IW') AS SEMANA, servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO, COUNT(sERVICIOS.IDSERVICIO) AS VECES FROM FACTURAS,SERVICIOS WHERE facturas.idservicio = servicios.idservicio group by to_char(facturas.fecha - 7/24,'IYYY'), to_char(facturas.fecha - 7/24,'IW'), servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO)where ANIO = ?)where rn = 1";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(anio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3394,16 +3395,17 @@ public List<Object []> rfc11mejorServicioPorSemana(){
 //		return resp;
 //	}
 	
-public List<Object []> rfc11servicioMenosConsumido(){
+public List<Object []> rfc11servicioMenosConsumido(long anio){
 	
 	PersistenceManager pm = pmf.getPersistenceManager();
 	Transaction tx=pm.currentTransaction();
 	try
 	{
 		tx.begin();
-		String sql = "select ANIO, SEMANA,IDservicio, NombreServicio, VECES from (select ANIO, SEMANA,IDservicio, nombreServicio, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(facturas.fecha - 7/24,'IYYY') AS ANIO, to_char(facturas.fecha - 7/24,'IW') AS SEMANA, servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO, COUNT(sERVICIOS.IDSERVICIO) AS VECES FROM FACTURAS,SERVICIOS WHERE facturas.idservicio = servicios.idservicio group by to_char(facturas.fecha - 7/24,'IYYY'), to_char(facturas.fecha - 7/24,'IW'), servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO))where rn = 1";
+		String sql = "select ANIO, SEMANA,IDservicio, NombreServicio, VECES from (select ANIO, SEMANA,IDservicio, nombreServicio, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(facturas.fecha - 7/24,'IYYY') AS ANIO, to_char(facturas.fecha - 7/24,'IW') AS SEMANA, servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO, COUNT(sERVICIOS.IDSERVICIO) AS VECES FROM FACTURAS,SERVICIOS WHERE facturas.idservicio = servicios.idservicio group by to_char(facturas.fecha - 7/24,'IYYY'), to_char(facturas.fecha - 7/24,'IW'), servicioS.IDservicio, SERVICIOS.NOMBRESERVICIO)where ANIO = ?)where rn = 1";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(anio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3447,16 +3449,17 @@ public List<Object []> rfc11servicioMenosConsumido(){
 //		return resp;
 //	}
 
-public List<Object []> rfc11habitacionMasSolicitada(){
+public List<Object []> rfc11habitacionMasSolicitada(long anio){
 	
 	PersistenceManager pm = pmf.getPersistenceManager();
 	Transaction tx=pm.currentTransaction();
 	try
 	{
 		tx.begin();
-		String sql = "select ANIO, SEMANA, IDHABITACION, VECES from (select ANIO, SEMANA, IDHABITACION, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES FROM ESTADIAS group by to_char(estadias.fechallegada - 7/24,'IYYY'), to_char(estadias.fechallegada - 7/24,'IW'), idHabitacion))where rn = 1";
+		String sql = "select ANIO, SEMANA, IDHABITACION, VECES from (select ANIO, SEMANA, IDHABITACION, VECES, row_number() over (partition by anio, semana order by veces desc) as rn from (SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES FROM ESTADIAS group by to_char(estadias.fechallegada - 7/24,'IYYY'), to_char(estadias.fechallegada - 7/24,'IW'), idHabitacion)where ANIO = ?)where rn = 1";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(anio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3479,16 +3482,17 @@ public List<Object []> rfc11habitacionMasSolicitada(){
 	}
 }
 
-public List<Object []> rfc11habitacionMenosSolicitada(){
+public List<Object []> rfc11habitacionMenosSolicitada(long anio){
 	
 	PersistenceManager pm = pmf.getPersistenceManager();
 	Transaction tx=pm.currentTransaction();
 	try
 	{
 		tx.begin();
-		String sql = "select ANIO, SEMANA, IDHABITACION, VECES from (select ANIO, SEMANA, IDHABITACION, VECES, row_number() over (partition by anio, semana order by veces asc) as rn from (SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES FROM ESTADIAS group by to_char(estadias.fechallegada - 7/24,'IYYY'), to_char(estadias.fechallegada - 7/24,'IW'), idHabitacion))where rn = 1";
+		String sql = "select ANIO, SEMANA, IDHABITACION, VECES from (select ANIO, SEMANA, IDHABITACION, VECES, row_number() over (partition by anio, semana order by veces asc) as rn from (SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada - 7/24,'IW') AS SEMANA, idhabitacion, COUNT(idHabitacion) AS VECES FROM ESTADIAS group by to_char(estadias.fechallegada - 7/24,'IYYY'), to_char(estadias.fechallegada - 7/24,'IW'), idHabitacion)where ANIO = ?)where rn = 1";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(anio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3550,16 +3554,17 @@ public List<Object []> rfc11habitacionMenosSolicitada(){
 //		return resp;
 //	}
 
-public List<Object []> rfc12_1(){
+public List<Object []> rfc12_1(long anio){
 	
 	PersistenceManager pm = pmf.getPersistenceManager();
 	Transaction tx=pm.currentTransaction();
 	try
 	{
 		tx.begin();
-		String sql = "SELECT ANIO, IDCLIENTE, COUNT (VECES) AS NUM_TRIMESTRES FROM(SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada  - 7/24,'Q') AS trimestre, idcliente, COUNT(idcliente) AS VECES FROM ESTADIAS where IDCLIENTE IS NOT null group by to_char(estadias.fechallegada  - 7/24,'IYYY'), to_char(estadias.fechallegada  - 7/24,'Q'), idcliente) GROUP BY ANIO, IDCLIENTE HAVING COUNT (VECES) = 4";
+		String sql = "SELECT ANIO, IDCLIENTE, COUNT (VECES) AS NUM_TRIMESTRES FROM(SELECT to_char(estadias.fechallegada - 7/24,'IYYY') AS ANIO, to_char(estadias.fechallegada  - 7/24,'Q') AS trimestre, idcliente, COUNT(idcliente) AS VECES FROM ESTADIAS where IDCLIENTE IS NOT null group by to_char(estadias.fechallegada  - 7/24,'IYYY'), to_char(estadias.fechallegada  - 7/24,'Q'), idcliente) WHERE ANIO=? GROUP BY ANIO, IDCLIENTE HAVING COUNT (VECES) = 4";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
+		q.setParameters(anio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
