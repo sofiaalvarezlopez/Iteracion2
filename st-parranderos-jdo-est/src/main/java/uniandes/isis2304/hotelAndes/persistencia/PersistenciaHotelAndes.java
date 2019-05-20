@@ -2838,10 +2838,10 @@ public List<Object []> rfc10basicaGerenteYRecepcionista(String inicio, String fi
 	try
 	{
 		tx.begin();
-		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5";
+		String sql = "SELECT * FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND IDSERVICIO = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
-		q.setParameters(inicio, fin, idServicio);
+		q.setParameters(inicio, fin, inicio, fin, idServicio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3157,10 +3157,10 @@ public List<Object []> rfc10numdocascGerenteYRecepcionista(String inicio, String
 	try
 	{
 		tx.begin();
-		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NUMERODOCUMENTO";
+		String sql = "SELECT * FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND IDSERVICIO = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NUMERODOCUMENTO";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
-		q.setParameters(inicio, fin, idServicio);
+		q.setParameters(inicio, fin, inicio, fin, idServicio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3209,10 +3209,10 @@ public List<Object []> rfc10numdocdescGerenteYRecepcionista(String inicio, Strin
 	try
 	{
 		tx.begin();
-		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NUMERODOCUMENTO DESC";
+		String sql = "SELECT * FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND IDSERVICIO = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NUMERODOCUMENTO DESC";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
-		q.setParameters(inicio, fin, idServicio);
+		q.setParameters(inicio, fin, inicio, fin, idServicio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3263,10 +3263,10 @@ public List<Object []> rfc10nombreascGerenteYRecepcionista(String inicio, String
 	try
 	{
 		tx.begin();
-		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NOMBRE";
+		String sql = "SELECT * FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND IDSERVICIO = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NOMBRE";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
-		q.setParameters(inicio, fin, idServicio);
+		q.setParameters(inicio, fin, inicio, fin, idServicio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
@@ -3296,10 +3296,10 @@ public List<Object []> rfc10nombredescGerenteYRecepcionista(String inicio, Strin
 	try
 	{
 		tx.begin();
-		String sql = "SELECT * FROM USUARIOS WHERE numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND idservicio = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NOMBRE DESC";
+		String sql = "SELECT * FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND numerodocumento NOT IN(SELECT NUMERODOCUMENTO FROM USUARIOS,ESTADIAS,FACTURAS WHERE usuarios.numerodocumento = estadias.idcliente AND  estadias.idestadia = facturas.idestadia AND facturas.fecha BETWEEN ? AND ? AND IDSERVICIO = ? GROUP BY NUMERODOCUMENTO, NOMBRE) AND idtipousuario = 5 ORDER BY NOMBRE DESC";
 		System.out.println(sql);
 		Query q = pmf.getPersistenceManager().newQuery(SQL, sql);
-		q.setParameters(inicio, fin, idServicio);
+		q.setParameters(inicio, fin, inicio, fin, idServicio);
 		long ini = System.currentTimeMillis();
 		List<Object[]> l = q.executeList();
 		long fini = System.currentTimeMillis();
